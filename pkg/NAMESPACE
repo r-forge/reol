@@ -1,0 +1,2 @@
+export(DownloadEOLpages, DownloadHeirarchy, DownloadSearchedTaxa, FirstTwo, GatherMedia, GatherResultsDataFrame, GetEOLTree, GetEOLpageFromHierPage, GetKingdoms, GetNumberSources, GetParentID, GetRichnessScore, GetSimpleTreeData, GetSyns, GetTaxonID, MakeDataFromHeirarchy, OneFileHierarchy, PingAPI, ProviderContributions, changeKingdomsToNumbers, whichTaxonHasTwoWords)
+import(XML, RCurl, rjson, R.oo)
