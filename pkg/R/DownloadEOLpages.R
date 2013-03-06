@@ -1,4 +1,4 @@
-DownloadEOLpages <- function(pages, MyKey=NULL) {
+DownloadEOLpages <- function(pages, MyKey=NULL, verbose=T) {
 #Download xml page content  #now full content using X=75
   for (i in sequence(length(pages))){
     pageNum<-pages[i]
@@ -7,6 +7,8 @@ DownloadEOLpages <- function(pages, MyKey=NULL) {
       web <- paste(web, "&key=", MyKey, sep="")
     a <- getURL(web)
     saveXML(xmlRoot(xmlTreeParse(a)), file=paste("eol", pages[i], ".xml", sep=""))
+    if(verbose)
+      print(paste("Downloaded ", "eol", pages[i], ".xml", sep=""))
     Sys.sleep(1)
   }
 }
