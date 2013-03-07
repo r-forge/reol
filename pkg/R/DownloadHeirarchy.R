@@ -1,4 +1,4 @@
-DownloadHeirarchy <- function(Results, database="calc", verbose=T){
+DownloadHierarchy <- function(Results, database="calc", verbose=T){
 # Results should be entire database
 # database=c("worms", "ncbi", "itis", "iucn") or calculate which has the most
   if (database == "worms") column<-6
@@ -19,7 +19,7 @@ DownloadHeirarchy <- function(Results, database="calc", verbose=T){
       a <- getURL(web)		
       saveXML(xmlRoot(xmlTreeParse(a)), file=paste("eol", pages[i], ".xml", sep=""))
       if(verbose)
-        print(paste("Downloaded ", "heir", pages[i], ".xml", sep=""))
+        print(paste("Downloaded ", "hier", pages[i], ".xml", sep=""))
     }
   Sys.sleep(1)
   }
