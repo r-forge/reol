@@ -4,14 +4,14 @@ GatherDataObjectInformation <- function(MyFile) {
   res <- xmlToList(xmlRoot(xmlTreeParse(MyFile, getDTD=F)), simplify = T)
   whichDataObjects <- which(names(res) == "dataObject") 
   NumberOfDataObjects <- length(whichDataObjects) 
-  DataObjectInfo <- data.frame(matrix(nrow=NumberOfDataObjects, ncol=1))
+  DataObjectInfo <- data.frame(matrix(nrow=NumberOfDataObjects, ncol=1), stringsAsFactors=F)
   taxon <- FirstTwo(res[[1]]$ScientificName)
   if (is.null(taxon)) 
     taxon <- NA
   eolID <- res[[1]]$taxonConceptID
   if (is.null(eolID)) 
     eolID <- NA
-  DataObjectInfo <- data.frame(rep(taxon, NumberOfDataObjects), rep(eolID, NumberOfDataObjects))  #initialize dataframe
+  DataObjectInfo <- data.frame(rep(taxon, NumberOfDataObjects), rep(eolID, NumberOfDataObjects), stringsAsFactors=F)  #initialize dataframe
   colnames(DataObjectInfo) <- c("Taxon", "eolID") 
 
   #add each data object one by one.  
