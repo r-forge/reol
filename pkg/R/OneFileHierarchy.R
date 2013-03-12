@@ -1,7 +1,8 @@
 OneFileHierarchy<- function (OneMyFile) {
 	res<-xmlToList(xmlRoot(xmlTreeParse(OneMyFile, getDTD=F)))
-	resMat <- matrix(nrow=length(res), ncol=7)
-	for(j in sequence(length(res))) {
+	resTaxonOnly <- which(names(res) == "Taxon")
+	resMat <- matrix(nrow=length(resTaxonOnly), ncol=7)
+	for(j in resTaxonOnly) {
 		a <- res[j]$Taxon$scientificName 
 		if (is.null(a))	a <- NA
 		b <- res[j]$Taxon$taxonRank

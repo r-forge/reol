@@ -14,7 +14,7 @@ DownloadSearchedTaxa <- function(ListOfTaxa, MyKey=NULL, verbose=T) {
     eolPageNumbers <- append(eolPageNumbers, searchRes$entry$id)  #there are other matches sometimes as well
     speciesNameForRef <- append(speciesNameForRef, searchRes$entry$title)
     if(searchRes$totalResults>0)
-	  DownloadEOLpages(as.numeric(searchRes$entry$id), MyKey)  
+	  DownloadEOLpages(as.numeric(searchRes$entry$id), MyKey, verbose=F)  
     if(verbose) {
       if(searchRes$totalResults==0)
         print(paste("Did not download any page for", taxon))
