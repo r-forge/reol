@@ -8,7 +8,7 @@
 CombineDataObjectInformation(MyFiles, verbose=T)
 }
 \arguments{
-	\item{MyFiles}{A list of filenames from downloaded EOL pages}
+	\item{MyFiles}{A vector of filenames for downloaded EOL pages}
 	\item{verbose}{An optional print statement while combining}	
 }
 \value{
