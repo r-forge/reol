@@ -8,7 +8,7 @@
 GetReferences(MyFiles, output=1)
 }
 \arguments{
-	\item{MyFile}{A single of filename for downloaded EOL page}
+	\item{MyFiles}{A vector of filenames for downloaded EOL pages}
 	\item{output}{Value of 1 or 2.  output=1 is default and will return a data frame with eolID and reference.  output=2 will return a dataframe with  eol taxon name, eol ID, and number of references.}
 }
 \value{
