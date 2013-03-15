@@ -19,8 +19,7 @@ DownloadHierarchy <- function(MyFiles, database="calc", verbose=T){
     if (!is.na(pages[i])) {
       pageNum<-pages[i]
       web <- paste("http://eol.org/api/hierarchy_entries/1.0/", pageNum, sep="")
-      a <- getURL(web)		
-      saveXML(xmlRoot(xmlTreeParse(a)), file=paste("hier", pages[i], ".xml", sep=""))
+      write(getURL(web), file=paste("hier", pages[i], ".xml", sep=""))
       if(verbose)
         print(paste("Downloaded ", "hier", pages[i], ".xml", sep=""))
     }
