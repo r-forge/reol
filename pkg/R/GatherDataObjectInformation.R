@@ -15,7 +15,7 @@ GatherDataObjectInformation <- function(MyFile) {
   colnames(DataObjectInfo) <- c("Taxon", "eolID") 
 
   #add each data object one by one.  
-  for(i in 1:NumberOfDataObjects){
+  for(i in sequence(NumberOfDataObjects)){
     DO <- res[[whichDataObjects[i]]]
     for(j in 1:length(DO)){
       nameOfColumn <- names(DO)[j]
@@ -29,6 +29,8 @@ GatherDataObjectInformation <- function(MyFile) {
 
     }
   }
+  if(dim(DataObjectInfo)[1] == 0)
+    DataObjectInfo[1,] <- c(taxon, eolID)	
   return(DataObjectInfo)
 }
 

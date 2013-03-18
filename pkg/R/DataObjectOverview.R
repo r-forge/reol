@@ -1,18 +1,21 @@
 DataObjectOverview <- function(MyFiles, verbose=TRUE){
 #thinking about the next function for an overview of media types:
-  cDOI<-CombineDataObjectInformation(MyFiles, verbose=verbose)
+  cDOI <- CombineDataObjectInformation(MyFiles, verbose=verbose)  #returns dataframe with all data objects
   UniqueTaxa <- unique(cDOI[,1])
   UniqueDataTypes <- unique(cDOI[,6])
   overview <- c()
-  for(h in sequence(length(UniqueTaxa))){
-    a <- cDOI[which(cDOI[,1] == UniqueTaxa[h]),]
-    b <- as.character(a[1,1])
+  for(h in sequence(length(UniqueTaxa))) {
+    taxonInfo <- c()
+    cDOIsubset <- cDOI[which(cDOI[,1] == UniqueTaxa[h]),]
+    taxonName <- as.character(cDOIsubset[1,1])
+    eolID <- as.character(cDOIsubset[1,2])
     for(i in sequence(length(UniqueDataTypes))){
-      b <- c(b, length(which(a[,6] == UniqueDataTypes[i])))  
+      taxonInfo <- append(taxonInfo, length(which(cDOIsubset[,6] == UniqueDataTypes[i])))  
     }
-  overview <- rbind(overview, b)
-  overview <- data.frame(overview, stringsAsFactors=F)
+  taxonInfo <- c(taxonName, eolID, taxonInfo)
+  overview <- rbind(overview, taxonInfo)
+  overview <- data.frame(overview, stringsAsFactors=FALSE)
   }  
-  colnames(overview) <- c("Taxon", UniqueDataTypes)
+  colnames(overview) <- c("Taxon", "eolID", UniqueDataTypes)
   return(overview)
 }

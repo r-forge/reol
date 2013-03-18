@@ -14,9 +14,10 @@ GetReferences <- function(MyFiles, output=1) {
       References <- append(References, res[whichReferences[j]])
     }
   }
-  ReferenceList <- cbind(Taxon, References)
-  if(output == 1) 
+  if(output == 1) {
+    ReferenceList <- cbind(Taxon, References)
     return(ReferenceList)
+  }
   if(output == 2)
     return(RefCounts)
 }
