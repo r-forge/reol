@@ -2,7 +2,7 @@ GetCommonNames <- function(MyFiles, output=1) {
   #This returns a data frame with all common names as a separate row.  Maybe make a data frame with an overview of information (number of cns in english, etc. for each sp.)
   CommonNames <- c()
   for(i in sequence(length(MyFiles))) {
-    res <- xmlToList(xmlRoot(xmlTreeParse(MyFiles[i], getDTD=F)), simplify = T)$taxonConcept
+    res <- xmlToList(xmlRoot(xmlParse(MyFiles[i], getDTD=FALSE)), simplify=FALSE)$taxonConcept
     CNs <- which(names(res) == "commonName")
     for(j in sequence(length(CNs))) {
       language <- as.character(res[[CNs[j]]]$.attr[which(names(res[[CNs[j]]]$.attr)=="lang")]) #not tidy, but effective for multiple entries
@@ -14,13 +14,13 @@ GetCommonNames <- function(MyFiles, output=1) {
   if (output == 1)
     return(CommonNames)
 
-  if (output == 2){
+  if (output == 2) {
     CNOverview <- c()
     whichLanguages <- unique(unique(CommonNames[,4]))
     for(i in sequence(length(MyFiles))) {
-      res <- xmlToList(xmlRoot(xmlTreeParse(MyFiles[i], getDTD=F)), simplify = T)$taxonConcept 
+      res <- xmlToList(xmlRoot(xmlParse(MyFiles[i], getDTD=FALSE)), simplify=FALSE)$taxonConcept 
       CNOverview <- rbind(CNOverview, c(res$ScientificName, res$taxonConceptID, rep(0, length(whichLanguages))))
-      CNOverview <- as.data.frame(CNOverview, stringsAsFactors=F)
+      CNOverview <- as.data.frame(CNOverview, stringsAsFactors=FALSE)
       colnames(CNOverview) <- c("Taxon", "eolID", whichLanguages)
       CNs <- which(names(res) == "commonName")
       for(j in sequence(length(CNs))) {

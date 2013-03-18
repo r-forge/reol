@@ -1,4 +1,4 @@
-DownloadSearchedTaxa <- function(ListOfTaxa, MyKey=NULL, verbose=T) {
+DownloadSearchedTaxa <- function(ListOfTaxa, MyKey=NULL, verbose=FALSE) {
   eolPageNumbers <-c()
   speciesNameForRef <- c()
   searchTaxon <- c()
@@ -8,7 +8,7 @@ DownloadSearchedTaxa <- function(ListOfTaxa, MyKey=NULL, verbose=T) {
 	web <- paste("http://eol.org/api/search/1.0/", taxon, sep="")	
     a <- getURL(web)
     searchRes <-c()
-    searchRes <- xmlToList(xmlRoot(xmlTreeParse(a, getDTD=F)))
+    searchRes <- xmlToList(xmlRoot(xmlParse(a, getDTD=FALSE)), simplify=FALSE)
     if(searchRes$totalResults==0)  #didn't match any eol taxa
       searchRes$entry$id <- "No matches"
     eolPageNumbers <- append(eolPageNumbers, searchRes$entry$id)  #there are other matches sometimes as well

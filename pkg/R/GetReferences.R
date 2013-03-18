@@ -4,12 +4,12 @@ GetReferences <- function(MyFiles, output=1) {
   Taxon <- c()
   RefCounts <- c()
   for(i in sequence(length(MyFiles))) {
-    res <- xmlToList(xmlRoot(xmlTreeParse(MyFiles[i], getDTD=F)), simplify = T)$taxonConcept
+    res <- xmlToList(xmlRoot(xmlParse(MyFiles[i], getDTD=FALSE)), simplify=FALSE)$taxonConcept
     whichReferences <- which(names(res) == "reference")
     RefCounts <- rbind(RefCounts, c(res$ScientificName, res$taxonConceptID, length(whichReferences)))
     RefCounts <- data.frame(RefCounts, stringsAsFactors=F)
     colnames(RefCounts) <- c("Taxon", "eolID", "Number Of References")
-    for(j in 1:length(whichReferences)){
+    for(j in 1:length(whichReferences)) {
       Taxon <- append(Taxon, res$taxonConceptID)
       References <- append(References, res[whichReferences[j]])
     }

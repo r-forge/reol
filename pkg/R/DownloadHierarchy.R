@@ -1,7 +1,7 @@
 DownloadHierarchy <- function(MyFiles, database="calc", verbose=T){
 # Results should be entire database
 # database=c("worms", "ncbi", "itis", "iucn") or calculate which has the most
-  Results <- GatherProviderDataFrame(MyFiles, F)[,-1:-2]
+  Results <- GatherProviderDataFrame(MyFiles, extended.output=FALSE)[,-1:-2]
   NumberOfPages <- apply(Results, 2, sum)[-dim(Results)[2]]
   if (database == "calc") {  #calculate the database with the most taxonomic coverage
     ProviderToUse <- names(which(NumberOfPages == max(NumberOfPages))[1]) #[1] extract first if several max
@@ -12,7 +12,7 @@ DownloadHierarchy <- function(MyFiles, database="calc", verbose=T){
     ProviderToUse <- names(NumberOfPages)[as.numeric(readline(prompt="Which provider database would you like to download?"))]
     print(paste("using ", ProviderToUse, "as the hierarchy provider"))
   }
-  Results <- GatherProviderDataFrame(MyFiles, T)
+  Results <- GatherProviderDataFrame(MyFiles, extended.output=TRUE)
   column  <- which(colnames(Results) == paste(ProviderToUse, ".taxonID", sep=""))
   pages <- Results[,column] 
   for (i in sequence(length(pages))){

@@ -1,4 +1,4 @@
-DownloadEOLpages <- function(pages, MyKey=NULL, verbose=T) {
+DownloadEOLpages <- function(pages, MyKey=NULL, verbose=TRUE) {
 #Download xml page content  #now full content using X=75
   for (i in sequence(length(pages))) {
     pageNum <- pages[i]

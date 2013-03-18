@@ -1,4 +1,4 @@
-DataObjectOverview <- function(MyFiles, verbose=T){
+DataObjectOverview <- function(MyFiles, verbose=TRUE){
 #thinking about the next function for an overview of media types:
   cDOI<-CombineDataObjectInformation(MyFiles, verbose=verbose)
   UniqueTaxa <- unique(cDOI[,1])

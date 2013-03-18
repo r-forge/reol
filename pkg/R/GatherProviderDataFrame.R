@@ -1,7 +1,7 @@
-GatherProviderDataFrame <- function(MyFiles, extended.output=F) {
+GatherProviderDataFrame <- function(MyFiles, extended.output=FALSE) {
   Providers <- data.frame(matrix(nrow=1, ncol=2))
   for(i in sequence(length(MyFiles))) {
-    res <- xmlToList(xmlRoot(xmlTreeParse(MyFiles[i], getDTD=F))[[1]], simplify = T) #[[1]] here for gathering just taxonConcepts
+    res <- xmlToList(xmlRoot(xmlParse(MyFiles[i], getDTD=FALSE))[[1]], simplify=FALSE) #[[1]] here for gathering just taxonConcepts
     taxon <- FirstTwo(res$ScientificName)
     if (is.null(taxon)) 
       taxon <- NA
@@ -18,7 +18,7 @@ GatherProviderDataFrame <- function(MyFiles, extended.output=F) {
   provider.vector <- c()
   provider.dataframe <- Providers
   for(row.num in sequence(dim(Providers)[1])){
-    res <- xmlToList(xmlRoot(xmlTreeParse(MyFiles[row.num], getDTD=F))[[1]], simplify=T)
+    res <- xmlToList(xmlRoot(xmlParse(MyFiles[row.num], getDTD=FALSE))[[1]], simplify=FALSE)
     whichTaxon <- which(names(res$additionalInformation) == "taxon")
     for (i in sequence(length(whichTaxon))) {
       source <- NULL
