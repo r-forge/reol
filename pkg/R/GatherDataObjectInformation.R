@@ -5,10 +5,10 @@ GatherDataObjectInformation <- function(MyFile) {
   whichDataObjects <- which(names(res) == "dataObject") 
   NumberOfDataObjects <- length(whichDataObjects) 
   DataObjectInfo <- data.frame(matrix(nrow=NumberOfDataObjects, ncol=1), stringsAsFactors=F)
-  taxon <- FirstTwo(res[[1]]$ScientificName)
+  taxon <- try(FirstTwo(res[[1]]$ScientificName), silent=T)
   if (is.null(taxon)) 
     taxon <- NA
-  eolID <- res[[1]]$taxonConceptID
+  eolID <- try(res[[1]]$taxonConceptID, silent=T)
   if (is.null(eolID)) 
     eolID <- NA
   DataObjectInfo <- data.frame(rep(taxon, NumberOfDataObjects), rep(eolID, NumberOfDataObjects), stringsAsFactors=F)  #initialize dataframe
@@ -17,7 +17,7 @@ GatherDataObjectInformation <- function(MyFile) {
   #add each data object one by one.  
   for(i in sequence(NumberOfDataObjects)){
     DO <- res[[whichDataObjects[i]]]
-    for(j in 1:length(DO)){
+    for(j in 1:length(DO)) {
       nameOfColumn <- names(DO)[j]
       if(!any(grepl(paste(nameOfColumn,'*', sep=""), colnames(DataObjectInfo)))) {  #add new column if data doesn't exist
         DataObjectInfo <- cbind(DataObjectInfo, rep(NA, NumberOfDataObjects))
