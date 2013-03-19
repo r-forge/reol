@@ -5,7 +5,7 @@
 	This function gathers information about the number of kinds of data objects.  For example, it will tell you that there are 3 gifs 12 jpgs, and 34 text objects, but it will not provide specific information beyond that.        
 }
 \usage{
-DataObjectOverview(MyFiles, verbose=T)
+DataObjectOverview(MyFiles, verbose=TRUE)
 }
 \arguments{
 	\item{MyFiles}{A vector of filenames for downloaded EOL pages}

@@ -5,7 +5,7 @@
 	This function will take a EOL page number(s) and download all the page content and save it as an xml file in the working directory.  
 }
 \usage{
-DownloadEOLpages(pages, MyKey, verbose=T)
+DownloadEOLpages(pages, MyKey, verbose=TRUE)
 }
 \arguments{
 	\item{pages}{EOL page numbers to download}
