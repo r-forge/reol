@@ -7,7 +7,7 @@ GatherSynonyms <- function(MyHiers, output=1) {
     synonyms <- c()
     ProviderTaxonID <- c()
     for(k in sequence(dim(resOneFile)[1])) {
-      if(!is.na(any(resOneFile[k,2] == "Species") || any(resOneFile[k,2] == "species") || any(resOneFile[k,3] == "valid") || any(resOneFile[k,3] == "synonym"))) {
+      if(!is.na(any(resOneFile[k,2] == "Species") || any(resOneFile[k,2] == "species") || any(resOneFile[k,3] == "valid") || any(resOneFile[k,3] == "sp.") ||any(resOneFile[k,3] == "sp") || any(resOneFile[k,3] == "Sp.") ||  any(resOneFile[k,3] == "synonym"))) {
         synonyms <- append(synonyms, resOneFile[k,1])
         ProviderTaxonID <- append(ProviderTaxonID, resOneFile[k,6])
       }
