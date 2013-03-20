@@ -1,7 +1,9 @@
-GetCommonNames <- function(MyFiles, output=1) {
+GetCommonNames <- function(MyFiles, output=c("detail", "counts")) {
   #This returns a data frame with all common names as a separate row.  Maybe make a data frame with an overview of information (number of cns in english, etc. for each sp.)
+  output <- match.arg(output)
   CommonNames <- c()
   for(i in sequence(length(MyFiles))) {
+  	print(paste("starting file", MyFiles[i]))
     res <- xmlToList(xmlRoot(xmlParse(MyFiles[i], getDTD=FALSE)), simplify=FALSE)$taxonConcept
     CNs <- which(names(res) == "commonName")
     for(j in sequence(length(CNs))) {
@@ -11,10 +13,10 @@ GetCommonNames <- function(MyFiles, output=1) {
     }
   }
   colnames(CommonNames) <- c("Taxon", "eolID", "Common Name", "language")
-  if (output == 1)
+  if (output == "detail")
     return(CommonNames)
 
-  if (output == 2) {
+  if (output == "counts") {
     CNOverview <- c()
     whichLanguages <- unique(unique(CommonNames[,4]))
     for(i in sequence(length(MyFiles))) {

@@ -1,6 +1,6 @@
-GatherSynonyms <- function(MyHiers, output=1) {
-	#change this to option1 or 2 like others
-	#option 1 will return a dataframe with each syn and option 2 will return a count list
+GatherSynonyms <- function(MyHiers, output=detail) {
+  #change this to option1 or 2 like others
+  #option 1 will return a dataframe with each syn and option 2 will return a count list
   syns <- vector("list")
   for(i in sequence(length(MyHiers))){
     resOneFile <- OneFileHierarchy(MyHiers[i])

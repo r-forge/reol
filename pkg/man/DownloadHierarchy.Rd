@@ -1,23 +1,29 @@
 \name{DownloadHierarchy}
 \alias{DownloadHierarchy}
+\alias{ProviderCount}
+\alias{BestProvider}
 \title{Download Hierarchy Content From Contributors}
 \description{
-	This function will use the results dataframe to find the contributor information.  Hierarchies get downloaded as "hier" pages rather than "eol" pages.  
+	This function will use the EOL pages to find the provider information.  Hierarchies get downloaded as "hier" pages rather than "eol" pages. Providers contribute information on taxonomic rankings, hierarchical tree structure, synonyms, etc.  
 }
 \usage{
-DownloadHierarchy(MyFiles, database="calc", verbose=T)
+DownloadHierarchy(MyFiles, database=NULL, verbose=T)
+ProviderCount(MyFiles, verbose=FALSE)
+BestProvider(MyFiles)
 }
 \arguments{
 	\item{MyFiles}{A vector of filenames for downloaded EOL pages}
 	\item{database}{Provider hierarchy information to use}
 	\item{verbose}{An optional print statement during download}	
 }
-\details{
-	There are currently two choices for database.  "calc" is the default, and will download the database with the most taxonomic coverage.  If there is more than one, it will only use the first in the list.  The second option is to be "user.defined".  This option will display all of the possible databases to download and prompt user for response.
-}
+
 \value{
 	XML file(s) downloaded to working directory.
 }
 \examples{
-	#DownloadHierarchy(Results, "calc")
+	#ProviderCount(MyFiles, verbose=True)
+	#BestProvider(MyFiles)
+	
+	#DownloadHierarchy(MyFiles, BestProvider(MyFiles))
+	#DownloadHierarchy(MyFiles, "FishBase (Fish Species)")
 }
