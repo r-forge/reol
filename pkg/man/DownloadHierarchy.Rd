@@ -7,7 +7,7 @@
 	This function will use the EOL pages to find the provider information.  Hierarchies get downloaded as "hier" pages rather than "eol" pages. Providers contribute information on taxonomic rankings, hierarchical tree structure, synonyms, etc.  
 }
 \usage{
-DownloadHierarchy(MyFiles, database=NULL, verbose=T)
+DownloadHierarchy(MyFiles, database=NULL, verbose=TRUE)
 ProviderCount(MyFiles, verbose=FALSE)
 BestProvider(MyFiles)
 }

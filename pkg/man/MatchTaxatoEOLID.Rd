@@ -9,7 +9,6 @@ MatchTaxatoEOLID(ListOfTaxa, exact=TRUE)
 }
 \arguments{
 	\item{ListOfTaxa}{List of EOL taxa to search and download EOL pages}
-	\item{MyKey}{An optional user identification key to identify yourself to EOL}
 	\item{exact}{Should taxon name match exactly in EOL or fuzzy match}
 }
 \details{

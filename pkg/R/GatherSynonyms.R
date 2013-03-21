@@ -1,19 +1,28 @@
-GatherSynonyms <- function(MyHiers, output=detail) {
-  #change this to option1 or 2 like others
-  #option 1 will return a dataframe with each syn and option 2 will return a count list
-  syns <- vector("list")
+GatherSynonyms <- function(MyHiers, output=c("detail", "counts")) {
+	#change this to option1 or 2 like others
+	#option 1 will return a dataframe with each syn and option 2 will return a count list
+  output <- match.arg(output)
+  syns <- c()
+  SynCounts <- c()
   for(i in sequence(length(MyHiers))){
     resOneFile <- OneFileHierarchy(MyHiers[i])
-    synonyms <- c()
-    ProviderTaxonID <- c()
-    for(k in sequence(dim(resOneFile)[1])) {
-      if(!is.na(any(resOneFile[k,2] == "Species") || any(resOneFile[k,2] == "species") || any(resOneFile[k,3] == "valid") || any(resOneFile[k,3] == "sp.") ||any(resOneFile[k,3] == "sp") || any(resOneFile[k,3] == "Sp.") ||  any(resOneFile[k,3] == "synonym"))) {
-        synonyms <- append(synonyms, resOneFile[k,1])
-        ProviderTaxonID <- append(ProviderTaxonID, resOneFile[k,6])
+    whichSpecies <- c(which(resOneFile[,2] == "Species"), which(resOneFile[,2] == "species"))
+    whichSyn <- c(which(resOneFile[,3] == "Synonym"), which(resOneFile[,3] == "synonym"))
+    if(length(whichSpecies) > 0)
+      SynCounts <- rbind(SynCounts, c(resOneFile[whichSpecies[1], 1], resOneFile[whichSpecies[1], 6], length(whichSyn)))
+    if(length(whichSyn) > 0) {
+      synonym <- c()
+      for(j in sequence(length(whichSyn))) {
+        synonym <- c(resOneFile[whichSpecies[1], 1], resOneFile[whichSpecies[1], 6], resOneFile[whichSyn[j], 1])
       }
+    syns <- rbind(syns, synonym)
     }
-    syns[[i]] <- synonyms
-    names(syns[[i]]) <- ProviderTaxonID
+      
   }
-  return(syns)
+  colnames(syns) <- c("Taxon", "hierID", "Synonym")
+  colnames(SynCounts) <- c("Taxon", "hierID", "NumberOfSynonyms")
+  if(output == "detail")
+    return(syns)
+  if(output == "counts")
+    return(SynCounts)
 }

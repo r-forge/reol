@@ -5,7 +5,8 @@
 	This function will send out a "ping" to the EOL API to make sure it is in working order. The EOL server will return either a message of success or failure.
 }
 \usage{
-PingAPI(MyKey=NULL)}
+	PingAPI(MyKey=NULL)
+}
 \arguments{
 	\item{MyKey}{An optional user identification key to identify yourself to EOL}
 }
