@@ -19,8 +19,9 @@ MatchTaxatoEOLID(ListOfTaxa, exact=TRUE)
 }
 \seealso{
 	\code{\link{DownloadEOLpages}}
+	\code{\link{DownloadSearchedTaxa}}
 }
 \examples{
-	#DownloadSearchedTaxa("Anolis_carolinensis")
-	#DownloadEOLpages(phy$tip.label, MyKey)
+	#bears<-c("Ursus americanus", "Ursus thibetanus", "Ursus maritimus")
+	#MatchTaxatoEOLID(bears)
 }

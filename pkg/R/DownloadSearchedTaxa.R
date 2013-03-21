@@ -1,30 +1,27 @@
-URLencodeTaxa <- function(taxon) {
-  taxon <- gsub("_", " ", taxon)
-  taxon <- gsub("'+'", " ", taxon)  #doesn't work
-  taxon <- gsub("'.'", " ", taxon)  #doesn't work
-  return(URLencode(taxon))
+APItaxon <- function(taxon) {
+  taxon <- gsub("_", "+", taxon)
+  taxon <- gsub(" ", "+", taxon)  #doesn't work
+  return(taxon)
 }
 
 
 MatchTaxatoEOLID <- function(ListOfTaxa, exact=TRUE){ 
   #Match a search taxon to an EOLID for downloading or storing
   #API can support fuzzy matching up to 30 matches if exact=F, but then pages have to be specified.  Might be a good thing to add later. 
-  eolPageNumbers <- c()
-  speciesNameForRef <- c()
-  searchTaxon <- c()
+  eolPageNumbers <- rep(NA, length(ListOfTaxa))
+  speciesNameForRef <- rep(NA, length(ListOfTaxa))
   for (i in sequence(length(ListOfTaxa))) {  
-    taxon <- URLencodeTaxa(ListOfTaxa[i])
-	web <- paste('http://eol.org/api/search/1.0.xml?q=%22', taxon, '%22&exact=', exact, '&page=1', sep="")	#Partly fixed by url encoding, but still won't work if species name has a + or . in it instead of spaces or _.  
-print(web)
+    taxon <- APItaxon(ListOfTaxa[i])
+	web <- paste('http://eol.org/api/search/1.0.xml?q=', taxon, '&exact=', exact, '&page=1', sep="")
     a <- getURL(web)
-    searchRes <- c()
+    searchRes <- NULL
     searchRes <- xmlToList(xmlRoot(xmlParse(a, getDTD=FALSE)), simplify=FALSE)
-    if(searchRes$totalResults == 0)  #didn't match any eol taxa
-      searchRes$entry$id <- NA
-    eolPageNumbers <- append(eolPageNumbers, searchRes$entry$id)  #there are other matches sometimes as well
-    speciesNameForRef <- append(speciesNameForRef, searchRes$entry$title)
+    if(searchRes$totalResults == 1) {  #didn't match any eol taxa
+      eolPageNumbers[i] <- searchRes$entry$id  #there are other matches sometimes as well
+      speciesNameForRef[i] <- searchRes$entry$title
+    }
   }
-  return(cbind(ListOfTaxa, speciesNameForRef, eolPageNumbers))
+  return(data.frame(ListOfTaxa, speciesNameForRef, eolPageNumbers, stringsAsFactors=F))
 }
 
 

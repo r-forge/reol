@@ -1,2 +1,2 @@
-export(CombineDataObjectInformation, DataObjectOverview, DownloadEOLpages, DownloadHierarchy, DownloadSearchedTaxa, FirstTwo, GatherDataObjectInformation, GatherProviderDataFrame, GatherSynonyms, GetCommonNames, GetReferences, GetRichnessScores, OneFileHierarchy, PingAPI)
+export(APItaxon, BestProvider, CombineDataObjectInformation, DownloadSearchedTaxa, GatherSynonyms, GetRichnessScores, DataObjectOverview, FirstTwo, GatherSynonyms,  OneFileHierarchy, DownloadEOLpages, GatherDataObjectInformation, GetCommonNames, MatchTaxatoEOLID, PingAPI, ProviderCount, DownloadHierarchy, GatherProviderDataFrame, GetReferences)
 import(XML, RCurl, rjson, R.oo)

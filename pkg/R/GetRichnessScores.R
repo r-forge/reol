@@ -1,10 +1,12 @@
 GetRichnessScores <- function(MyFiles) {
-  richness <- c()
+  richnessDF <- matrix(nrow=length(MyFiles), ncol=3)
   for(i in sequence(length(MyFiles))) {
+    richnessData <- rep(NA, 3)
     res <- xmlToList(xmlRoot(xmlParse(MyFiles[i], getDTD=FALSE)), simplify=FALSE)$taxonConcept
-    richness <- rbind(richness, c(res$ScientificName, res$taxonConceptID, res$additionalInformation$richness_score))
-    richness <- as.data.frame(richness, stringsAsFactors=FALSE)
+    richnessData <- c(res$ScientificName, res$taxonConceptID, res$additionalInformation$richness_score)
+    richnessDF[i,] <- richnessData
   }
-  colnames(richness) <- c("Taxon", "eolID", "Richness_Score")
-  return(richness)
+  richnessDF <- as.data.frame(richnessDF, stringsAsFactors=FALSE)
+  colnames(richnessDF) <- c("Taxon", "eolID", "Richness_Score")
+  return(richnessDF)
 }
