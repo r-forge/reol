@@ -8,7 +8,7 @@ GatherDataObjectInformation <- function(MyFile) {
   taxon <- try(FirstTwo(res[[1]]$ScientificName), silent=T)
   if (is.null(taxon)) 
     taxon <- NA
-  eolID <- try(res[[1]]$taxonConceptID, silent=T)
+  eolID <- try(res$taxonConcept$taxonConceptID, silent=T)
   if (is.null(eolID)) 
     eolID <- NA
   DataObjectInfo <- data.frame(rep(taxon, NumberOfDataObjects), rep(eolID, NumberOfDataObjects), stringsAsFactors=F)  #initialize dataframe

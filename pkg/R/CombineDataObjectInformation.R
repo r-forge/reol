@@ -12,7 +12,6 @@ CombineDataObjectInformation <- function(MyFiles, verbose=T) {
       for(j in sequence(length(ColumnsToAdd))) {
         CombinedDOI <- cbind(CombinedDOI, rep(NA, dim(CombinedDOI)[1]))
         colnames(CombinedDOI) <- c(colnames(CombinedDOI[-length(colnames(CombinedDOI))]), colnames(DOI)[ColumnsToAdd[j]]) #add new colname
-        #print(paste("added column to CombinedDOI", colnames(DOI)[ColumnsToAdd[j]]))
       }
     }
     if(any(!colnames(CombinedDOI) %in% colnames(DOI))) { #check that all new data coming in will match existing data
