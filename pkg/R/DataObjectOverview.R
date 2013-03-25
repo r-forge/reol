@@ -1,11 +1,11 @@
 DataObjectOverview <- function(MyFiles, verbose=TRUE){
-#thinking about the next function for an overview of media types:
   cDOI <- CombineDataObjectInformation(MyFiles, verbose=verbose)  #returns dataframe with all data objects
   UniqueTaxa <- unique(cDOI[,1])
   UniqueDataTypes <- unique(cDOI[,6])
-  overview <- c()
+  overview <- matrix(nrow=length(UniqueTaxa), ncol=2+length(UniqueDataTypes))
+  colnames(overview) <- c("Taxon", "eolID", UniqueDataTypes)
   for(h in sequence(length(UniqueTaxa))) {
-    taxonInfo <- c()
+    taxonInfo <- NULL
     cDOIsubset <- cDOI[which(cDOI[,1] == UniqueTaxa[h]),]
     taxonName <- as.character(cDOIsubset[1,1])
     eolID <- as.character(cDOIsubset[1,2])
@@ -13,9 +13,8 @@ DataObjectOverview <- function(MyFiles, verbose=TRUE){
       taxonInfo <- append(taxonInfo, length(which(cDOIsubset[,6] == UniqueDataTypes[i])))  
     }
   taxonInfo <- c(taxonName, eolID, taxonInfo)
-  overview <- rbind(overview, taxonInfo)
-  overview <- data.frame(overview, stringsAsFactors=FALSE)
+  overview[h,] <- taxonInfo
   }  
-  colnames(overview) <- c("Taxon", "eolID", UniqueDataTypes)
+  overview <- data.frame(overview, stringsAsFactors=FALSE)
   return(overview)
 }

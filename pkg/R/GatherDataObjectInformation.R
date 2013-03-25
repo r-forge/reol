@@ -5,7 +5,7 @@ GatherDataObjectInformation <- function(MyFile) {
   whichDataObjects <- which(names(res) == "dataObject") 
   NumberOfDataObjects <- length(whichDataObjects) 
   DataObjectInfo <- data.frame(matrix(nrow=NumberOfDataObjects, ncol=1), stringsAsFactors=F)
-  taxon <- try(FirstTwo(res[[1]]$ScientificName), silent=T)
+  taxon <- try(FirstTwo(res$taxonConcept$ScientificName), silent=T)
   if (is.null(taxon)) 
     taxon <- NA
   eolID <- try(res$taxonConcept$taxonConceptID, silent=T)
