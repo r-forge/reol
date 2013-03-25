@@ -1,7 +1,7 @@
-GatherProviderDataFrame <- function(MyFiles, extended.output=FALSE) {
+GatherProviderDataFrame <- function(MyEOLs, extended.output=FALSE) {
   Providers <- data.frame(matrix(nrow=1, ncol=2))
-  for(i in sequence(length(MyFiles))) {
-    res <- xmlToList(xmlRoot(xmlParse(MyFiles[i], getDTD=FALSE))[[1]], simplify=FALSE) #[[1]] here for gathering just taxonConcepts
+  for(i in sequence(length(MyEOLs))) {
+    res <- xmlToList(xmlRoot(xmlParse(MyEOLs[i], getDTD=FALSE))[[1]], simplify=FALSE) #[[1]] here for gathering just taxonConcepts
     taxon <- FirstTwo(res$ScientificName)
     if (is.null(taxon)) 
       taxon <- NA
@@ -15,10 +15,10 @@ GatherProviderDataFrame <- function(MyFiles, extended.output=FALSE) {
   }  
   colnames(Providers) <- c("Taxon", "eolID")
 
-  provider.vector <- c()
+  provider.vector <- NULL
   provider.dataframe <- Providers
   for(row.num in sequence(dim(Providers)[1])){
-    res <- xmlToList(xmlRoot(xmlParse(MyFiles[row.num], getDTD=FALSE))[[1]], simplify=FALSE)
+    res <- xmlToList(xmlRoot(xmlParse(MyEOLs[row.num], getDTD=FALSE))[[1]], simplify=FALSE)
     whichTaxon <- which(names(res$additionalInformation) == "taxon")
     for (i in sequence(length(whichTaxon))) {
       source <- NULL

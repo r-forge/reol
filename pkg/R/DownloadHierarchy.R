@@ -1,6 +1,6 @@
-ProviderCount <- function(MyFiles, verbose=FALSE) {
+ProviderCount <- function(MyEOLs, verbose=FALSE) {
   #Returns vector of provider coverage
-  results <- GatherProviderDataFrame(MyFiles, extended.output=FALSE)[,-1:-2]
+  results <- GatherProviderDataFrame(MyEOLs, extended.output=FALSE)[,-1:-2]
   results <- results[, -dim(results)[2]]
   counts <- apply(results, 2, sum)
   names(counts) <- colnames(results)
@@ -10,17 +10,17 @@ ProviderCount <- function(MyFiles, verbose=FALSE) {
   return(counts)
 }
 
-BestProvider <- function(MyFiles) {
+BestProvider <- function(MyEOLs) {
   #Returns the provider with the most taxonomic coverage
-  return(names(ProviderCount(MyFiles))[1])	
+  return(names(ProviderCount(MyEOLs))[1])	
 }
 
 
-DownloadHierarchy <- function(MyFiles, database=NULL, verbose=TRUE) {
+DownloadHierarchy <- function(MyEOLs, database=NULL, verbose=TRUE) {
   #Downloads provider database
   if(is.null(database))
-    database <- BestProvider(MyFiles)	
-  results <- GatherProviderDataFrame(MyFiles, extended.output=TRUE)
+    database <- BestProvider(MyEOLs)	
+  results <- GatherProviderDataFrame(MyEOLs, extended.output=TRUE)
   column <- which(colnames(results) == paste(database, ".taxonID", sep=""))
   pages <- results[,column] 
   for (i in sequence(length(pages))) {

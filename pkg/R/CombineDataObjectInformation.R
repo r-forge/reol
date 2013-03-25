@@ -1,12 +1,12 @@
-CombineDataObjectInformation <- function(MyFiles, verbose=T) {
+CombineDataObjectInformation <- function(MyEOLs, verbose=T) {
   #Next: subset to Trusted Information only
   #this function works for multiple EOL files.  It will return information about all of the different data objects associated with each taxon.  
   #There may be warnings with this function, and they should be ok.  Warnings may indicate that there is more than one entry for a field, which is typically associated with the "additional information" subheading
-  CombinedDOI <- suppressWarnings(GatherDataObjectInformation(MyFiles[1]))
-  for (i in 2:length(MyFiles)){
+  CombinedDOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs[1]))
+  for (i in 2:length(MyEOLs)){
     if(verbose)
       print(paste("combined", i, "files"))
-    DOI <- suppressWarnings(GatherDataObjectInformation(MyFiles[i]))
+    DOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs[i]))
     if(any(!colnames(DOI) %in% colnames(CombinedDOI))) { #check that all new data coming in will match existing data
       ColumnsToAdd <- which(!colnames(DOI) %in% colnames(CombinedDOI))
       for(j in sequence(length(ColumnsToAdd))) {

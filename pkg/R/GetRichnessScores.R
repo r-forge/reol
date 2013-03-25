@@ -1,8 +1,8 @@
-GetRichnessScores <- function(MyFiles) {
-  richnessDF <- matrix(nrow=length(MyFiles), ncol=3)
-  for(i in sequence(length(MyFiles))) {
+GetRichnessScores <- function(MyEOLs) {
+  richnessDF <- matrix(nrow=length(MyEOLs), ncol=3)
+  for(i in sequence(length(MyEOLs))) {
     richnessData <- rep(NA, 3)
-    res <- xmlToList(xmlRoot(xmlParse(MyFiles[i], getDTD=FALSE)), simplify=FALSE)$taxonConcept
+    res <- xmlToList(xmlRoot(xmlParse(MyEOLs[i], getDTD=FALSE)), simplify=FALSE)$taxonConcept
     richnessData <- c(res$ScientificName, res$taxonConceptID, res$additionalInformation$richness_score)
     richnessDF[i,] <- richnessData
   }

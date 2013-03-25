@@ -1,15 +1,15 @@
-GetCommonNames <- function(MyFiles, output=c("detail", "counts")) {
+GetCommonNames <- function(MyEOLs, output=c("detail", "counts")) {
   #This returns a data frame with all common names as a separate row.  Maybe make a data frame with an overview of information (number of cns in english, etc. for each sp.)
   output <- match.arg(output)
   CommonNames <- matrix(nrow=0, ncol=4)
   colnames(CommonNames) <- c("Taxon", "eolID", "Common Name", "language")
-  CNOverview <- data.frame(matrix(nrow=length(MyFiles), ncol=2))
+  CNOverview <- data.frame(matrix(nrow=length(MyEOLs), ncol=2))
   colnames(CNOverview) <- c("Taxon", "eolID")
-  for(i in sequence(length(MyFiles))) {
-  	#print(paste("starting file", MyFiles[i]))
+  for(i in sequence(length(MyEOLs))) {
+  	#print(paste("starting file", MyEOLs[i]))
     taxon <- NA
     eolID <- NA
-    res <- xmlToList(xmlRoot(xmlParse(MyFiles[i], getDTD=FALSE)), simplify=FALSE)$taxonConcept
+    res <- xmlToList(xmlRoot(xmlParse(MyEOLs[i], getDTD=FALSE)), simplify=FALSE)$taxonConcept
     if(!is.null(res)) {
       taxon <- res$ScientificName
       eolID <- res$taxonConceptID
@@ -22,7 +22,7 @@ GetCommonNames <- function(MyFiles, output=c("detail", "counts")) {
         CommonNames <- rbind(CommonNames, taxonCommonNames, deparse.level=0)
         CommonNames <- data.frame(CommonNames, stringsAsFactors=FALSE)
         if(sum(grepl(language, colnames(CNOverview))) == 0) {
-          CNOverview <- cbind(CNOverview, rep(0, length(MyFiles)))
+          CNOverview <- cbind(CNOverview, rep(0, length(MyEOLs)))
           colnames(CNOverview) <- append(colnames(CNOverview[-dim(CNOverview)[2]]), language)
         }
         languageColumn <- which(colnames(CNOverview) == language)  ##BROKEN

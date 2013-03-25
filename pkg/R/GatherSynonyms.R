@@ -6,7 +6,7 @@ GatherSynonyms <- function(MyHiers, output=c("detail", "counts")) {
   SynCounts <- c()
   for(i in sequence(length(MyHiers))){
     resOneFile <- OneFileHierarchy(MyHiers[i])
-    whichSpecies <- c(which(resOneFile[,2] == "Species"), which(resOneFile[,2] == "species"))
+    whichSpecies <- c(which(resOneFile[,2] == "Species"), which(resOneFile[,2] == "species"), which(resOneFile[,2] == "Sp."), which(resOneFile[,2] == "sp."), which(resOneFile[,2] == "Sp"), which(resOneFile[,2] == "sp"), which(resOneFile[,2] == "SP"))
     whichSyn <- c(which(resOneFile[,3] == "Synonym"), which(resOneFile[,3] == "synonym"))
     if(length(whichSpecies) > 0)
       SynCounts <- rbind(SynCounts, c(resOneFile[whichSpecies[1], 1], resOneFile[whichSpecies[1], 6], length(whichSyn)))

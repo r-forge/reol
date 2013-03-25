@@ -1,7 +1,7 @@
-GatherDataObjectInformation <- function(MyFile) {
+GatherDataObjectInformation <- function(MyEOL) {
   #this function works for one EOL file only.  It will return information about all of the different data objects associated with each taxon.  
   #There may be warnings with this function, and they should be ok.  Warnings may indicate that there is more than one entry for a field, which is typically associated with the "additional information" subheading
-  res <- xmlToList(xmlRoot(xmlParse(MyFile, getDTD=FALSE)), simplify=FALSE)
+  res <- xmlToList(xmlRoot(xmlParse(MyEOL, getDTD=FALSE)), simplify=FALSE)
   whichDataObjects <- which(names(res) == "dataObject") 
   NumberOfDataObjects <- length(whichDataObjects) 
   DataObjectInfo <- data.frame(matrix(nrow=NumberOfDataObjects, ncol=1), stringsAsFactors=F)

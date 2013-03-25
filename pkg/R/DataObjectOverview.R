@@ -1,5 +1,5 @@
-DataObjectOverview <- function(MyFiles, verbose=TRUE){
-  cDOI <- CombineDataObjectInformation(MyFiles, verbose=verbose)  #returns dataframe with all data objects
+DataObjectOverview <- function(MyEOLs, verbose=TRUE){
+  cDOI <- CombineDataObjectInformation(MyEOLs, verbose=verbose)  #returns dataframe with all data objects
   UniqueTaxa <- unique(cDOI[,1])
   UniqueDataTypes <- unique(cDOI[,6])
   overview <- matrix(nrow=length(UniqueTaxa), ncol=2+length(UniqueDataTypes))
