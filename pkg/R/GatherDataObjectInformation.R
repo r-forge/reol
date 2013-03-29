@@ -1,7 +1,9 @@
-GatherDataObjectInformation <- function(MyEOL) {
+GatherDataObjectInformation <- function(MyEOL, from.file=TRUE) {
   #this function works for one EOL file only.  It will return information about all of the different data objects associated with each taxon.  
   #There may be warnings with this function, and they should be ok.  Warnings may indicate that there is more than one entry for a field, which is typically associated with the "additional information" subheading
-  res <- xmlToList(xmlRoot(xmlParse(MyEOL, getDTD=FALSE)), simplify=FALSE)
+  if(from.file)
+    res <- FilesToList(MyEOL)[[1]]
+  #res <- xmlToList(xmlRoot(xmlParse(MyEOL, getDTD=FALSE)), simplify=FALSE)
   whichDataObjects <- which(names(res) == "dataObject") 
   NumberOfDataObjects <- length(whichDataObjects) 
   DataObjectInfo <- data.frame(matrix(nrow=NumberOfDataObjects, ncol=1), stringsAsFactors=F)
@@ -15,13 +17,13 @@ GatherDataObjectInformation <- function(MyEOL) {
   colnames(DataObjectInfo) <- c("Taxon", "eolID") 
 
   #add each data object one by one.  
-  for(i in sequence(NumberOfDataObjects)){
+  for(i in sequence(NumberOfDataObjects)) {
     DO <- res[[whichDataObjects[i]]]
     for(j in 1:length(DO)) {
       nameOfColumn <- names(DO)[j]
       if(!any(grepl(paste(nameOfColumn,'*', sep=""), colnames(DataObjectInfo)))) {  #add new column if data doesn't exist
         DataObjectInfo <- cbind(DataObjectInfo, rep(NA, NumberOfDataObjects))
-        colnames(DataObjectInfo) <- c(colnames(DataObjectInfo[-length(colnames(DataObjectInfo))]), nameOfColumn) #ad new colname
+        colnames(DataObjectInfo) <- c(colnames(DataObjectInfo[-length(colnames(DataObjectInfo))]), nameOfColumn) #add new colname
       }
       column <- which(colnames(DataObjectInfo) == nameOfColumn)
       #DataObjectInfo[i,column] <- paste("DO$", nameOfColumn, sep="")

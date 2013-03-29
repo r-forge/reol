@@ -5,16 +5,16 @@
 	This function will read in the downloaded xml files and amass a data frame with provider information.  Information will include taxon name, eol number, and information from each provider in the following order: provider taxon, provider taxon ID, provider scientific name, provider taxonomy rank.
 }
 \usage{
-GatherProviderDataFrame(MyFiles, extended.output=FALSE)
+GatherProviderDataFrame(MyEOLs, extended.output=FALSE)
 }
 \arguments{
-	\item{MyFiles}{A vector of filenames for downloaded EOL pages}
+	\item{MyEOLs}{A vector of filenames for downloaded EOL pages}
 	\item{extended.output}{If set to TRUE, then a large dataframe will be returned with information from each provider in the following order: provider taxon, provider taxon ID, provider scientific name, provider taxonomy rank.}
 }
 \value{
 	Returns a data frame with presence/absence of provider information or if extended.output=T ID values for each provider.  
 }
 \examples{
-	#myFiles <- system("grep -l xml *", intern=T)
-	#GatherProviderDataFrame(myFiles)
+	#MyEOLs <- system("grep -l xml *", intern=T)
+	#GatherProviderDataFrame(MyEOLs)
 }
