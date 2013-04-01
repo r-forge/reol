@@ -26,8 +26,7 @@ RepeatDataToDrop <- function(TreeData) {
     return(FALSE)
 }
 
-
-MakeHierarchyTree <- function(MyHiers) {
+MakeTreeData <- function(MyHiers) {
   if(any(MyHiers == "hierNA.xml"))
   	MyHiers <- MyHiers[-which(MyHiers == "hierNA.xml")]
   CombFiles <- CombineHierarchyInfo(MyHiers) #in future get these to read in just once
@@ -44,6 +43,11 @@ MakeHierarchyTree <- function(MyHiers) {
       TreeData <- as.data.frame(TreeData, stringsAsFactors=T)
     }
   }
+  return(TreeData)
+}  
+  
+MakeHierarchyTree <- function(MyHiers) {
+  TreeData <- MakeTreeData(MyHiers)
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
   pattern <- paste("~", paste(colnames(TreeData)[-which(apply(TreeData, 2, RepeatDataToDrop))], sep="", collapse="/"), sep="")
   fo <- as.formula(pattern)
@@ -51,3 +55,21 @@ MakeHierarchyTree <- function(MyHiers) {
   tree <- as.phylo.formula(fo, data=TreeData)  
   return(tree)
 }
+
+ReturnTaxSet <- function(Taxon, TreeData) {
+	whichRows <- which(TreeData == Taxon, TRUE)[,1]
+	return(TreeData[whichRows, dim(TreeData)[2]])
+}
+
+MakeNodeLabels <- function(MyHiers, label="all") {  #also make an option to just label genus, etc. 
+  TreeData <- MakeTreeData(MyHiers)
+  DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
+  prunedTreeData <- TreeData[,-DataToDrop]
+  if(label == "all")
+    uniqueTaxSets <- c(apply(prunedTreeData[,-dim(prunedTreeData)[2]], 2, unique), recursive=T)
+  ListOfSpeciesPerNode <- lapply(uniqueTaxSets, ReturnTaxSet, TreeData=prunedTreeData)
+  names(ListOfSpeciesPerNode) <- uniqueTaxSets
+  ListOfSpeciesPerNode <- ListOfSpeciesPerNode[which(lapply(ListOfSpeciesPerNode, length) > 1)]
+  return(ListOfSpeciesPerNode)
+}
+
