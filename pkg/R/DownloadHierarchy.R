@@ -33,4 +33,5 @@ DownloadHierarchy <- function(MyEOLs, database=NULL, verbose=TRUE) {
       Sys.sleep(1)
     }
   }
+  return(paste("hier", pages, ".xml", sep=""))
 }

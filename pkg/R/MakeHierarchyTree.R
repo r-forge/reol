@@ -28,6 +28,8 @@ RepeatDataToDrop <- function(TreeData) {
 
 
 MakeHierarchyTree <- function(MyHiers) {
+  if(any(MyHiers == "hierNA.xml"))
+  	MyHiers <- MyHiers[-which(MyHiers == "hierNA.xml")]
   CombFiles <- CombineHierarchyInfo(MyHiers) #in future get these to read in just once
   whichColumns <- unique(CombFiles[,2])
   TreeData <- data.frame(matrix(nrow=length(MyHiers), ncol=length(whichColumns)))
@@ -44,8 +46,8 @@ MakeHierarchyTree <- function(MyHiers) {
   }
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
   pattern <- paste("~", paste(colnames(TreeData)[-which(apply(TreeData, 2, RepeatDataToDrop))], sep="", collapse="/"), sep="")
+  fo <- as.formula(pattern)
   TreeData <- as.data.frame(apply(TreeData, 2, factor))
-  class(fo <- ~genus/Species)
   tree <- as.phylo.formula(fo, data=TreeData)  
   return(tree)
 }
