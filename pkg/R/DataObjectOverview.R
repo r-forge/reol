@@ -16,5 +16,9 @@ DataObjectOverview <- function(MyEOLs, verbose=TRUE){
   overview[h,] <- taxonInfo
   }  
   overview <- data.frame(overview, stringsAsFactors=FALSE)
+  if(any(colnames(overview) == "NA.") ||  any(colnames(overview) == "NA")) {
+    whichColToDelete <- c(which(colnames(overview)=="NA."), which(colnames(overview)=="NA"))
+    overview <- overview[,-whichColToDelete]
+  }
   return(overview)
 }
