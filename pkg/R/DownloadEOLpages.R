@@ -10,4 +10,5 @@ DownloadEOLpages <- function(pages, MyKey=NULL, verbose=TRUE) {
       print(paste("Downloaded ", "eol", pages[i], ".xml", sep=""))
     Sys.sleep(1)
   }
+  return(paste("eol", pages, ".xml", sep=""))
 }
