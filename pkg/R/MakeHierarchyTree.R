@@ -1,9 +1,9 @@
-subsetDataForHierTrees <- function(data) {
-  data  <- data[which(!duplicated(data[,2])),] #delete repeats
-  data  <- data[!is.na(data[,2]),] #delete NAs
-  if(any(data[,2] == "unranked clade"))
-    data  <- data[-which(data[,2] == "unranked clade"),] #delete unranked
-  return(data)
+subsetDataForHierTrees <- function(oneFileHier) {
+  oneFileHier  <- oneFileHier[which(!duplicated(oneFileHier[,2])),] #delete repeats
+  oneFileHier  <- oneFileHier[!is.na(oneFileHier[,2]),] #delete NAs
+  if(any(oneFileHier[,2] == "unranked clade"))
+    oneFileHier  <- oneFileHier[-which(oneFileHier[,2] == "unranked clade"),] #delete unranked
+  return(oneFileHier)
 }
 
 CombineHierarchyInfo <- function(MyHiers) {
@@ -38,7 +38,6 @@ MakeTreeData <- function(MyHiers) {
     oneFile <- subsetDataForHierTrees(OneFileHierarchy(MyHiers[i]))
     for(j in sequence(dim(oneFile)[1])){
       colPosition <- which(colnames(TreeData) == oneFile[j,2])
-      #colPosition <- grep(oneFile[j,2], oneFile[,2], ignore.case=TRUE)  #ignoring case acts like a wildcard instead of just case (infraorder, order, suborder all return)
       TreeData[i,colPosition] <- oneFile[j,1]
       TreeData <- as.data.frame(TreeData, stringsAsFactors=T)
     }
