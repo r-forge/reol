@@ -5,10 +5,10 @@
 	This function removed repeat taxonomic units, undefined clades, and NAs from hierarchy information. 
 }
 \usage{
-subsetDataForHierTrees(data)
+subsetDataForHierTrees(oneFileHier)
 }
 \arguments{
-	\item{data}{A data frame from OneFileHierarchy}
+	\item{oneFileHier}{A dataframe of taxonomic hierarchy information out of OneFileHierarchy function}
 }
 \value{
 	Returns a subset data frame. 
