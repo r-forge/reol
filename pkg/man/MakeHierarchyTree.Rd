@@ -9,14 +9,15 @@
 }
 \usage{
 MakeTreeData(MyHiers)
-MakeHierarchyTree(MyHiers)
+MakeHierarchyTree(MyHiers, includeNodeLabels=TRUE)
 ReturnTaxSet(Taxon, TreeData)
 MakeNodeLabels(MyHiers, label="all")
 }
 \arguments{
 	\item{MyHiers}{A vector of hier pages}
-	\item{TreeData}{A dataframe of taxonomic hierarchy information out of MakeTreeData function}
+	\item{includeNodeLabels}{Option to write node labels to phylogenetic tree}
 	\item{Taxon}{Taxonomic group that contains subunits}
+	\item{TreeData}{A dataframe of taxonomic hierarchy information out of MakeTreeData function}
 	\item{label}{Which hierarchical units should be included in the node labels}
 }
 \value{

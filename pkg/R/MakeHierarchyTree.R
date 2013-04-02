@@ -45,13 +45,15 @@ MakeTreeData <- function(MyHiers) {
   return(TreeData)
 }  
   
-MakeHierarchyTree <- function(MyHiers) {
+MakeHierarchyTree <- function(MyHiers, includeNodeLabels=TRUE) {
   TreeData <- MakeTreeData(MyHiers)
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
   pattern <- paste("~", paste(colnames(TreeData)[-which(apply(TreeData, 2, RepeatDataToDrop))], sep="", collapse="/"), sep="")
   fo <- as.formula(pattern)
   TreeData <- as.data.frame(apply(TreeData, 2, factor))
   tree <- as.phylo.formula(fo, data=TreeData)  
+  if(includeNodeLabels)
+    tree <- makeNodeLabel(tree, method="u", nodeList=MakeNodeLabels(MyHiers, "all"))  #maybe change this later when other options
   return(tree)
 }
 
