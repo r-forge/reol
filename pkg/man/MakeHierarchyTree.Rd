@@ -2,7 +2,7 @@
 \alias{MakeTreeData}
 \alias{MakeHierarchyTree}
 \alias{ReturnTaxSet}
-\alias{MakeNodeLabels}
+\alias{NodeLabelList}
 \title{Creates Hierarchical Trees}
 \description{
 	These functions will create a phylogenetic tree (dendrogram) based on taxonomic ranking from EOL hierarchy pages. 
@@ -11,7 +11,7 @@
 MakeTreeData(MyHiers)
 MakeHierarchyTree(MyHiers, includeNodeLabels=TRUE)
 ReturnTaxSet(Taxon, TreeData)
-MakeNodeLabels(MyHiers, label="all")
+NodeLabelList(MyHiers, label="all")
 }
 \arguments{
 	\item{MyHiers}{A vector of hier pages}

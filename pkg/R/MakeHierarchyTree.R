@@ -53,7 +53,7 @@ MakeHierarchyTree <- function(MyHiers, includeNodeLabels=TRUE) {
   TreeData <- as.data.frame(apply(TreeData, 2, factor))
   tree <- as.phylo.formula(fo, data=TreeData)  
   if(includeNodeLabels)
-    tree <- makeNodeLabel(tree, method="u", nodeList=MakeNodeLabels(MyHiers, "all"))  #maybe change this later when other options
+    tree <- makeNodeLabel(tree, method="u", nodeList=NodeLabelList(MyHiers, "all"))  #maybe change this later when other options
   return(tree)
 }
 
@@ -62,7 +62,7 @@ ReturnTaxSet <- function(Taxon, TreeData) {
 	return(TreeData[whichRows, dim(TreeData)[2]])
 }
 
-MakeNodeLabels <- function(MyHiers, label="all") {  #also make an option to just label genus, etc. 
+NodeLabelList <- function(MyHiers, label="all") {  #also make an option to just label genus, etc. 
   TreeData <- MakeTreeData(MyHiers)
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
   prunedTreeData <- TreeData[,-DataToDrop]
