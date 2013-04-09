@@ -16,7 +16,7 @@ MakeEdgeLabels(MyHiers, label="all")
 \arguments{
 	\item{phy}{phylogenetic tree in the class phylo}	
 	\item{MyHiers}{A vector of hier pages}
-	\item{Taxa}{Vector of tip taxa}
+	\item{taxa}{Vector of tip taxa}
 	\item{label}{Which hierarchical units should be included in the edge labels}
 }
 \value{
