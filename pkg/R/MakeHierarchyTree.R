@@ -51,7 +51,7 @@ MakeHierarchyTree <- function(MyHiers, includeNodeLabels=TRUE) {
   pattern <- paste("~", paste(colnames(TreeData)[-which(apply(TreeData, 2, RepeatDataToDrop))], sep="", collapse="/"), sep="")
   fo <- as.formula(pattern)
   TreeData <- as.data.frame(apply(TreeData, 2, factor))
-  tree <- as.phylo.formula(fo, data=TreeData)  
+  tree <- ladderize(as.phylo.formula(fo, data=TreeData))  
   if(includeNodeLabels)
     tree <- makeNodeLabel(tree, method="u", nodeList=NodeLabelList(MyHiers, "all"))  #maybe change this later when other options
   return(tree)
