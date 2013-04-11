@@ -19,7 +19,7 @@ OneFileHierarchy<- function (MyHier) {
 		if (is.null(g))	g <- NA
 		resMat[j,] <- c(a,b,c,d,e,f,g)
 	}
-	colnames(resMat) <- c("scientificName", "taxonRank", "taxonomicStatus", "taxonConceptID", "parentNameUsageID", "taxonID", "identifier")
+	colnames(resMat) <- c("scientificName", "taxonRank", "taxonomicStatus", "eolID", "parentNameUsageID", "taxonID", "identifier")
     resMat[,2] <- gsub("\\b(\\w)", "\\U\\1", resMat[,2], perl=T)  #cap all taxon ranks for downstream combining
 	return(resMat)		
 }
