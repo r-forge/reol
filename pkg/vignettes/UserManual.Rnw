@@ -92,13 +92,16 @@ Just as EOL page content can be downloaded and scraped for content, so can the c
 NCBIfiles <- DownloadHierarchy(MyEOLs, database="NCBI Taxonomy", verbose=F)
 @
 
-
  \section{Gathering Data from Provider Pages}
-There are two bits of information that can be gleaned from the provider pages, the taxonomic hierarchy and a synonyms list. \textit{Reol} utilizes both bits in several functions, which are described in detail below.  
+There are essentially two pieces of information that can be gathered from the provider pages, the taxonomic hierarchy and a synonyms list. \textit{Reol} utilizes both bits in several functions, which are described in detail below.  
 
+\subsection{Taxonomic Synonyms}
+Each provider records their own set of taxonomic synonyms, so lists may be different from provider to provider.  If output is set to detail, a data frame will be returned with the taxon name, the provider ID, and the synonym.  If output is set to counts, then a data frame with taxon, provider ID, and the number of taxonomic synonyms is returned.  These synonyms are scientific synonyms only, not misidentifications or vernacular names.  
 
-\subsection{Creating a Taxonomic Dendrogram}
-add synonyms stuff
+<<>>=
+GatherSynonyms(MyHiers, "d")
+GatherSynonyms(MyHiers, "c")
+@
 
 \subsection{Creating a Taxonomic Dendrogram}
 add tree stuff 
@@ -109,6 +112,38 @@ add tree stuff
   
  
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
