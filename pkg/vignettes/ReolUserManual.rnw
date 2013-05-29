@@ -18,7 +18,7 @@ This document will provide a deeper explanation about the various functions than
 This vignette assumes you have the current version of R.  First, install and load the package.  A stable release is available through CRAN (http://cran.r-project.org/web/packages/Reol/) or a working repository can also be used through R-Forge (https://r-forge.r-project.org/projects/reol/).  
 
 <<>>=
-install.packages("Reol", repos="http://R-Forge.R-project.org")
+install.packages("Reol")
 library(Reol)
 @
 
@@ -67,7 +67,6 @@ DataObjectOverview(MyEOLs, verbose=F)
 Common or vernacular names are also available on the EOL pages and their associated languages.  If output is set to detail (or d), it will return a data frame with the taxon, EOL ID, common name, and language.  In the following example, just the common names for humans are retrieved, but vectors of taxa are supported as well.  If output=counts, then a data frame of language counts will be retuned without the common names.
 
 <<>>=
-GetCommonNames("eol327955.xml", output="d")
 GetCommonNames(MyEOLs, output="c")
 @
 
@@ -81,6 +80,7 @@ GetReferences(MyEOLs, output="c")
 
 \subsection{Providers}
 EOL has a number of content providers (see http://eol.org/info/222) that provide information about classifications and synonymy. This is data that falls under the names tab on the EOL website.  \textit{Reol} has a few functions for gathering provider information.  \texttt{GatherProviderDataFrame} gathers the providers that are available for each taxon in the vector.  It returns a data frame with boolean response, 1 if the provider has contributed information and 0 if they have not.  Total number of providers for each taxon is the last column of the data frame.  There is also the option to have it print an extended output, which will return information about provider IDs, taxonomic rank, database ID.  The extended output format is used for other \textit{Reol} functions.  The \texttt{BestProvider} function calculates the provider that contributes the most information for the given set of taxa.  If there is a tie, it returns only the first one on the list.  This doesn't necessarily mean it is the best or most complete provider, so users beware.  This function can be useful, however, for choosing provider pages to download.  
+
 <<>>=
 GatherProviderDataFrame(MyEOLs)
 BestProvider(MyEOLs)
@@ -93,7 +93,7 @@ Just as EOL page content can be downloaded and scraped for content, so can the c
 NCBIfiles <- DownloadHierarchy(MyEOLs, database="NCBI Taxonomy", verbose=F)
 @
 
- \section{Gathering Data from Provider Pages}
+\section{Gathering Data from Provider Pages}
 There are essentially two pieces of information that can be gathered from the provider pages, the taxonomic hierarchy and a synonyms list. \textit{Reol} utilizes both bits in several functions, which are described in detail below.  
 
 \subsection{Taxonomic Synonyms}
@@ -109,22 +109,27 @@ Each EOL provider contributes taxonomic hierarchy data.  This data can be used t
 
 The tree structure follows the same formatting of the package ape (http://cran.r-project.org/web/packages/ape/), in the class phylo.  The benefit is that you can use all of ape's plotting functions to make nice looking trees and mapping of traits.  
 
-<<>>=
+\begin {center}
+<<fig=TRUE>>=
 ApeTree <- MakeHierarchyTree(NCBIfiles, includeNodeLabels = TRUE)
 plot(ApeTree, "p", show.node.label=TRUE, adj=0.5, font=4, edge.width=3, edge.color="dark gray", tip.color="black")
 @
+\end{center}
 
 \textit{Reol} also has a function to create edge labels with the taxonomic group names automatically.  In some cases there are multiple taxonomic names for one edge, and at this point it will only print the last one.  There is a bit more flexibility with visualization using the edge label functions rather than the node label functions.  
 
-<<>>=
+\begin {center}
+<<fig=TRUE>>=
 edges <- MakeEdgeLabels(NCBIfiles)
 plot(ApeTree, "c", show.node.label=FALSE)
 edgelabels(text=names(edges), edge=edges, bg="light gray")
 @
+\end{center}
 
 These trees can be used to plot information about EOL data.  For example, if we want to know patterns of the number of common names across our taxa, we can plot that information as a continuous trait along our new taxonomy tree.  
 
-<<>>=
+\begin {center}
+<<fig=TRUE>>=
 CNs <- GetCommonNames(MyEOLs, output="c")
 plot(ApeTree, label.offset=0.5, x.lim=10, no.margin=TRUE)
 edgelabels(text=names(edges), edge=edges, bg="light blue")
@@ -132,7 +137,7 @@ trans <- CNs[,3]/10
 tiplabels(pch=22, bg=rgb(0,0.5,0.5,trans), cex=2.8, adj=0.7)
 tiplabels(CNs[,3], 1:7, frame="none", bg="clear",adj=-1)
 @
-
+\end{center}
 
  
 \end{document}
