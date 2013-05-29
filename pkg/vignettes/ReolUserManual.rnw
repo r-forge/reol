@@ -1,9 +1,9 @@
-\documentclass[12pt]{article} \\
+\documentclass[12pt]{article}
 \usepackage{amsmath} 
 \title{Reol}
 \author{Barb Banbury, University of Tennessee, bbanbury@utk.edu}
 \date{\today}
-\VignetteIndexEntry{How to Use Reol}
+%\VignetteIndexEntry{How to Use Reol}
 
 \begin{document}
 \maketitle
