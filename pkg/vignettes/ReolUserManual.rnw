@@ -7,7 +7,11 @@
 
 \begin{document}
 \maketitle
- 
+
+<<echo=false,quiet=true>>=
+options(width=60)
+@ 
+
 
 \textit{Reol} is a package that interfaces the Encyclopedia of Life (EOL) with the R environment.  It will download EOL pages via the API, and text is scraped for content and amassed into various  datasets. \textit{Reol} can be used to download and manipulate data about any taxonomic groups.  In addition, data from provider pages can  be downloaded and used for creating taxonomic trees or gathering taxonomic synonyms.  
 
@@ -17,15 +21,11 @@ This document will provide a deeper explanation about the various functions than
  \section{Getting Started}
 This vignette assumes you have the current version of R.  First, install and load the package.  A stable release is available through CRAN (http://cran.r-project.org/web/packages/Reol/) or a working repository can also be used through R-Forge (https://r-forge.r-project.org/projects/reol/).  
 
-<<>>=
-install.packages("Reol")
-library(Reol)
-@
-
 You can register as an EOL user on their website (http://eol.org/users/register) and generate and save an API key in your user profile. This key is a unique identifier that you can use when using the EOL API.  Though it is not required, it is recommended to use a key, especially if you are going to be using the API heavily.  All \textit{Reol} functions that interact with the API have the option to include a key (\texttt{MyKey}).  
 
 To ensure that the API is up and running, you can use the \texttt{PingAPI} function. If there is an error, it will report the error message.  
 <<>>=
+library(Reol)
 PingAPI()
 @
 
