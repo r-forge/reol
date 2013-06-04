@@ -31,6 +31,7 @@ MakeEdgeLabels(MyHiers, label="all")
 	#EdgeLabels <- MakeEdgeLabels(MyHiers)
 	
 	#plot(phy)
-	#edgelabels(text=names(EdgeLabels), edge=EdgeLabels)  #there are lots of plotting options, but see ape for details
+	#edgelabels(text=names(EdgeLabels), edge=EdgeLabels)  
+	#there are lots of plotting options, but see ape for details
 
 }
