@@ -1,6 +1,5 @@
 \name{CollectDataforWeb}
 \alias{CollectDataforWeb}
-\alias{PageProcessing}
 \alias{DataProcessing}
 \alias{CNCount}
 \alias{DOCount}
@@ -12,7 +11,6 @@
 }
 \usage{
 CollectDataforWeb(MyEOL)
-PageProcessing(MyEOL)
 CNCount(res)
 DOCount(res)
 providerCount(res)
