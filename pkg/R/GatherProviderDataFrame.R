@@ -2,7 +2,6 @@ GatherProviderDataFrame <- function(MyEOLs, extended.output=FALSE) {
   Providers <- data.frame(matrix(nrow=1, ncol=2))
   for(i in sequence(length(MyEOLs))) {
     res <- PageProcessing(MyEOLs[i])$taxonConcept
-res <- xmlToList(xmlRoot(xmlParse(MyEOLs[i], getDTD=FALSE))[[1]], simplify=FALSE) #[[1]] here for gathering just taxonConcepts
     taxon <- res$ScientificName
     taxon <- FirstTwo(taxon)
     if (is.null(taxon)) 
@@ -20,7 +19,7 @@ res <- xmlToList(xmlRoot(xmlParse(MyEOLs[i], getDTD=FALSE))[[1]], simplify=FALSE
   provider.vector <- NULL
   provider.dataframe <- Providers
   for(row.num in sequence(dim(Providers)[1])){
-    res <- xmlToList(xmlRoot(xmlParse(MyEOLs[row.num], getDTD=FALSE))[[1]], simplify=FALSE)
+    res <- PageProcessing(MyEOLs[row.num])$taxonConcept
     whichTaxon <- which(names(res$additionalInformation) == "taxon")
     for (i in sequence(length(whichTaxon))) {
       source <- NULL
