@@ -1,10 +1,8 @@
 GatherProviderDataFrame <- function(MyEOLs, extended.output=FALSE) {
-	##Prune out NAs (see cichlids for example)
   Providers <- data.frame(matrix(nrow=1, ncol=2))
   for(i in sequence(length(MyEOLs))) {
-    res <- xmlToList(xmlRoot(xmlParse(MyEOLs[i], getDTD=FALSE))[[1]], simplify=FALSE) #[[1]] here for gathering just taxonConcepts
-#    if(res$message == "Sorry, there was a problem")
-#      res$ScientificName <- "NA"
+    res <- PageProcessing(MyEOLs[i])$taxonConcept
+res <- xmlToList(xmlRoot(xmlParse(MyEOLs[i], getDTD=FALSE))[[1]], simplify=FALSE) #[[1]] here for gathering just taxonConcepts
     taxon <- res$ScientificName
     taxon <- FirstTwo(taxon)
     if (is.null(taxon)) 

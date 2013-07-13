@@ -1,5 +1,5 @@
 OneFileHierarchy<- function (MyHier) {
-	res<-xmlToList(xmlRoot(xmlParse(MyHier, getDTD=FALSE)), simplify=FALSE)
+	res <- PageProcessing(MyHier)
 	resTaxonOnly <- which(names(res) == "Taxon")
 	resMat <- matrix(nrow=length(resTaxonOnly), ncol=7)
 	for(j in resTaxonOnly) {

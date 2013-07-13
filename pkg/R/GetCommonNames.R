@@ -1,15 +1,13 @@
 GetCommonNames <- function(MyEOLs, output=c("detail", "counts")) {
-  #This returns a data frame with all common names as a separate row.  Maybe make a data frame with an overview of information (number of cns in english, etc. for each sp.)
   output <- match.arg(output)
   CommonNames <- matrix(nrow=0, ncol=4)
   colnames(CommonNames) <- c("Taxon", "eolID", "Common Name", "language")
   CNOverview <- data.frame(matrix(nrow=length(MyEOLs), ncol=2))
   colnames(CNOverview) <- c("Taxon", "eolID")
   for(i in sequence(length(MyEOLs))) {
-  	#print(paste("starting file", MyEOLs[i]))
     taxon <- NA
     eolID <- NA
-    res <- xmlToList(xmlRoot(xmlParse(MyEOLs[i], getDTD=FALSE)), simplify=FALSE)$taxonConcept
+    res <- PageProcessing(MyEOLs[i])$taxonConcept
     if(!is.null(res)) {
       taxon <- res$ScientificName
       eolID <- res$taxonConceptID
