@@ -25,13 +25,12 @@ MatchTaxatoEOLID <- function(ListOfTaxa, exact=TRUE){
 }
 
 
-DownloadSearchedTaxa <- function(ListOfTaxa, MyKey=NULL, exact=TRUE, verbose=TRUE) {
+DownloadSearchedTaxa <- function(ListOfTaxa, to.file=T, MyKey=NULL, exact=TRUE, verbose=TRUE) {
   matches <- MatchTaxatoEOLID(ListOfTaxa, exact=exact)
   pagesToDownload <- unique(matches[,3])
   fileNames <- data.frame(paste("eol", matches[,3], ".xml", sep=""), stringsAsFactors=FALSE)
   colnames(fileNames) <- "fileNames"
   if(any(!is.na(pagesToDownload))) {
-    DownloadEOLpages(as.numeric(pagesToDownload), MyKey, verbose=verbose)  
+    DownloadEOLpages(as.numeric(pagesToDownload), to.file=to.file, MyKey, verbose=verbose)  
   }
-  return(cbind(matches, fileNames))
 }

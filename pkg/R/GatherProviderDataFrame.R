@@ -1,7 +1,13 @@
-GatherProviderDataFrame <- function(MyEOLs, extended.output=FALSE) {
+GatherProviderDataFrame <- function(MyEOLs, from.file=T, extended.output=FALSE) {
+#if from.file=T, MyEOLs should point to a list of file names
+#if from.file=F, MyEOL should point to an R object
   Providers <- data.frame(matrix(nrow=1, ncol=2))
   for(i in sequence(length(MyEOLs))) {
-    res <- PageProcessing(MyEOLs[i])$taxonConcept
+  	if(from.file)
+      res <- PageProcessing(MyEOLs[i])$taxonConcept
+    if(!from.file) {
+      res <- PageProcessing(MyEOLs[[i]])$taxonConcept
+    }
     taxon <- res$ScientificName
     taxon <- FirstTwo(taxon)
     if (is.null(taxon)) 
@@ -19,7 +25,10 @@ GatherProviderDataFrame <- function(MyEOLs, extended.output=FALSE) {
   provider.vector <- NULL
   provider.dataframe <- Providers
   for(row.num in sequence(dim(Providers)[1])){
-    res <- PageProcessing(MyEOLs[row.num])$taxonConcept
+    if(from.file)
+      res <- PageProcessing(MyEOLs[row.num])$taxonConcept
+    if(!from.file)
+      res <- PageProcessing(MyEOLs[[row.num]])$taxonConcept    
     whichTaxon <- which(names(res$additionalInformation) == "taxon")
     for (i in sequence(length(whichTaxon))) {
       source <- NULL
