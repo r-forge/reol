@@ -1,10 +1,11 @@
 Package: Reol
-Version: 1.15
+Version: 1.16
 Date: 2013-06-14	
 Title: R interface to the Encyclopedia of Life
 Author: Barb Banbury <bbanbury@utk.edu>, Brian O'Meara <bomeara@utk.edu>
 Maintainer: Barb Banbury <bbanbury@utk.edu>
-Depends: R (>= 2.13.0), XML, RCurl, R.oo, ape
+Depends: R (>= 2.13.0)
+Imports: XML, RCurl, ape, R.oo, R.methodsS3
 Suggests: geiger
 LazyData: yes
 Description: An R interface to the EOL API. Includes functions for downloading and extracting information off the EOL pages.
