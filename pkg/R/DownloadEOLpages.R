@@ -18,5 +18,8 @@ DownloadEOLpages <- function(pages, to.file=T, MyKey=NULL, verbose=TRUE) {
     }  
     Sys.sleep(1)
   }
-  return(EOLpages)
+  if(to.file)
+    return(paste("eol", pages, ".xml", sep=""))
+  else
+    return(EOLpages)
 }
