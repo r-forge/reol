@@ -45,5 +45,8 @@ DownloadHierarchy <- function(MyEOLs, from.file=T, to.file=T, database=NULL, ver
       Sys.sleep(1)
     }
   }
-  return(hierpages)
+  if(to.file)
+    return(paste("hier", pages, ".xml", sep=""))
+  else
+    return(hierpages)
 }
