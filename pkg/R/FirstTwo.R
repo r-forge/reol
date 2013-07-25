@@ -4,7 +4,7 @@ FirstTwo <- function(name) {
   if(!is.na(name)) {
   	#trim2 <- function (x) gsub("^\\s+|\\s+$", "", x)
     name <- gsub("^\\s+|\\s+$", "", name)
-    if(length(name) > 2)
+    if(length(strsplit(name, " ")[[1]]) > 2)
       name <- paste(strsplit(name," ")[[1]][1:2],sep=" ",collapse=" ")
   }
   return(name)
