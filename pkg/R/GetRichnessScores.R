@@ -1,4 +1,4 @@
-GetRichnessScores <- function(MyEOLs, from.file=T) {
+GetRichnessScores <- function(MyEOLs, from.file=TRUE) {
   richnessDF <- matrix(nrow=length(MyEOLs), ncol=3)
   for(i in sequence(length(MyEOLs))) {
     richnessData <- rep(NA, 3)

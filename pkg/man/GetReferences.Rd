@@ -9,6 +9,7 @@ GetReferences(MyEOLs, from.file=TRUE, output = c("detail", "counts"))
 }
 \arguments{
 	\item{MyEOLs}{A vector of filenames for downloaded EOL pages}
+	\item{from.file}{Whether MyEOLs comes from working directory (T) or is an R object (F)}
 	\item{output}{"detail" will return a data frame with eolID and reference; "counts" will return a dataframe with  eol taxon name, eol ID, and number of references.}
 }
 \value{

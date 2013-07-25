@@ -5,7 +5,7 @@
 	This function goes through the hierarchy pages to collect taxonomic synonyms.    
 }
 \usage{
-GatherSynonyms(MyHiers, from.file=TRUE, output = c("detail", "counts"))
+GatherSynonyms(MyHiers, output = c("detail", "counts"))
 }
 \arguments{
 	\item{MyHiers}{A vector of filenames for downloaded hierarchy pages}
