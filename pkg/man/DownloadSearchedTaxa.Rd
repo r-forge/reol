@@ -5,7 +5,7 @@
 	This function will take a sting of taxa and search EOL database for the EOL pages. If it finds a match, it will download the EOL page.  
 }
 \usage{
-DownloadSearchedTaxa(ListOfTaxa, to.file=T, MyKey=NULL, exact=TRUE, verbose=TRUE)
+DownloadSearchedTaxa(ListOfTaxa, to.file=TRUE, MyKey=NULL, exact=TRUE, verbose=TRUE)
 }
 \arguments{
 	\item{ListOfTaxa}{List of EOL taxa to search and download EOL pages}
