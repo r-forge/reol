@@ -1,2 +1,2 @@
 export(APItaxon, BestProvider, CombineDataObjectInformation, CombineHierarchyInfo, DownloadSearchedTaxa, GatherSynonyms, GetRichnessScores, DataObjectOverview, FirstTwo, GatherSynonyms,  OneFileHierarchy, DownloadEOLpages, GatherDataObjectInformation, GetCommonNames, MakeHierarchyTree, RepeatDataToDrop, subsetDataForHierTrees, MatchTaxatoEOLID, PingAPI, ProviderCount, DownloadHierarchy, GatherProviderDataFrame, GetReferences, MakeTreeData, ReturnTaxSet, MakeEdgeLabels, NodeLabelList, getTipList, whichEdge, GetHierID, MatchHierPageToEOLdata, CNCount, DOCount, providerCount, PageProcessing, DataProcessing, CollectDataforWeb, GetIUCNStat)
-import(XML, RCurl, ape, R.oo, R.methodsS3)
+import(XML, RCurl, ape)
