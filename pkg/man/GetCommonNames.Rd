@@ -5,7 +5,7 @@
 	This function gathers each species common names and the language with which they are associated. 
 }
 \usage{
-GetCommonNames(MyEOLs, output = c("detail", "counts"))
+GetCommonNames(MyEOLs, from.file=TRUE, output = c("detail", "counts"))
 }
 \arguments{
 	\item{MyEOLs}{A vector of filenames for downloaded EOL pages}

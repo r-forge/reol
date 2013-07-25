@@ -5,7 +5,7 @@
 	This function gathers the references on the EOL pages (not the references on the provider pages). 
 }
 \usage{
-GetReferences(MyEOLs, output = c("detail", "counts"))
+GetReferences(MyEOLs, from.file=TRUE, output = c("detail", "counts"))
 }
 \arguments{
 	\item{MyEOLs}{A vector of filenames for downloaded EOL pages}

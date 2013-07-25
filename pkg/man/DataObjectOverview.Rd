@@ -1,19 +1,27 @@
 \name{DataObjectOverview}
+\alias{GatherDataObjectInformation}
+\alias{CombineDataObjectInformation}
 \alias{DataObjectOverview}
-\title{Data Object  Overview Information}
+\title{Data Object Information}
 \description{
-	This function gathers information about the number of kinds of data objects.  For example, it will tell you that there are 3 gifs 12 jpgs, and 34 text objects, but it will not provide specific information beyond that.        
+	These functions gather information about the number of kinds of data objects. For example, it will tell you that there are 3 gifs 12 jpgs, and 34 text objects.        
 }
 \usage{
-DataObjectOverview(MyEOLs, verbose=TRUE)
+GatherDataObjectInformation(MyEOL)
+CombineDataObjectInformation(MyEOLs, from.file=TRUE, verbose=T)
+DataObjectOverview(MyEOLs, from.file=TRUE, verbose=TRUE)
 }
 \arguments{
-	\item{MyEOLs}{A vector of filenames for downloaded EOL pages}
+	\item{MyEOL}{A single EOL file or R object}
+	\item{MyEOLs}{A vector of filenames or a list of XMLs for downloaded EOL pages}
+	\item{from.file}{Whether MyEOLs comes from working directory (T) or is an R object (F)}
 	\item{verbose}{An optional print statement while combining}	
 }
 \value{
-	Returns a data frame where each row is a single taxon and columns are a type of data object. 
+	 GatherDataObjectInformation will return information from one single EOL file all of the data objects and their associated accession info.  CombineDataObjectInformation will combine the data gathered singly into a huge matrix.  Printing the results may hang up R or cause memory issues, so it isn't recommended.  Returns a data frame where each row is a single taxon and columns are a type of data object. 
 }
 \examples{
 	#DataObjectOverview(MyEOLs)
+	#CombineDataObjectInformation(MyEOLs, from.file=FALSE)
+	#DataObjectOverview(MyEOLs, verbose=T)
 }
