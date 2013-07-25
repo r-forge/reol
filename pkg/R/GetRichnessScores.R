@@ -6,7 +6,7 @@ GetRichnessScores <- function(MyEOLs, from.file=T) {
       res <- PageProcessing(MyEOLs[i])$taxonConcept
     else
       res <- PageProcessing(MyEOLs[[i]])$taxonConcept
-    scientificName  <- res[[which(names(res) == grep("scientificName", names(res), ignore.case=TRUE, value=T))]] #because some are cap and some are not
+    scientificName  <- res[[which(names(res) == grep("ScientificName", names(res), ignore.case=TRUE, value=T))]] #because some are cap and some are not
     richnessData <- c(scientificName, res$taxonConceptID, res$additionalInformation$richness_score)
     richnessDF[i,] <- richnessData
   }

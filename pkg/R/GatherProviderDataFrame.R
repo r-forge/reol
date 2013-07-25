@@ -5,11 +5,10 @@ GatherProviderDataFrame <- function(MyEOLs, from.file=T, extended.output=FALSE) 
   for(i in sequence(length(MyEOLs))) {
   	if(from.file)
       res <- PageProcessing(MyEOLs[i])$taxonConcept
-    if(!from.file) {
+    else
       res <- PageProcessing(MyEOLs[[i]])$taxonConcept
-    }
-    taxon <- res$ScientificName
-    taxon <- FirstTwo(taxon)
+    scientificName  <- res[[which(names(res) == grep("ScientificName", names(res), ignore.case=TRUE, value=T))]] #because some are cap and some are not
+    taxon <- FirstTwo(scientificName)
     if (is.null(taxon)) 
       taxon <- NA
     eolID <- res$taxonConceptID

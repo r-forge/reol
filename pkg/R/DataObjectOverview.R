@@ -5,7 +5,8 @@ GatherDataObjectInformation <- function(MyEOL) {
   whichDataObjects <- which(names(res) == "dataObject") 
   NumberOfDataObjects <- length(whichDataObjects) 
   DataObjectInfo <- data.frame(matrix(nrow=NumberOfDataObjects, ncol=1), stringsAsFactors=F)
-  taxon <- try(FirstTwo(res$taxonConcept$scientificName), silent=T)
+  scientificName  <- res$taxonConcept[[which(names(res$taxonConcept) == grep("ScientificName", names(res$taxonConcept), ignore.case=TRUE, value=T))]] #because some are cap and some are not
+  taxon <-FirstTwo(scientificName)
   if (is.null(taxon)) 
     taxon <- NA
   eolID <- try(res$taxonConcept$taxonConceptID, silent=T)
