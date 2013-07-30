@@ -1,12 +1,7 @@
-GatherProviderDataFrame <- function(MyEOLs, from.file=T, extended.output=FALSE) {
-#if from.file=T, MyEOLs should point to a list of file names
-#if from.file=F, MyEOL should point to an R object
+GatherProviderDataFrame <- function(MyEOLs, extended.output=FALSE) {
   Providers <- data.frame(matrix(nrow=1, ncol=2))
   for(i in sequence(length(MyEOLs))) {
-  	if(from.file)
-      res <- PageProcessing(MyEOLs[i])$taxonConcept
-    else
-      res <- PageProcessing(MyEOLs[[i]])$taxonConcept
+    res <- PageProcessing(MyEOLs[i])$taxonConcept
     scientificName  <- res[[which(names(res) == grep("ScientificName", names(res), ignore.case=TRUE, value=T))]] #because some are cap and some are not
     taxon <- FirstTwo(scientificName)
     if (is.null(taxon)) 
@@ -24,10 +19,7 @@ GatherProviderDataFrame <- function(MyEOLs, from.file=T, extended.output=FALSE) 
   provider.vector <- NULL
   provider.dataframe <- Providers
   for(row.num in sequence(dim(Providers)[1])){
-    if(from.file)
-      res <- PageProcessing(MyEOLs[row.num])$taxonConcept
-    if(!from.file)
-      res <- PageProcessing(MyEOLs[[row.num]])$taxonConcept    
+    res <- PageProcessing(MyEOLs[row.num])$taxonConcept
     whichTaxon <- which(names(res$additionalInformation) == "taxon")
     for (i in sequence(length(whichTaxon))) {
       source <- NULL

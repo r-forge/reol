@@ -1,8 +1,11 @@
 PageProcessing <- function(MyEOL) {
-  res <- xmlToList(xmlRoot(xmlParse(MyEOL, getDTD=FALSE)), simplify=FALSE)
+  if(class(MyEOL) == "character" || class(MyEOL) == "vector")
+    res <- xmlToList(xmlRoot(xmlParse(MyEOL, getDTD=FALSE)), simplify=FALSE)
+  if(class(MyEOL) == "list")
+    res <- xmlToList(xmlRoot(xmlParse(MyEOL[[1]], getDTD=FALSE)), simplify=FALSE)
   if(!is.null(res$error)) {
-    system(paste("mv", MyEOL, "../TRASH/"))
-    stop(paste("Bad file", MyEOL, "has been purged"))
+    #system(paste("mv", MyEOL, "../TRASH/"))
+    stop(paste("Bad file", MyEOL, "has an error"))
     }
   return(res)
 }

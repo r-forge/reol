@@ -1,6 +1,6 @@
-ProviderCount <- function(MyEOLs, from.file=T, verbose=FALSE) {
+ProviderCount <- function(MyEOLs, verbose=FALSE) {
   #Returns vector of provider coverage
-  results <- GatherProviderDataFrame(MyEOLs, from.file=from.file, extended.output=FALSE)[,-1:-2]
+  results <- GatherProviderDataFrame(MyEOLs, extended.output=FALSE)[,-1:-2]
   results <- results[, -dim(results)[2]]
   counts <- apply(results, 2, sum)
   names(counts) <- colnames(results)
@@ -10,20 +10,19 @@ ProviderCount <- function(MyEOLs, from.file=T, verbose=FALSE) {
   return(counts)
 }
 
-BestProvider <- function(MyEOLs, from.file=T) {
+BestProvider <- function(MyEOLs) {
   #Returns the provider with the most taxonomic coverage
-  return(names(ProviderCount(MyEOLs, from.file=from.file))[1])	
+  return(names(ProviderCount(MyEOLs))[1])	
 }
 
 
-DownloadHierarchy <- function(MyEOLs, from.file=T, to.file=T, database=NULL, verbose=TRUE) {
+DownloadHierarchy <- function(MyEOLs, to.file=TRUE, database=NULL, verbose=TRUE) {
 #MyEOLs can be a file or an R object
-#from.file is whether it should find the data via a file (T) or an R object (F)
 #to.file is whether you want to save the information as a file (T) or an R object (F)
   #Downloads provider database
   if(is.null(database))
-    database <- BestProvider(MyEOLs, from.file)	
-  results <- GatherProviderDataFrame(MyEOLs, from.file, extended.output=TRUE)
+    database <- BestProvider(MyEOLs)	
+  results <- GatherProviderDataFrame(MyEOLs, extended.output=TRUE)
   column <- which(colnames(results) == paste(database, ".taxonID", sep=""))
   pages <- results[,column] 
   hierpages <- vector("list", length=length(pages))

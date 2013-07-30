@@ -1,14 +1,11 @@
-GetReferences <- function(MyEOLs, from.file=TRUE, output=c("detail", "counts")) {
+GetReferences <- function(MyEOLs, output=c("detail", "counts")) {
   output <- match.arg(output)
   ReferenceList <- matrix(nrow=0, ncol=3)
   colnames(ReferenceList) <- c("Taxon", "eolID", "Reference")
   RefCounts <- matrix(nrow=length(MyEOLs), ncol=3)
   colnames(RefCounts) <- c("Taxon", "eolID", "Number Of References")
   for(i in sequence(length(MyEOLs))) {
-    if(from.file)
-      res <- PageProcessing(MyEOLs[i])$taxonConcept
-    else
-      res <- PageProcessing(MyEOLs[[i]])$taxonConcept
+    res <- PageProcessing(MyEOLs[i])$taxonConcept
     whichReferences <- which(names(res) == "reference")
     scientificName  <- res[[which(names(res) == grep("ScientificName", names(res), ignore.case=TRUE, value=T))]] #because some are cap and some are not
     RefCounts[i,] <- c(scientificName, res$taxonConceptID, length(whichReferences))

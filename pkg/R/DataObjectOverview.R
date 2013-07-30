@@ -1,7 +1,7 @@
 GatherDataObjectInformation <- function(MyEOL) {
   #this function works for one EOL file only.  It will return information about all of the different data objects associated with each taxon.  
   #There may be warnings with this function, and they should be ok.  Warnings may indicate that there is more than one entry for a field, which is typically associated with the "additional information" subheading
-  res <- PageProcessing(MyEOL)  #doesn't matter whether from.file since you are always just passing a singleton  
+  res <- PageProcessing(MyEOL)  
   whichDataObjects <- which(names(res) == "dataObject") 
   NumberOfDataObjects <- length(whichDataObjects) 
   DataObjectInfo <- data.frame(matrix(nrow=NumberOfDataObjects, ncol=1), stringsAsFactors=F)
@@ -36,21 +36,15 @@ GatherDataObjectInformation <- function(MyEOL) {
 }
 
 
-CombineDataObjectInformation <- function(MyEOLs, from.file=TRUE, verbose=T) {
+CombineDataObjectInformation <- function(MyEOLs, verbose=TRUE) {
   #Next: subset to Trusted Information only
   #this function works for multiple EOL files.  It will return information about all of the different data objects associated with each taxon.  
   #There may be warnings with this function, and they should be ok.  Warnings may indicate that there is more than one entry for a field, which is typically associated with the "additional information" subheading
-  if(from.file)
-    CombinedDOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs[1]))
-  else
-    CombinedDOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs[[1]]))
+  CombinedDOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs[1]))
   for (i in 2:length(MyEOLs)){
     if(verbose)
       print(paste("combined", i, "files"))
-    if(from.file)
-      DOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs[i]))
-    else
-      DOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs[[i]]))
+    DOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs[i]))
     if(any(!colnames(DOI) %in% colnames(CombinedDOI))) { #check that all new data coming in will match existing data
       ColumnsToAdd <- which(!colnames(DOI) %in% colnames(CombinedDOI))
       for(j in sequence(length(ColumnsToAdd))) {
@@ -77,8 +71,8 @@ CombineDataObjectInformation <- function(MyEOLs, from.file=TRUE, verbose=T) {
 }
 
 
-DataObjectOverview <- function(MyEOLs, from.file=TRUE, verbose=TRUE){
-  cDOI <- CombineDataObjectInformation(MyEOLs, from.file=from.file, verbose=verbose)  
+DataObjectOverview <- function(MyEOLs, verbose=TRUE){
+  cDOI <- CombineDataObjectInformation(MyEOLs, verbose=verbose)  
   UniqueTaxa <- unique(cDOI[,which(names(cDOI) == "Taxon")])
   UniqueDataTypes <- unique(cDOI[,which(names(cDOI) == "mimeType")])
   overview <- matrix(nrow=length(UniqueTaxa), ncol=2+length(UniqueDataTypes))

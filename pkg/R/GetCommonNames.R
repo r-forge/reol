@@ -1,4 +1,4 @@
-GetCommonNames <- function(MyEOLs, from.file=TRUE, output=c("detail", "counts")) {
+GetCommonNames <- function(MyEOLs, output=c("detail", "counts")) {
   output <- match.arg(output)
   CommonNames <- matrix(nrow=0, ncol=4)
   colnames(CommonNames) <- c("Taxon", "eolID", "Common Name", "language")
@@ -7,10 +7,7 @@ GetCommonNames <- function(MyEOLs, from.file=TRUE, output=c("detail", "counts"))
   for(i in sequence(length(MyEOLs))) {
     taxon <- NA
     eolID <- NA
-    if(from.file)
-      res <- PageProcessing(MyEOLs[i])$taxonConcept
-    else
-      res <- PageProcessing(MyEOLs[[i]])$taxonConcept
+    res <- PageProcessing(MyEOLs[i])$taxonConcept
     if(!is.null(res)) {
       taxon  <- res[[which(names(res) == grep("ScientificName", names(res), ignore.case=TRUE, value=T))]] #because some are cap and some are not
       eolID <- res$taxonConceptID

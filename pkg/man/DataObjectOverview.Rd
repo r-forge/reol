@@ -8,13 +8,12 @@
 }
 \usage{
 GatherDataObjectInformation(MyEOL)
-CombineDataObjectInformation(MyEOLs, from.file=TRUE, verbose=T)
-DataObjectOverview(MyEOLs, from.file=TRUE, verbose=TRUE)
+CombineDataObjectInformation(MyEOLs, verbose=TRUE)
+DataObjectOverview(MyEOLs, verbose=TRUE)
 }
 \arguments{
 	\item{MyEOL}{A single EOL file or R object}
 	\item{MyEOLs}{A vector of filenames or a list of XMLs for downloaded EOL pages}
-	\item{from.file}{Whether MyEOLs comes from working directory (T) or is an R object (F)}
 	\item{verbose}{An optional print statement while combining}	
 }
 \value{
@@ -22,6 +21,6 @@ DataObjectOverview(MyEOLs, from.file=TRUE, verbose=TRUE)
 }
 \examples{
 	#DataObjectOverview(MyEOLs)
-	#CombineDataObjectInformation(MyEOLs, from.file=FALSE)
+	#CombineDataObjectInformation(MyEOLs)
 	#DataObjectOverview(MyEOLs, verbose=T)
 }
