@@ -15,6 +15,8 @@ whichEdge <- function(phy, taxa) {
 
 MakeEdgeLabels <- function(MyHiers, label="all"){
   NodeLabelList <- NodeLabelList(MyHiers)
+  if(length(NodeLabelList) == 0)
+    stop("Node Labels can not be created, because hierarchy information doesn't overlap")
   phy <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)
   tipList <- getTipList(phy)
   edges <- c(lapply(NodeLabelList, whichEdge, phy=phy), recursive=T)
