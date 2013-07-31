@@ -1,4 +1,8 @@
 GatherSynonyms <- function(MyHiers, output=c("detail", "counts")) {
+  if(any(is.na(names(MyHiers)))) {
+  	whichNAs <- which(is.na(names(MyHiers)))
+  	MyHiers <- MyHiers[-whichNAs]
+  }
   output <- match.arg(output)
   syns <- matrix(ncol=3, nrow=0)
   colnames(syns) <- c("Taxon", "hierID", "Synonym")
