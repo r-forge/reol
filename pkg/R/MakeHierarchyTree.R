@@ -9,6 +9,7 @@ subsetDataForHierTrees <- function(oneFileHier) {
 CombineHierarchyInfo <- function(MyHiers) {
   CombFiles <- matrix(nrow=0, ncol=7)
   for(i in sequence(length(MyHiers))) {
+  	print(i)
     oneFile <- subsetDataForHierTrees(OneFileHierarchy(MyHiers[i]))
     CombFiles <- rbind(CombFiles, oneFile)
     CombFiles <- as.data.frame(CombFiles, stringsAsFactors=FALSE)
@@ -46,6 +47,10 @@ MakeTreeData <- function(MyHiers) {
 }  
   
 MakeHierarchyTree <- function(MyHiers, includeNodeLabels=TRUE) {
+  if(any(is.na(names(MyHiers)))) {
+  	whichNAs <- which(is.na(names(MyHiers)))
+  	MyHiers <- MyHiers[-whichNAs]
+  }
   TreeData <- MakeTreeData(MyHiers)
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
   pattern <- paste("~", paste(colnames(TreeData)[-which(apply(TreeData, 2, RepeatDataToDrop))], sep="", collapse="/"), sep="")

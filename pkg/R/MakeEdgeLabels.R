@@ -14,6 +14,10 @@ whichEdge <- function(phy, taxa) {
 }
 
 MakeEdgeLabels <- function(MyHiers, label="all"){
+  if(any(is.na(names(MyHiers)))) {
+  	whichNAs <- which(is.na(names(MyHiers)))
+  	MyHiers <- MyHiers[-whichNAs]
+  }
   NodeLabelList <- NodeLabelList(MyHiers)
   if(length(NodeLabelList) == 0)
     stop("Node Labels can not be created, because hierarchy information doesn't overlap")
