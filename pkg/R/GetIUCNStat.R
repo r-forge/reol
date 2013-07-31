@@ -9,5 +9,5 @@ GetIUCNStat <- function(MyEOLs) {
  scientificName  <- res$taxonConcept[[which(names(res$taxonConcept) == grep("ScientificName", names(res$taxonConcept), ignore.case=TRUE, value=TRUE))]] #because some are cap and some are not
   IUCN[i,] <- c(scientificName, res$taxonConcept$taxonConceptID, IUCNstat)
   }  
-  return(IUCN)
+  return(data.frame(IUCN, stringsAsFactors=FALSE))
 }
