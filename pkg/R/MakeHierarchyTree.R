@@ -9,7 +9,6 @@ subsetDataForHierTrees <- function(oneFileHier) {
 CombineHierarchyInfo <- function(MyHiers) {
   CombFiles <- matrix(nrow=0, ncol=7)
   for(i in sequence(length(MyHiers))) {
-  	print(i)
     oneFile <- subsetDataForHierTrees(OneFileHierarchy(MyHiers[i]))
     CombFiles <- rbind(CombFiles, oneFile)
     CombFiles <- as.data.frame(CombFiles, stringsAsFactors=FALSE)
