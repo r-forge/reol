@@ -14,7 +14,7 @@ ReturnTaxSet(Taxon, TreeData)
 NodeLabelList(MyHiers, label="all")
 }
 \arguments{
-	\item{MyHiers}{A vector of hier pages}
+	\item{MyHiers}{A vector of filenames or a list of XMLs for downloaded EOL pages}
 	\item{includeNodeLabels}{Option to write node labels to phylogenetic tree (Note, this can also be done separately using \code{NodeLabelList}}
 	\item{Taxon}{Taxonomic group that contains subunits}
 	\item{TreeData}{A dataframe of taxonomic hierarchy information out of MakeTreeData function}

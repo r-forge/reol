@@ -8,13 +8,14 @@
 GetCommonNames(MyEOLs, output = c("detail", "counts"))
 }
 \arguments{
-	\item{MyEOLs}{A vector of filenames for downloaded EOL pages}
+	\item{MyEOLs}{A vector of filenames or a list of XMLs for downloaded EOL pages}
 	\item{output}{"detail" will return a data frame with common names and their language; "counts" will return a dataframe with each taxon and language counts for common names.}
 }
 \value{
 	Returns a data frame with taxon, eol ID, common name, and language. 
 }
 \examples{
-	#GetCommonNames(MyEOLs)
-	#GetCommonNames(MyEOLs, output="counts")
+data(MyEOLs)
+GetCommonNames(MyEOLs, output="details")
+GetCommonNames(MyEOLs, "c")
 }

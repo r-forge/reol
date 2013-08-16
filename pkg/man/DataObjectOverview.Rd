@@ -17,10 +17,11 @@ DataObjectOverview(MyEOLs, verbose=TRUE)
 	\item{verbose}{An optional print statement while combining}	
 }
 \value{
-	 GatherDataObjectInformation will return information from one single EOL file all of the data objects and their associated accession info.  CombineDataObjectInformation will combine the data gathered singly into a huge matrix.  Printing the results may hang up R or cause memory issues, so it isn't recommended.  Returns a data frame where each row is a single taxon and columns are a type of data object. 
+	 \code{GatherDataObjectInformation} will return information from one single EOL file all of the data objects and their associated accession info.  \code{CombineDataObjectInformation} will combine the data gathered singly into a huge matrix.  Printing the results from either of these functions may hang up R or cause memory issues, so it isn't recommended (though you can pull of pieces of it).  \code{DataObjectOverview} returns a data frame where each row is a single taxon and columns are a type of data object. 
 }
 \examples{
-	#DataObjectOverview(MyEOLs)
-	#CombineDataObjectInformation(MyEOLs)
-	#DataObjectOverview(MyEOLs, verbose=T)
+data(MyEOLs)
+\dontrun{GatherDataObjectInformation(MyEOLs[[1]])}
+\dontrun{CombineDataObjectInformation(MyEOLs)}
+DataObjectOverview(MyEOLs)
 }

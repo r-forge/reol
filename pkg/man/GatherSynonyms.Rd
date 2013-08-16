@@ -13,8 +13,10 @@ GatherSynonyms(MyHiers, output = c("detail", "counts"))
 
 }
 \value{
-	Returns a data frame where each row is a taxonomic unit. 
+	When output="detail", it returns a data frame where each row is the taxonomic unit that has a synonym, the hierarchy ID, and the synonym.  When output="counts", each taxon is included whether it has a synonym or not.  Rather than report the synonyms, it reports the number of synonyms for each.
 }
 \examples{
-	#GatherSynonyms(MyHiers)
+data(MyHiers)
+GatherSynonyms(MyHiers, output="detail")
+GatherSynonyms(MyHiers, "c")
 }

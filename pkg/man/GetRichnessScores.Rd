@@ -8,11 +8,12 @@
 GetRichnessScores(MyEOLs)
 }
 \arguments{
-	\item{MyEOLs}{A vector of filenames for downloaded EOL pages}
+	\item{MyEOLs}{A vector of filenames for downloaded EOL pages OR a list of XML data stored as an R object}
 }
 \value{
 	Returns a data frame with taxon, eol ID and numerical richness score. 
 }
 \examples{
-	#GetRichnessScores(MyEOLs)
+data(MyEOLs)
+GetRichnessScores(MyEOLs)
 }
