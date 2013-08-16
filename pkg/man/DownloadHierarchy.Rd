@@ -26,13 +26,13 @@ DownloadHierarchy(MyEOLs, to.file=TRUE, database=NULL, verbose=TRUE)
 	\code{\link{DownloadSearchedTaxa}}
 }
 \examples{
-	data(MyEOLs)
-	ProviderCount(MyEOLs, verbose=TRUE)
-	BestProvider(MyEOLs)
+data(MyEOLs)
+ProviderCount(MyEOLs, verbose=TRUE)
+BestProvider(MyEOLs)
 	
-	#Download data from whichever provider has the most coverage
-	\dontrun{MyHiers <- DownloadHierarchy(MyEOLs, to.file=TRUE, BestProvider(MyEOLs))}
+#Download data from whichever provider has the most coverage
+\dontrun{MyHiers <- DownloadHierarchy(MyEOLs, to.file=TRUE, BestProvider(MyEOLs))}
 	
-	#Or download from a specific provider
-	MyHiers <- DownloadHierarchy(MyEOLs, FALSE, database="NCBI Taxonomy")
+#Or download from a specific provider
+MyHiers <- DownloadHierarchy(MyEOLs, FALSE, database="NCBI Taxonomy")
 }

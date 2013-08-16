@@ -5,7 +5,7 @@
 \alias{NodeLabelList}
 \title{Creates Hierarchical Trees}
 \description{
-	These functions will create a phylogenetic tree (dendrogram) based on taxonomic ranking from EOL hierarchy pages. 
+	These functions will create a taxonomic tree (dendrogram) based on ranking from EOL's provider (hierarchy) pages. 
 }
 \usage{
 MakeTreeData(MyHiers)
@@ -15,20 +15,28 @@ NodeLabelList(MyHiers, label="all")
 }
 \arguments{
 	\item{MyHiers}{A vector of hier pages}
-	\item{includeNodeLabels}{Option to write node labels to phylogenetic tree}
+	\item{includeNodeLabels}{Option to write node labels to phylogenetic tree (Note, this can also be done separately using \code{NodeLabelList}}
 	\item{Taxon}{Taxonomic group that contains subunits}
 	\item{TreeData}{A dataframe of taxonomic hierarchy information out of MakeTreeData function}
 	\item{label}{Which hierarchical units should be included in the node labels}
 }
 \value{
-	MakeTreeData returns a data frame with data for use in MakeHierarchyTree function, but can also be used independently. MakeHierarchyTree returns phylogenetic tree in the class "phylo". ReturnTaxSet will return the tree tips for the taxonomic group requested. MakeNodeLabels will return a list of tip labels per internal node.  
+\code{MakeTreeData} returns a data frame with data for use in \code{MakeHierarchyTree} function, but can also be used independently. \code{MakeHierarchyTree} returns taxonomic tree in the class "phylo". \code{ReturnTaxSet} will return the tree tips for the taxonomic group requested, this is mostly an internal function for creating node labels. \code{MakeNodeLabels} will return a list of tip labels per internal node.  This can be used to create node labels to plot on the tree. 
 }
 \details{
-	This tree displays taxonomic structuring only and is not the result of a phylogenetic analysis.
+	This tree displays taxonomic structuring only and is not the result of a phylogenetic analysis. Alos note that not all providers return hierarchy information, if errors or no tree is returned it is likely that information is missing and you may have to use another provider.
+}
+\seealso{
+\code{ProviderCount}
+\code{DownloadHierarchy}
+\code{MakeEdgeLabels}
 }
 \examples{
-	#TreeData <- MakeTreeData(MyHiers)
-	#MakeHierarchyTree(MyHiers)
-	#ReturnTaxSet(TreeData[1,1], TreeData)
-	#MakeNodeLabels(MyHiers, "all")
+data(MyHiers)
+TreeData <- MakeTreeData(MyHiers)
+Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=TRUE)
+labels <- NodeLabelList(MyHiers, "all")
+plot(Tree, show.node.label=TRUE)
+
+plot(Tree, "c", show.node.label=TRUE, adj=0.5, font=3, edge.color="gray", tip.color=rainbow(10))
 }

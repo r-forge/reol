@@ -8,15 +8,19 @@
 MatchHierPageToEOLdata(MyHiers, EOLdata)
 }
 \arguments{
-	\item{MyHiers}{A vector of filenames for downloaded hierarchy pages}
+	\item{MyHiers}{A vector of filenames for downloaded hierarchy pages or a list of XML data stored as an R object}
 	\item{EOLdata}{Any output dataframe from Reol functions}
 }
 \value{
-	Returns a data frame where each row is a taxonomic unit. 
+	Returns a data frame where each row is a taxonomic unit. This is especially helpful if you wish to plot EOL data on a taxonomic tree (see example).
 }
 \examples{
-	#MatchHierPageToEOLdata(MyHiers, GetRichnessScores(MyEOLs))
-	
-	#dataOverview<-DataObjectOverview(MyEOLs)
-	#MatchHierPageToEOLdata(MyHiers, dataOverview)
+#plotting richness scores
+data(MyEOLs)
+data(MyHiers)
+Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)  
+MyData <- MatchHierPageToEOLdata(MyHiers, GetRichnessScores(MyEOLs))
+plot(Tree, label.offset=1, x.lim=10)
+tiplabels(round(as.numeric(MyData[,3])), 1:6, col="Blue", frame="none", bg="clear",adj = -0.5)
+title(main="Richness scores")
 }

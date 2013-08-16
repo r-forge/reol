@@ -3,7 +3,7 @@
 \alias{DownloadSearchedTaxa}
 \title{Download Page Content From EOL}
 \description{
-	This function will take a string of taxa and search EOL database for the EOL pages. If it finds a match, it will download the EOL page.  
+	These functions will take a string of EOL IDs or taxonomic names and search EOL database for the pages. If it finds a match, it will download the EOL page.  
 }
 \usage{
 DownloadEOLpages(pages, to.file=TRUE, MyKey=NULL, verbose=TRUE)
@@ -18,7 +18,7 @@ DownloadSearchedTaxa(ListOfTaxa, to.file=TRUE, MyKey=NULL, exact=TRUE, verbose=T
 	\item{exact}{Should taxon name match exactly in EOL or fuzzy match}
 }
 \details{
-	\code{DownloadEOLpages} will download EOL pages based on the EOL unique identifyer number (EOLID). Each taxon is associated with a unique identifier.  These numbers are used to match EOL pages with hierarchy pages and keep track of taxonomic changes. If you are unsure of these numbers you can use \code{DownloadSearchedTaxa}, which will search for either an exact taxonomic match (exact=TRUE) or use fuzzy name matching to catch spelling errors (exact=FALSE).  This will automatically recover the matching EOL ID and download or save the XML data accordingly. 
+	\code{DownloadEOLpages} will download EOL pages based on the EOL unique identifyer number (EOL ID). Each taxon is associated with a unique identifier.  These numbers are used to match EOL pages with hierarchy pages and keep track of taxonomic changes. If you are unsure of these numbers you can use \code{DownloadSearchedTaxa}, which will search for either an exact taxonomic match (exact=TRUE) or use fuzzy name matching to catch spelling errors (exact=FALSE).  This will automatically recover the matching EOL ID and download or save the XML data accordingly. 
 	
 	To generate an api key (MyKey), register with EOL and find it under your profile.  
 }
@@ -31,11 +31,11 @@ DownloadSearchedTaxa(ListOfTaxa, to.file=TRUE, MyKey=NULL, exact=TRUE, verbose=T
 }
 \examples{
 #Download taxa files to working directory in R
-	\dontrun{DownloadEOLpages(c(1,2,3), to.file=TRUE, MyKey)}
-	\dontrun{DownloadSearchedTaxa("Anolis_carolinensis", to.file=TRUE, exact=TRUE)}
+\dontrun{DownloadEOLpages(c(1,2,3), to.file=TRUE, MyKey)}
+\dontrun{DownloadSearchedTaxa("Anolis_carolinensis", to.file=TRUE, exact=TRUE)}
 
 #Save data as an R object rather than download files
-	MyTaxa <- c("Camelus bactrianus", "Camelus dromedarius")
-	MyEOLs <- DownloadSearchedTaxa(MyTaxa, to.file=FALSE)
-	#save(MyEOLs, file="MyEOLs.rda")
+MyTaxa <- c("Camelus bactrianus", "Camelus dromedarius")
+MyEOLs <- DownloadSearchedTaxa(MyTaxa, to.file=FALSE)
+#save(MyEOLs, file="MyEOLs.rda")
 }
