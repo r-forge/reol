@@ -1,4 +1,4 @@
-DownloadEOLpages <- function(pages, to.file=T, MyKey=NULL, verbose=TRUE) {
+DownloadEOLpages <- function(pages, to.file=TRUE, MyKey=NULL, verbose=TRUE) {
   EOLpages <- vector("list", length=length(pages))
   for (i in sequence(length(pages))) {
     pageNum <- pages[i]

@@ -1,29 +1,41 @@
-\name{DownloadSearchedTaxa}
+\name{DownloadEOLpages}
+\alias{DownloadEOLpages}
 \alias{DownloadSearchedTaxa}
 \title{Download Page Content From EOL}
 \description{
-	This function will take a sting of taxa and search EOL database for the EOL pages. If it finds a match, it will download the EOL page.  
+	This function will take a string of taxa and search EOL database for the EOL pages. If it finds a match, it will download the EOL page.  
 }
 \usage{
+DownloadEOLpages(pages, to.file=TRUE, MyKey=NULL, verbose=TRUE)
 DownloadSearchedTaxa(ListOfTaxa, to.file=TRUE, MyKey=NULL, exact=TRUE, verbose=TRUE)
 }
 \arguments{
-	\item{ListOfTaxa}{List of EOL taxa to search and download EOL pages}
+	\item{pages}{EOL page numbers to download}
 	\item{to.file}{Whether to download data to a file}
 	\item{MyKey}{An optional user identification key to identify yourself to EOL}
-	\item{exact}{Should taxon name match exactly in EOL or fuzzy match}
 	\item{verbose}{An optional print statement during download}	
+	\item{ListOfTaxa}{List of EOL taxa to search and download EOL pages}
+	\item{exact}{Should taxon name match exactly in EOL or fuzzy match}
 }
 \details{
-	To generate an api key, register with EOL and find it under your profile.  
+	\code{DownloadEOLpages} will download EOL pages based on the EOL unique identifyer number (EOLID). Each taxon is associated with a unique identifier.  These numbers are used to match EOL pages with hierarchy pages and keep track of taxonomic changes. If you are unsure of these numbers you can use \code{DownloadSearchedTaxa}, which will search for either an exact taxonomic match (exact=TRUE) or use fuzzy name matching to catch spelling errors (exact=FALSE).  This will automatically recover the matching EOL ID and download or save the XML data accordingly. 
+	
+	To generate an api key (MyKey), register with EOL and find it under your profile.  
 }
 \value{
-	XML file(s) downloaded to working directory.
+	Either an XML file(s) downloaded to working directory or as an R object saved in the workspace.
 }
 \seealso{
 	\code{\link{DownloadEOLpages}}
+	\code{\link{DownloadHierarchy}}
 }
 \examples{
-	#DownloadSearchedTaxa("Anolis_carolinensis", F)
-	#DownloadEOLpages(phy$tip.label, to.file=T, MyKey)
+#Download taxa files to working directory in R
+	\dontrun{DownloadEOLpages(c(1,2,3), to.file=TRUE, MyKey)}
+	\dontrun{DownloadSearchedTaxa("Anolis_carolinensis", to.file=TRUE, exact=TRUE)}
+
+#Save data as an R object rather than download files
+	MyTaxa <- c("Camelus bactrianus", "Camelus dromedarius")
+	MyEOLs <- DownloadSearchedTaxa(MyTaxa, to.file=FALSE)
+	#save(MyEOLs, file="MyEOLs.rda")
 }

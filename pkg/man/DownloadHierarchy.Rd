@@ -4,12 +4,12 @@
 \alias{BestProvider}
 \title{Download Hierarchy Content From Contributors}
 \description{
-	This function will use the EOL pages to find the provider information.  Hierarchies get downloaded as "hier" pages rather than "eol" pages. Providers contribute information on taxonomic rankings, hierarchical tree structure, synonyms, etc.  
+	This function will use the EOL pages to find the provider information (ie which providers contribute information to the pages).  Hierarchies get downloaded as "hier" pages rather than "eol" pages. Providers contribute information on taxonomic rankings, hierarchical tree structure, synonyms, etc.  Some providers only contribute certain kinds of information; for example not all will provide synonyms or taxonomic hierarchy information.  
 }
 \usage{
-DownloadHierarchy(MyEOLs, to.file=TRUE, database=NULL, verbose=TRUE)
 ProviderCount(MyEOLs,verbose=FALSE)
 BestProvider(MyEOLs)
+DownloadHierarchy(MyEOLs, to.file=TRUE, database=NULL, verbose=TRUE)
 }
 \arguments{
 	\item{MyEOLs}{A vector of filenames for downloaded EOL pages}
@@ -19,13 +19,20 @@ BestProvider(MyEOLs)
 }
 
 \value{
-	XML file(s) downloaded to working directory.
+	\code{ProviderCount} will give a named vector back of all of the providers that contribute to the set of MyEOLs taxa, and the number of taxa they contribute.  The maximum number of species a provider can contribute will be the number of taxa in MyEOLs.  Usually, ITIS, GBIF, and NCBI are top contributors (but this varies depending on scale). \code{BestProvider} will choose the top provider from this list (even if there are ties).  \code{DownloadHierarchy} will download the XML information either to a file (to.file=TRUE) or as a single R object as a list (to.file=FALSE).
+}
+\seealso{
+	\code{\link{DownloadEOLpages}}
+	\code{\link{DownloadSearchedTaxa}}
 }
 \examples{
-	#ProviderCount(MyEOLs, verbose=True)
-	#BestProvider(MyEOLs)
+	data(MyEOLs)
+	ProviderCount(MyEOLs, verbose=TRUE)
+	BestProvider(MyEOLs)
 	
-	#DownloadHierarchy(MyEOLs, to.file=F, BestProvider(MyEOLs))
+	#Download data from whichever provider has the most coverage
+	\dontrun{MyHiers <- DownloadHierarchy(MyEOLs, to.file=TRUE, BestProvider(MyEOLs))}
 	
-	#DownloadHierarchy(MyEOLs, "FishBase (Fish Species)")
+	#Or download from a specific provider
+	MyHiers <- DownloadHierarchy(MyEOLs, FALSE, database="NCBI Taxonomy")
 }
