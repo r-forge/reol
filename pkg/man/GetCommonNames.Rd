@@ -2,7 +2,8 @@
 \alias{GetCommonNames}
 \title{Gather Common Name Information}
 \description{
-	This function gathers each species common names and the language with which they are associated. 
+	This function gathers each species common names and the language with which
+	they are associated. 
 }
 \usage{
 GetCommonNames(MyEOLs, output = c("detail", "counts"))

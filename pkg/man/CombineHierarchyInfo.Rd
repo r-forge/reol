@@ -2,7 +2,8 @@
 \alias{CombineHierarchyInfo}
 \title{Combine Hierarchy Info}
 \description{
-	This function combines different hierarchy dataframes into one. 
+	This function combines different hierarchy dataframes into one. Mostly an
+	internal function for tree and edge label building. 
 }
 \usage{
 CombineHierarchyInfo(MyHiers)
@@ -14,5 +15,6 @@ CombineHierarchyInfo(MyHiers)
 	Returns a combined data frame. 
 }
 \examples{
-	#CombineHierarchyInfo(MyHiers)
+	data(MyHiers)
+	CombineHierarchyInfo(MyHiers)
 }

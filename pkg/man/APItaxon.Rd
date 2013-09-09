@@ -14,5 +14,5 @@
 	Returns an encoded taxon name.
 }
 \examples{
-	#APItaxon("Ursus americanus)
+	APItaxon("Ursus americanus")
 }

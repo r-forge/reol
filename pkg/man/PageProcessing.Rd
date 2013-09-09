@@ -18,5 +18,7 @@ PageProcessing(MyEOL)
 	#PageProcessing("eol1.xml") 
 	
 	#or reads in an R object
-	#PageProcessing(eol1)
+	data(MyEOLs)
+	PageProcessing(MyEOLs[1])
+
 }

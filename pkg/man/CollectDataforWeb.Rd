@@ -7,7 +7,8 @@
 
 \title{Collect Data from EOL Pages for Website}
 \description{
-	    These functions will readin, and scrape content off the downloaded EOL pages.  This is for building the data table on eoldata.org.    
+	    These functions will read and scrape content off the downloaded EOL
+	    pages. This is for building the data table on eoldata.org.
 }
 \usage{
 CollectDataforWeb(MyEOL)
@@ -24,5 +25,6 @@ DataProcessing(res)
 	Appends EOL data to a table. 
 }
 \examples{
-	#CollectDataforWeb(MyEOL)
+	data(MyEOLs)
+	CollectDataforWeb(MyEOL[1])
 }

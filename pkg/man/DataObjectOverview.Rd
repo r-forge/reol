@@ -4,7 +4,9 @@
 \alias{DataObjectOverview}
 \title{Data Object Information}
 \description{
-	These functions gather information about the number of kinds of data objects. For example, it will tell you that there are 3 gifs 12 jpgs, and 34 text objects.        
+	These functions gather information about the number of kinds of data
+	objects. For example, it will tell you that there are 3 gifs 12 jpgs, and 34
+	text objects.        
 }
 \usage{
 GatherDataObjectInformation(MyEOL)
@@ -21,7 +23,9 @@ DataObjectOverview(MyEOLs, verbose=TRUE)
 }
 \examples{
 data(MyEOLs)
+DataObjectOverview(MyEOLs)
+
+
 \dontrun{GatherDataObjectInformation(MyEOLs[[1]])}
 \dontrun{CombineDataObjectInformation(MyEOLs)}
-DataObjectOverview(MyEOLs)
 }

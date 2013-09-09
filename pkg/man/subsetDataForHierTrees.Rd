@@ -2,7 +2,7 @@
 \alias{subsetDataForHierTrees}
 \title{Subset Data For Hier Trees}
 \description{
-	This function removed repeat taxonomic units, undefined clades, and NAs from hierarchy information. 
+	This internal function removes repeat taxonomic units, undefined clades, and NAs from hierarchy information. 
 }
 \usage{
 subsetDataForHierTrees(oneFileHier)
@@ -12,7 +12,4 @@ subsetDataForHierTrees(oneFileHier)
 }
 \value{
 	Returns a subset data frame. 
-}
-\examples{
-	#subsetDataForHierTrees(OneFileHierarchy(MyHiers[1]))
 }

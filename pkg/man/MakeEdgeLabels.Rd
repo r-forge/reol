@@ -25,14 +25,15 @@ MakeEdgeLabels(MyHiers, label="all")
 	Also "edges" in the edgeLabels function is not the actual edge number, but the row.  Our functions reflect this.    
 }
 \seealso{
-\code{MakeHierarchyTree}
+\code{\link{MakeHierarchyTree}}
 }
 \examples{
 data(MyHiers)
-Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)
+Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=TRUE)
 edges <- MakeEdgeLabels(MyHiers)
-	
-plot(Tree)
-edgelabels(text=names(edges), edge=edges)  
 
+plot(Tree, show.node.label=TRUE)
+	
+plot(Tree, show.node.label=FALSE)
+edgelabels(text=names(edges), edge=edges)  
 }

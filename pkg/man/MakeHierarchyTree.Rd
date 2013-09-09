@@ -27,9 +27,9 @@ NodeLabelList(MyHiers, label="all")
 	This tree displays taxonomic structuring only and is not the result of a phylogenetic analysis. Alos note that not all providers return hierarchy information, if errors or no tree is returned it is likely that information is missing and you may have to use another provider.
 }
 \seealso{
-\code{ProviderCount}
-\code{DownloadHierarchy}
-\code{MakeEdgeLabels}
+\code{\link{ProviderCount}}
+\code{\link{DownloadHierarchy}}
+\code{\link{MakeEdgeLabels}}
 }
 \examples{
 data(MyHiers)

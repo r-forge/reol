@@ -13,7 +13,3 @@ RepeatDataToDrop(TreeData)
 \value{
 	Returns boolean response of whether to drop data or not.
 }
-\examples{
-	#apply(TreeData, 2, RepeatDataToDrop)
-	#RepeatDataToDrop(TreeData[,1)
-}

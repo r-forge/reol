@@ -14,6 +14,6 @@
 	Returns a message with "success" or "failure".
 }
 \examples{
+	PingAPI()
 	#PingAPI(MyKey)
-	#PingAPI()
 }

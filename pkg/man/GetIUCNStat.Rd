@@ -2,7 +2,8 @@
 \alias{GetIUCNStat}
 \title{Gather IUCN Status for EOL Pages}
 \description{
-	This function gathers IUCN threat statuses from EOL pages if they are reported.  
+	This function gathers IUCN threat statuses from EOL pages if they are
+	reported.  
 }
 \usage{
 GetIUCNStat(MyEOLs)

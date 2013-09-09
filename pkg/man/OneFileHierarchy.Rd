@@ -14,5 +14,6 @@ OneFileHierarchy(MyHier)
 	Returns a data frame where each row is a hierarchical taxonomic unit. 
 }
 \examples{
-	#OneFileHierarchy(MyHiers[1])
+	data(MyHiers)
+	OneFileHierarchy(MyHiers[1])
 }

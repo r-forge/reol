@@ -14,5 +14,10 @@ GetHierID(MyHier)
 	Returns a hierarchical concept ID. 
 }
 \examples{
-	#GetHierID("hier51323249.xml")
+	#Works with a single page
+	GetHierID("hier51323249.xml")
+
+	#Or works with a list or vector of names
+	data(MyHiers)
+	GetHierID(MyHiers)
 }

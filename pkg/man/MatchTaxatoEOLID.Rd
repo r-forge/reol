@@ -11,17 +11,14 @@ MatchTaxatoEOLID(ListOfTaxa, exact=TRUE)
 	\item{ListOfTaxa}{List of EOL taxa to search and download EOL pages}
 	\item{exact}{Should taxon name match exactly in EOL or fuzzy match}
 }
-\details{
-	To generate an api key, register with EOL and find it under your profile.  
-}
 \value{
-	XML file(s) downloaded to working directory.
+	Returns a table with the submitted taxon name, returned taxon name, and eol ID number.
 }
 \seealso{
 	\code{\link{DownloadEOLpages}}
 	\code{\link{DownloadSearchedTaxa}}
 }
 \examples{
-	#bears<-c("Ursus americanus", "Ursus thibetanus", "Ursus maritimus")
-	#MatchTaxatoEOLID(bears)
+	bears<-c("Ursus americanus", "Ursus thibetanus", "Ursus maritimus")
+	MatchTaxatoEOLID(bears, exact=TRUE)
 }

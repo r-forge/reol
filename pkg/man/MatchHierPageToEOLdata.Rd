@@ -15,12 +15,13 @@ MatchHierPageToEOLdata(MyHiers, EOLdata)
 	Returns a data frame where each row is a taxonomic unit. This is especially helpful if you wish to plot EOL data on a taxonomic tree (see example).
 }
 \examples{
-#plotting richness scores
-data(MyEOLs)
-data(MyHiers)
-Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)  
-MyData <- MatchHierPageToEOLdata(MyHiers, GetRichnessScores(MyEOLs))
-plot(Tree, label.offset=1, x.lim=10)
-tiplabels(round(as.numeric(MyData[,3])), 1:6, col="Blue", frame="none", bg="clear",adj = -0.5)
-title(main="Richness scores")
+	#plotting richness scores
+	data(MyEOLs)
+	data(MyHiers)
+	Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)  
+	MyData <- MatchHierPageToEOLdata(MyHiers, GetRichnessScores(MyEOLs))
+	plot(Tree, label.offset=1, x.lim=10)
+	tiplabels(round(as.numeric(MyData[,3])), 1:6, col="Blue", frame="none",
+		bg="clear",adj = -0.5)
+	title(main="Richness scores")
 }

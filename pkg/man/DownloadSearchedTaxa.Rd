@@ -1,4 +1,4 @@
-\name{DownloadEOLpages}
+\name{DownloadSearchedTaxa}
 \alias{DownloadEOLpages}
 \alias{DownloadSearchedTaxa}
 \title{Download Page Content From EOL}
@@ -26,7 +26,6 @@ DownloadSearchedTaxa(ListOfTaxa, to.file=TRUE, MyKey=NULL, exact=TRUE, verbose=T
 	Either an XML file(s) downloaded to working directory or as an R object saved in the workspace.
 }
 \seealso{
-	\code{\link{DownloadEOLpages}}
 	\code{\link{DownloadHierarchy}}
 }
 \examples{

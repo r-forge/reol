@@ -9,11 +9,14 @@ GatherSynonyms(MyHiers, output = c("detail", "counts"))
 }
 \arguments{
 	\item{MyHiers}{A vector of filenames for downloaded hierarchy pages}
-	\item{output}{"detail" will return a data frame with each taxon and their taxonomic synonyms; "counts" will return a dataframe with each species and synonym counts.}
-
+	\item{output}{"detail" will return a data frame with each taxon and their taxonomic 
+	synonyms; "counts" will return a dataframe with each species and synonym counts.}
 }
 \value{
-	When output="detail", it returns a data frame where each row is the taxonomic unit that has a synonym, the hierarchy ID, and the synonym.  When output="counts", each taxon is included whether it has a synonym or not.  Rather than report the synonyms, it reports the number of synonyms for each.
+	When output is set to detail, it returns a data frame where each row is the 
+	taxonomic unit that has a synonym, the hierarchy ID, and the synonym.  
+	When output="counts", each taxon is included whether it has a synonym or not.  
+	Rather than report the synonyms, it reports the number of synonyms for each.
 }
 \examples{
 data(MyHiers)

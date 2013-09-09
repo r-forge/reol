@@ -16,4 +16,5 @@ FirstTwo(name)
 \examples{
 	FirstTwo("Galanthus cilicicus Baker")
 	FirstTwo("Galanthus peshmenii A.P.Davis & C.D.Brickell")
+	FirstTwo("Galanthus")
 }
