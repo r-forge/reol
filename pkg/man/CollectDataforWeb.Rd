@@ -26,5 +26,5 @@ DataProcessing(res)
 }
 \examples{
 	data(MyEOLs)
-	CollectDataforWeb(MyEOL[1])
+	CollectDataforWeb(MyEOLs[1])
 }
