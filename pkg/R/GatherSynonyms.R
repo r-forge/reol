@@ -1,5 +1,5 @@
 GatherSynonyms <- function(MyHiers, output=c("detail", "counts")) {
-  if(any(is.na(names(MyHiers)))) {
+  if(any(is.na(GetHierID(MyHiers)))) {
   	whichNAs <- which(is.na(names(MyHiers)))
   	MyHiers <- MyHiers[-whichNAs]
   }
