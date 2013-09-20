@@ -29,7 +29,7 @@ MakeEdgeLabels <- function(MyHiers, label="all"){
   }
   justInts <- which(tipList[,3] == "internal")   #to get row to use in ape
   names(justInts) <- tipList[tipList[,3] == "internal",4]  #associate taxon name with row
-  any(names(justInts) == 0)
+  if(any(names(justInts) == 0))
     justInts <- justInts[-which(names(justInts) == 0)]
   return(justInts)
 }
