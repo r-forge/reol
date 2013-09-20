@@ -14,20 +14,22 @@ whichEdge <- function(phy, taxa) {
 }
 
 MakeEdgeLabels <- function(MyHiers, label="all"){
-  if(any(is.na(names(MyHiers)))) {
+  if(any(is.na(GetHierID(MyHiers)))) {
   	whichNAs <- which(is.na(names(MyHiers)))
   	MyHiers <- MyHiers[-whichNAs]
   }
-  NodeLabelList <- NodeLabelList(MyHiers)
-  if(length(NodeLabelList) == 0)
+  nodeList <- NodeLabelList(MyHiers)
+  if(length(nodeList) == 0)
     stop("Node Labels can not be created, because hierarchy information doesn't overlap")
   phy <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)
   tipList <- getTipList(phy)
-  edges <- c(lapply(NodeLabelList, whichEdge, phy=phy), recursive=T)
+  edges <- c(lapply(nodeList, whichEdge, phy=phy), recursive=T)
   for(i in 1:length(edges)){
     tipList[which(tipList[,2] == edges[i]),4] <- names(edges[i])  #will write over tax set group names
   }
   justInts <- which(tipList[,3] == "internal")   #to get row to use in ape
   names(justInts) <- tipList[tipList[,3] == "internal",4]  #associate taxon name with row
+  any(names(justInts) == 0)
+    justInts <- justInts[-which(names(justInts) == 0)]
   return(justInts)
 }

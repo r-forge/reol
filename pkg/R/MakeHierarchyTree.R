@@ -16,19 +16,11 @@ CombineHierarchyInfo <- function(MyHiers) {
   return(CombFiles)
 }
 
-RepeatDataToDrop <- function(TreeData) {
-  #Drop any columns that are the same or NA
-  if(length(unique(TreeData)) == 1)
-    return(TRUE)
-  if(any(is.na(TreeData)))
-    return(TRUE)
-  else
-    return(FALSE)
-}
-
 MakeTreeData <- function(MyHiers) {
-  if(any(MyHiers == "hierNA.xml"))
-  	MyHiers <- MyHiers[-which(MyHiers == "hierNA.xml")]
+  if(any(is.na(GetHierID(MyHiers)))) {
+  	whichNAs <- which(is.na(names(MyHiers)))
+  	MyHiers <- MyHiers[-whichNAs]
+  }
   CombFiles <- CombineHierarchyInfo(MyHiers) #in future get these to read in just once
   whichColumns <- unique(CombFiles[,2])
   TreeData <- data.frame(matrix(nrow=length(MyHiers), ncol=length(whichColumns)))
@@ -44,17 +36,38 @@ MakeTreeData <- function(MyHiers) {
   }
   return(TreeData)
 }  
+
+RepeatDataToDrop <- function(TreeData) {
+  #Drop any columns that are the same or NA
+  if(length(unique(TreeData)) == 1)
+    return(TRUE)
+  if(any(is.na(TreeData)))
+    return(TRUE)
+  else
+    return(FALSE)
+}
+
+DropADim <- function(TreeData) {
+  while(any(is.na(TreeData))){
+    rowPercent <- apply(is.na(TreeData), 1, sum)/dim(TreeData)[2]
+    colPercent <- apply(is.na(TreeData), 2, sum)/dim(TreeData)[1]
+    maxPercent <- max(c(rowPercent, colPercent))
+    if(maxPercent %in% rowPercent)
+      TreeData  <- TreeData[-which(rowPercent == maxPercent), ]
+    if(maxPercent %in% colPercent)
+      TreeData  <- TreeData[,-which(colPercent == maxPercent)]
+  }
+  return(TreeData)
+}
+
   
 MakeHierarchyTree <- function(MyHiers, includeNodeLabels=TRUE) {
-  if(any(is.na(names(MyHiers)))) {
-  	whichNAs <- which(is.na(names(MyHiers)))
-  	MyHiers <- MyHiers[-whichNAs]
-  }
   TreeData <- MakeTreeData(MyHiers)
+  TreeData <- DropADim(TreeData)
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
   pattern <- paste("~", paste(colnames(TreeData)[-which(apply(TreeData, 2, RepeatDataToDrop))], sep="", collapse="/"), sep="")
   if(pattern == "~")
-    stop("non overlapping taxa, no tree can be built")
+    stop("Error in Tree Building: try MakeTreeData(MyHiers) to see if there is hierarchical data associated with your files")
   fo <- as.formula(pattern)
   TreeData <- as.data.frame(apply(TreeData, 2, factor))
   tree <- ladderize(as.phylo.formula(fo, data=TreeData))  
@@ -70,6 +83,7 @@ ReturnTaxSet <- function(Taxon, TreeData) {
 
 NodeLabelList <- function(MyHiers, label="all") {  #also make an option to just label genus, etc. 
   TreeData <- MakeTreeData(MyHiers)
+  TreeData <- DropADim(TreeData)
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
   prunedTreeData <- TreeData[,-DataToDrop]
   if(label == "all")
