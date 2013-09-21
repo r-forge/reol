@@ -10,7 +10,16 @@ getTipList <- function(phy) {
 
 whichEdge <- function(phy, taxa) {
   tipList <- getTipList(phy)
-  return(min(as.numeric(tipList[tipList[,4] %in% taxa, 1])))
+  nodes <- tipList[tipList[, 4] %in% taxa, 1]
+  if(length(unique(nodes)) == 1)  #works for finding tip ancestors
+    return(as.numeric(unique(nodes)))
+  else {
+    while(length(unique(nodes)) > 1) {
+      rows <- suppressWarnings(which(tipList[,2] == nodes))
+      nodes <- as.numeric(tipList[rows, 1])
+    }
+  return(as.numeric(unique(nodes)))
+  }  
 }
 
 MakeEdgeLabels <- function(MyHiers, label="all"){

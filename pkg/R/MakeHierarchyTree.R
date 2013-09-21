@@ -8,10 +8,17 @@ subsetDataForHierTrees <- function(oneFileHier) {
 
 CombineHierarchyInfo <- function(MyHiers) {
   CombFiles <- matrix(nrow=0, ncol=7)
+  longestHierTaxon <- 0  #start at 0, so it accepts the first file as the longest
   for(i in sequence(length(MyHiers))) {
     oneFile <- subsetDataForHierTrees(OneFileHierarchy(MyHiers[i]))
-    CombFiles <- rbind(CombFiles, oneFile)
-    CombFiles <- as.data.frame(CombFiles, stringsAsFactors=FALSE)
+    if(length(oneFile[,2]) > longestHierTaxon) {
+      longestHierTaxon <- max(longestHierTaxon, length(oneFile[,2]))    
+      CombFiles <- rbind(oneFile, CombFiles)  #puts longest hierarchies first in combined files
+      CombFiles <- as.data.frame(CombFiles, stringsAsFactors=FALSE)
+      #print(paste("longest dim = ", longestHierTaxon))
+    }
+    else
+      CombFiles <- rbind(CombFiles, oneFile)  #puts shorter hierarchies after
   }
   return(CombFiles)
 }
@@ -21,7 +28,7 @@ MakeTreeData <- function(MyHiers) {
   	whichNAs <- which(is.na(names(MyHiers)))
   	MyHiers <- MyHiers[-whichNAs]
   }
-  CombFiles <- CombineHierarchyInfo(MyHiers) #in future get these to read in just once
+  CombFiles <- CombineHierarchyInfo(MyHiers) 
   whichColumns <- unique(CombFiles[,2])
   TreeData <- data.frame(matrix(nrow=length(MyHiers), ncol=length(whichColumns)))
   colnames(TreeData) <- whichColumns
