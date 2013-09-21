@@ -9,6 +9,7 @@ getTipList <- function(phy) {
 }
 
 whichEdge <- function(phy, taxa) {
+  rootNode <- nTips(phy) +1
   tipList <- getTipList(phy)
   nodes <- tipList[tipList[, 4] %in% taxa, 1]
   if(length(unique(nodes)) == 1)  
@@ -17,6 +18,8 @@ whichEdge <- function(phy, taxa) {
     while(length(unique(nodes)) > 1) {
       rows <- which(tipList[,2] %in% nodes)
       nodes <- as.numeric(tipList[rows, 1])
+      if(rootNode %in% nodes)
+        nodes <- nodes[-which(nodes==rootNode)]
     }
   return(as.numeric(unique(nodes)))
   }  
@@ -33,7 +36,6 @@ MakeEdgeLabels <- function(MyHiers, label="all"){
   phy <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)
   tipList <- getTipList(phy)
   edges <- c(lapply(nodeList, whichEdge, phy=phy), recursive=T)
-##not finding names when it leads to the root
   for(i in sequence(length(edges))){
     if(length(tipList[which(tipList[,2] == edges[i]),4]) > 0)
       tipList[which(tipList[,2] == edges[i]),4] <- names(edges[i])  #will write over tax set group names
