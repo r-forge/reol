@@ -9,7 +9,7 @@ getTipList <- function(phy) {
 }
 
 whichEdge <- function(phy, taxa) {
-  rootNode <- nTips(phy) +1
+  rootNode <- Ntip(phy) +1
   tipList <- getTipList(phy)
   nodes <- tipList[tipList[, 4] %in% taxa, 1]
   if(length(unique(nodes)) == 1)  
