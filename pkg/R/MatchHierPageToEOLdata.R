@@ -20,3 +20,38 @@ MatchHierPageToEOLdata <- function(MyHiers, EOLdata){
   matchedData <- data.frame(matchedData, row.names=1, stringsAsFactors=FALSE)
   return(matchedData)
 }
+
+
+MatchDataToTreeTips <- function(Tree, Data){
+  if(length(grep("HierID", colnames(Data), ignore.case=T)) == 0) 
+    warning("EOLdata must be matched to HierarchyID first, use MatchHierPageToEOLdata(MyHiers, EOLdata)")
+  if(any(is.na(Data)))
+    Data <- Data[-unique(which(is.na(Data), arr.ind=TRUE)[,1]),]
+  if(length(grep("Taxon", colnames(Data), ignore.case=T)) > 0)  #if taxon names are a column, then make them rownames
+    rownames(Data) <- Data[,grep("Taxon", colnames(Data), ignore.case=T)]
+  NewOrderMatchedData <- data.frame(matrix(ncol=dim(Data)[2], nrow=length(Tree$tip.label)))
+  colnames(NewOrderMatchedData) <- colnames(Data)
+  for(i in sequence(length(Tree$tip.label))){
+    if(any(rownames(Data) %in% Tree$tip.label[i])) {
+      NewOrderMatchedData[i,] <- Data[which(rownames(Data) %in% Tree$tip.label[i]),]
+      rownames(NewOrderMatchedData)[i] <- rownames(Data[which(rownames(Data) %in% Tree$tip.label[i]),])
+    }
+    else {
+      NewOrderMatchedData[i,] <- rep(NA, dim(NewOrderMatchedData)[2])
+      rownames(NewOrderMatchedData)[i] <- Tree$tip.label[i]
+    }
+  }
+  if(all(rownames(NewOrderMatchedData) == Tree$tip.label))
+    return(NewOrderMatchedData)
+  else
+    warning("something wonky in data")
+}
+
+
+
+
+
+
+
+
+

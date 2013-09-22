@@ -6,11 +6,32 @@ subsetDataForHierTrees <- function(oneFileHier) {
   return(oneFileHier)
 }
 
+MergeTaxonomies <- function(i, j) {
+  combined <- i
+  `%ni%` = Negate(`%in%`) 
+  outlier.pos <- which(j %ni% i)
+  for (outlier.index in sequence(length(outlier.pos))) {
+    if (outlier.pos[outlier.index] == 1) {
+      warning("Haven't dealt with this yet")
+      return(combined)
+    }
+    previous.pos <- which(grepl(j[outlier.pos[outlier.index] - 1], combined))[1]
+    if ((previous.pos+1) <= length(combined))
+      combined <- c(combined[1:previous.pos], j[outlier.pos[outlier.index]], combined[(previous.pos+1): length(combined)]) 
+    else
+      combined <- c(combined[1:previous.pos], j[outlier.pos[outlier.index]])
+  }
+  return(combined)
+}
+
 CombineHierarchyInfo <- function(MyHiers) {
   CombFiles <- matrix(nrow=0, ncol=7)
   longestHierTaxon <- 0  #start at 0, so it accepts the first file as the longest
+  MergedTax <- NULL
   for(i in sequence(length(MyHiers))) {
     oneFile <- subsetDataForHierTrees(OneFileHierarchy(MyHiers[i]))
+    Tax <- oneFile[,2]
+    MergedTax <- MergeTaxonomies(Tax, MergedTax)
     if(length(oneFile[,2]) > longestHierTaxon) {
       longestHierTaxon <- max(longestHierTaxon, length(oneFile[,2]))    
       CombFiles <- rbind(oneFile, CombFiles)  #puts longest hierarchies first in combined files
@@ -20,7 +41,8 @@ CombineHierarchyInfo <- function(MyHiers) {
     else
       CombFiles <- rbind(CombFiles, oneFile)  #puts shorter hierarchies after
   }
-  return(CombFiles)
+  
+  return(list(CombFiles, MergedTax))
 }
 
 MakeTreeData <- function(MyHiers) {
@@ -28,8 +50,8 @@ MakeTreeData <- function(MyHiers) {
   	whichNAs <- which(is.na(names(MyHiers)))
   	MyHiers <- MyHiers[-whichNAs]
   }
-  CombFiles <- CombineHierarchyInfo(MyHiers) 
-  whichColumns <- unique(CombFiles[,2])
+  CombFiles <- CombineHierarchyInfo(MyHiers)
+  whichColumns <- CombFiles[[2]]
   TreeData <- data.frame(matrix(nrow=length(MyHiers), ncol=length(whichColumns)))
   colnames(TreeData) <- whichColumns
   for(i in sequence(length(MyHiers))) {
