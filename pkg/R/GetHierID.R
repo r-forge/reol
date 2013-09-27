@@ -3,5 +3,7 @@ GetHierID <- function(MyHier){
     conceptID <- gsub("^\\D+|\\D+$", "", names(MyHier))
   if(class(MyHier) == "character")
     conceptID <- gsub("^\\D+|\\D+$", "", MyHier)
+  if(any(conceptID == ""))
+    conceptID[which(conceptID == "")] <- NA
   return(conceptID)
 }

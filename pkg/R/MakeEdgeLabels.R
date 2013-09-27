@@ -27,7 +27,7 @@ whichEdge <- function(phy, taxa) {
 
 MakeEdgeLabels <- function(MyHiers, label="all"){
   if(any(is.na(GetHierID(MyHiers)))) {
-  	whichNAs <- which(is.na(names(MyHiers)))
+  	whichNAs <- which(is.na(GetHierID(MyHiers)))
   	MyHiers <- MyHiers[-whichNAs]
   }
   nodeList <- NodeLabelList(MyHiers)

@@ -48,7 +48,7 @@ CombineHierarchyInfo <- function(MyHiers) {
 
 MakeTreeData <- function(MyHiers) {
   if(any(is.na(GetHierID(MyHiers)))) {
-  	whichNAs <- which(is.na(names(MyHiers)))
+  	whichNAs <- which(is.na(GetHierID(MyHiers)))
   	MyHiers <- MyHiers[-whichNAs]
   }
   CombFiles <- CombineHierarchyInfo(MyHiers)
