@@ -34,7 +34,8 @@ DownloadSearchedTaxa(ListOfTaxa, to.file=TRUE, MyKey=NULL, exact=TRUE, verbose=T
 \dontrun{DownloadSearchedTaxa("Anolis_carolinensis", to.file=TRUE, exact=TRUE)}
 
 #Save data as an R object rather than download files
-MyTaxa <- c("Camelus bactrianus", "Camelus dromedarius")
+
+MyTaxa <- c("Camelus", "Camelus dromedarius")
 MyEOLs <- DownloadSearchedTaxa(MyTaxa, to.file=FALSE)
 #save(MyEOLs, file="MyEOLs.rda")
 }
