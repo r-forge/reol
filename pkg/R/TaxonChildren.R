@@ -7,8 +7,8 @@ TaxonChildren <- function (MyHiers){
     whichRows <- which(oneFile[,5] == GetHierID(MyHiers[tax]))
     if(length(whichRows) > 0){
       oneFile <- matrix(oneFile[whichRows,], nrow=length(whichRows))  #find which are to parent
-      if(any(is.na(oneFile[,2])))
-        oneFile <- oneFile[-which(is.na(oneFile[,2])),] #remove any NAs
+      #if(any(is.na(oneFile[,2])))  
+      #  oneFile <- oneFile[-which(is.na(oneFile[,2])),] #remove any NAs
       if(dim(oneFile)[1] > 0){
         for(i in sequence(dim(oneFile)[1])) {
           TC <- rbind(TC, c(Taxon, oneFile[i,c(1,2,4,6)]))
