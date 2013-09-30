@@ -1,22 +1,27 @@
 \name{TaxonChildren}
 \alias{TaxonChildren}
-\title{Gathers A List Of Taxonomic Offspring}
+\alias{TaxonParents}
+\title{Gathers A List Of Taxonomic Parents and Offspring}
 \description{
-	This function goes through the hierarchy pages to collect taxonomic offspring.    
+	This function goes through the hierarchy pages to collect taxonomic offspring and parantage.    
 }
 \usage{
 TaxonChildren(MyHiers)
+TaxonParents(MyHier)
 }
 \arguments{
-	\item{MyHiers}{A vector of filenames for downloaded hierarchy pages}
+	\item{MyHiers}{A vector or single filename for downloaded hierarchy pages}
+	\item{MyHier}{A single filename for downloaded hierarchy pages}
 }
 \value{
-	This function will report the primary offspring of a taxon if the hierarchy page reports this information.  
+	\code{TaxonChildren} will report the primary offspring of a taxon if the hierarchy page reports this information.  \code{TaxonParents} will return the list of taxonomic parentage. 
 }
 \examples{
 #simple example using Reol data:
 data(MyHiers)
 TaxonChildren(MyHiers)
+TaxonParents(MyHiers[1])
+
 
 #Species of Anolis off NCBI
 eolAnolis <- DownloadSearchedTaxa("Anolis", to.file=FALSE)

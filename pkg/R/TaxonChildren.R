@@ -21,3 +21,10 @@ TaxonChildren <- function (MyHiers){
 }
 
 
+TaxonParents <- function(MyHier) {
+  hierID <- GetHierID(MyHier)
+  parents <- subsetDataForHierTrees(OneFileHierarchy(MyHier), hierID)
+  parents <- data.frame(paste(parents[,2], parents[,1]))
+  names(parents) <- ""
+  return(parents)
+}
