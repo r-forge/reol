@@ -72,7 +72,10 @@ CombineDataObjectInformation <- function(MyEOLs, verbose=TRUE) {
 
 
 DataObjectOverview <- function(MyEOLs, verbose=TRUE){
-  cDOI <- CombineDataObjectInformation(MyEOLs, verbose=verbose)  
+  if(length(MyEOLs) == 1)
+    cDOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs))
+  else
+    cDOI <- CombineDataObjectInformation(MyEOLs, verbose=verbose)  
   UniqueTaxa <- unique(cDOI[,which(names(cDOI) == "Taxon")])
   UniqueDataTypes <- unique(cDOI[,which(names(cDOI) == "mimeType")])
   overview <- matrix(nrow=length(UniqueTaxa), ncol=2+length(UniqueDataTypes))
