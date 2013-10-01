@@ -100,11 +100,18 @@ DropADim <- function(TreeData) {
 }
 
   
-MakeHierarchyTree <- function(MyHiers, includeNodeLabels=TRUE) {
+MakeHierarchyTree <- function(MyHiers, includeNodeLabels=TRUE, userRanks=NULL) {
   TreeData <- MakeTreeData(MyHiers)
-  TreeData <- DropADim(TreeData)
-  DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
-  pattern <- paste("~", paste(colnames(TreeData)[-which(apply(TreeData, 2, RepeatDataToDrop))], sep="", collapse="/"), sep="")
+  if(!is.null(userRanks)){
+    TreeData <- TreeData[,which(colnames(TreeData) %in% userRanks)]
+    TreeData <- DropADim(TreeData)
+    pattern <- paste("~", paste(colnames(TreeData), sep="", collapse="/"), sep="")   
+  }
+  else{
+    TreeData <- DropADim(TreeData)
+    DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
+    pattern <- paste("~", paste(colnames(TreeData)[-which(apply(TreeData, 2, RepeatDataToDrop))], sep="", collapse="/"), sep="")
+  }
   if(pattern == "~")
     stop("Error in Tree Building: try MakeTreeData(MyHiers) to see if there is hierarchical data associated with your files")
   fo <- as.formula(pattern)
