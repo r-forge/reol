@@ -16,6 +16,10 @@ TaxonParents(MyHier)
 \value{
 	\code{TaxonChildren} will report the primary offspring of a taxon if the hierarchy page reports this information.  \code{TaxonParents} will return the list of taxonomic parentage. 
 }
+\seealso{
+\code{\link{MakeTreeData}}
+}
+
 \examples{
 #simple example using Reol data:
 data(MyHiers)

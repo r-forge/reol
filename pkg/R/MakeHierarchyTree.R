@@ -1,5 +1,5 @@
 subsetDataForHierTrees <- function(oneFileHier, HierID) {
-  oneFileHier <- oneFileHier[1:which(oneFileHier[,6] == HierID),]  #stop at HierID to avoid taking children
+  oneFileHier <- matrix(oneFileHier[1:which(oneFileHier[,6] == HierID),], ncol=7)  #stop at HierID to avoid taking children
   oneFileHier  <- matrix(oneFileHier[which(!duplicated(oneFileHier[,2])),], ncol=7) #delete repeats
   oneFileHier  <- matrix(oneFileHier[!is.na(oneFileHier[,2]),], ncol=7) #delete NAs; ncol is hard coded to be 7 columns so that R doesn't convert to a vector when there is a single row.  
   if(any(oneFileHier[,2] == "unranked clade"))
@@ -30,19 +30,28 @@ CombineHierarchyInfo <- function(MyHiers) {
   longestHierTaxon <- 0  #start at 0, so it accepts the first file as the longest
   MergedTax <- NULL
   for(i in sequence(length(MyHiers))) {
-    oneFile <- subsetDataForHierTrees(OneFileHierarchy(MyHiers[i]), GetHierID(MyHiers[i]))
-    Tax <- oneFile[,2]
-    MergedTax <- MergeTaxonomies(Tax, MergedTax)
-    if(length(oneFile[,2]) > longestHierTaxon) {
-      longestHierTaxon <- max(longestHierTaxon, length(oneFile[,2]))    
-      CombFiles <- rbind(oneFile, CombFiles)  #puts longest hierarchies first in combined files
-      CombFiles <- as.data.frame(CombFiles, stringsAsFactors=FALSE)
-      #print(paste("longest dim = ", longestHierTaxon))
+    OFH <- OneFileHierarchy(MyHiers[i])
+    #print(i)
+    if(dim(OFH)[1] <= 1)
+      cat(paste(OFH[1,1], "has no higher taxonomic rankings, so it must be dropped\n"))
+    if(dim(OFH)[1] > 1){
+      oneFile <- subsetDataForHierTrees(OFH, GetHierID(MyHiers[i]))
+      if(dim(oneFile)[1] <= 1)
+        cat(paste(OFH[1,1], "has no higher taxonomic rankings, so it must be dropped\n"))
+      if(dim(oneFile)[1] > 1) {
+        Tax <- oneFile[,2]
+        MergedTax <- MergeTaxonomies(Tax, MergedTax)
+        if(length(oneFile[,2]) > longestHierTaxon) {
+          longestHierTaxon <- max(longestHierTaxon, length(oneFile[,2]))    
+          CombFiles <- rbind(oneFile, CombFiles)  #puts longest hierarchies first in combined files
+          CombFiles <- as.data.frame(CombFiles, stringsAsFactors=FALSE)
+          #print(paste("longest dim = ", longestHierTaxon))
+        }
+      }
+      else
+        CombFiles <- rbind(CombFiles, oneFile)  #puts shorter hierarchies after
     }
-    else
-      CombFiles <- rbind(CombFiles, oneFile)  #puts shorter hierarchies after
   }
-  
   return(list(CombFiles, MergedTax))
 }
 
