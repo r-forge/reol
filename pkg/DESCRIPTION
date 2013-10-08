@@ -1,6 +1,6 @@
 Package: Reol
-Version: 1.27
-Date: 2013-09-30
+Version: 1.28
+Date: 2013-10-8
 Title: R interface to the Encyclopedia of Life
 Author: Barb Banbury <bbanbury@utk.edu>, Brian O'Meara <bomeara@utk.edu>
 Maintainer: Barb Banbury <bbanbury@utk.edu>
