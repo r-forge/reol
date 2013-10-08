@@ -1,4 +1,8 @@
 GetCommonNames <- function(MyEOLs, output=c("detail", "counts")) {
+  if(any(is.na(GetHierID(MyEOLs)))) {
+  	whichNAs <- which(is.na(GetHierID(MyEOLs)))
+  	MyEOLs <- MyEOLs[-whichNAs]
+  }
   output <- match.arg(output)
   CommonNames <- matrix(nrow=0, ncol=4)
   colnames(CommonNames) <- c("Taxon", "eolID", "Common Name", "language")

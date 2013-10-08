@@ -72,14 +72,19 @@ CombineDataObjectInformation <- function(MyEOLs, verbose=TRUE) {
 
 
 DataObjectOverview <- function(MyEOLs, verbose=TRUE){
+  if(any(is.na(GetHierID(MyEOLs)))) {
+  	whichNAs <- which(is.na(GetHierID(MyEOLs)))
+  	MyEOLs <- MyEOLs[-whichNAs]
+  }
   if(length(MyEOLs) == 1)
     cDOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs))
+
   else
     cDOI <- CombineDataObjectInformation(MyEOLs, verbose=verbose)  
-  UniqueTaxa <- unique(cDOI[,which(names(cDOI) == "Taxon")])
-  UniqueDataTypes <- unique(cDOI[,which(names(cDOI) == "mimeType")])
-  overview <- matrix(nrow=length(UniqueTaxa), ncol=2+length(UniqueDataTypes))
-  colnames(overview) <- c("Taxon", "eolID", UniqueDataTypes)
+    UniqueTaxa <- unique(cDOI[,which(names(cDOI) == "Taxon")])
+    UniqueDataTypes <- unique(cDOI[,which(names(cDOI) == "mimeType")])
+    overview <- matrix(nrow=length(UniqueTaxa), ncol=2+length(UniqueDataTypes))
+    colnames(overview) <- c("Taxon", "eolID", UniqueDataTypes)
   for(h in sequence(length(UniqueTaxa))) {
     taxonInfo <- NULL
     cDOIsubset <- cDOI[which(cDOI[,1] == UniqueTaxa[h]),]

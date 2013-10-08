@@ -1,4 +1,8 @@
 GatherProviderDataFrame <- function(MyEOLs, extended.output=FALSE) {
+  if(any(is.na(GetHierID(MyEOLs)))) {
+  	whichNAs <- which(is.na(GetHierID(MyEOLs)))
+  	MyEOLs <- MyEOLs[-whichNAs]
+  }
   Providers <- data.frame(matrix(nrow=1, ncol=2))
   for(i in sequence(length(MyEOLs))) {
     res <- PageProcessing(MyEOLs[i])$taxonConcept

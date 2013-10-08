@@ -1,4 +1,8 @@
 GetReferences <- function(MyEOLs, output=c("detail", "counts")) {
+  if(any(is.na(GetHierID(MyEOLs)))) {
+  	whichNAs <- which(is.na(GetHierID(MyEOLs)))
+  	MyEOLs <- MyEOLs[-whichNAs]
+  }
   output <- match.arg(output)
   ReferenceList <- matrix(nrow=0, ncol=3)
   colnames(ReferenceList) <- c("Taxon", "eolID", "Reference")
