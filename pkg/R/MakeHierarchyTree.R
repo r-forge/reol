@@ -99,7 +99,20 @@ DropADim <- function(TreeData) {
   return(TreeData)
 }
 
+AutofillTaxonNames <- function(TreeData){
+  #autofill in missing data with child taxon names
+  for(i in sequence(dim(TreeData)[1])){
+    columnNAs <- which(is.na(TreeData[i,]))
+    columnInfo <- which(!is.na(TreeData[1,]))
+    for (j in rev(sequence(length(columnNAs)))){
+      ChildTaxonPlace <- which(columnInfo > columnNAs[j])[1]
+      TreeData[i, columnNAs[j]] <- paste(colnames(TreeData)[columnNAs[j]], TreeData[i, columnInfo[ChildTaxonPlace]], sep="")
+    }
+  }
+  return(TreeData)
+}
   
+
 MakeHierarchyTree <- function(MyHiers, includeNodeLabels=TRUE, userRanks=NULL) {
   TreeData <- MakeTreeData(MyHiers)
   if(!is.null(userRanks)){
@@ -108,7 +121,8 @@ MakeHierarchyTree <- function(MyHiers, includeNodeLabels=TRUE, userRanks=NULL) {
     pattern <- paste("~", paste(colnames(TreeData), sep="", collapse="/"), sep="")   
   }
   else{
-    TreeData <- DropADim(TreeData)
+    TreeData <- AutofillTaxonNames(TreeData)
+    #TreeData <- DropADim(TreeData)
     DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
     pattern <- paste("~", paste(colnames(TreeData)[-which(apply(TreeData, 2, RepeatDataToDrop))], sep="", collapse="/"), sep="")
   }

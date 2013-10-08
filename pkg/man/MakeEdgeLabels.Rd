@@ -1,6 +1,7 @@
 \name{MakeEdgeLabels}
 \alias{MakeEdgeLabels}
 \alias{getTipList}
+\alias{WhatToDoWithDuplicateEdgeNames}
 \alias{whichEdge}
 \title{Creates Edge Labels for Hierarchy Trees}
 \description{
@@ -9,20 +10,24 @@
 \usage{
 getTipList(phy)
 whichEdge(phy, taxa)
-MakeEdgeLabels(MyHiers, label="all")
+WhatToDoWithDuplicateEdgeNames(edgeLabels, duplicateEdgeLabels)
+MakeEdgeLabels(MyHiers, label="all", duplicateEdgeLabels="recent")
 }
 \arguments{
 	\item{phy}{phylogenetic tree in the class phylo}	
 	\item{MyHiers}{A vector of hier pages OR a list of XMLs as an R object}
 	\item{taxa}{Vector of tip taxa}
+	\item{edgeLabels}{Vector of edge labels with the same associated branch}
+	\item{duplicateEdgeLabels}{Choice of which edge label to prefer: recent, oldest, or combined}
 	\item{label}{Which hierarchical units should be included in the edge labels}
 }
 \value{
-	\code{MakeEdgeLabels} returns a vector of "edges" and their clade names to be used in apes edgeLabels function.  \code{getTipList} and \code{whichEdge} are internal functions for \code{MakeEdgeLabel}. 
+	\code{MakeEdgeLabels} returns a vector of "edges" and their clade names to be used in apes edgeLabels function.  \code{getTipList}, \code{WhatToDoWithDuplicateEdgeNames}, and \code{whichEdge} are internal functions for \code{MakeEdgeLabel}. 
 }
 \details{
 	Note that "edges" are slightly different than node labels, in that edges are plotted along the center of the branch rather than at a node.  Plotting both is redundant, but one or the other may look better aesthetically. 
 	Also "edges" in the edgeLabels function is not the actual edge number, but the row.  Our functions reflect this.    
+	There will likely be cases where edges have more than one hierarchical name (for example, the branch to camel species will have the genus Camelus and the family Camelidae). When making edge labels, you have the choice of using the most recent hierarchical name (genus in the camel example) or the oldest (family in camels), or you can choose to combine the names so that you can see all of them (Camilidae.Camelus).  
 }
 \seealso{
 \code{\link{MakeHierarchyTree}}
@@ -34,6 +39,10 @@ edges <- MakeEdgeLabels(MyHiers)
 
 plot(Tree, show.node.label=TRUE)
 	
+plot(Tree, show.node.label=FALSE)
+edgelabels(text=names(edges), edge=edges)  
+
+edges <- MakeEdgeLabels(MyHiers, duplicateEdgeLabels="oldest")
 plot(Tree, show.node.label=FALSE)
 edgelabels(text=names(edges), edge=edges)  
 }

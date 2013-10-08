@@ -1,5 +1,6 @@
 \name{MakeHierarchyTree}
 \alias{MakeTreeData}
+\alias{AutofillTaxonNames}
 \alias{MakeHierarchyTree}
 \alias{ReturnTaxSet}
 \alias{NodeLabelList}
@@ -10,6 +11,7 @@
 }
 \usage{
 MakeTreeData(MyHiers)
+AutofillTaxonNames(TreeData)
 MakeHierarchyTree(MyHiers, includeNodeLabels=TRUE, userRanks=NULL)
 ReturnTaxSet(Taxon, TreeData)
 NodeLabelList(MyHiers, label="all")
@@ -26,7 +28,7 @@ MergeTaxonomies(i, j)
 	\item{j}{A Hierarchical Taxonomy (ex: Class, Genus, Species)}
 }
 \value{
-\code{MakeTreeData} returns a data frame with data for use in \code{MakeHierarchyTree} function, but can also be used independently. \code{MakeHierarchyTree} returns taxonomic tree in the class "phylo". \code{ReturnTaxSet} will return the tree tips for the taxonomic group requested, this is mostly an internal function for creating node labels. \code{MakeNodeLabels} will return a list of tip labels per internal node.  This can be used to create node labels to plot on the tree. \code{MergeTaxonomies} will merge two taxonomies into a single list that preserves hierarchical structure. It is mostly for internal use.  
+\code{MakeTreeData} returns a data frame with data for use in \code{MakeHierarchyTree} function, but can also be used independently. \code{AutofillTaxonNames} is an internal function that deals with missing data in TreeData. \code{MakeHierarchyTree} returns taxonomic tree in the class "phylo". \code{ReturnTaxSet} will return the tree tips for the taxonomic group requested, this is mostly an internal function for creating node labels. \code{MakeNodeLabels} will return a list of tip labels per internal node.  This can be used to create node labels to plot on the tree. \code{MergeTaxonomies} will merge two taxonomies into a single list that preserves hierarchical structure. It is mostly for internal use.  
 }
 \details{
 	This tree displays taxonomic structuring only and is not the result of a phylogenetic analysis. Alos note that not all providers return hierarchy information, if errors or no tree is returned it is likely that information is missing and you may have to use another provider.
