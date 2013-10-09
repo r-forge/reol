@@ -3,10 +3,8 @@ PageProcessing <- function(MyEOL) {
     res <- xmlToList(xmlRoot(xmlParse(MyEOL, getDTD=FALSE)), simplify=FALSE)
   if(class(MyEOL) == "list")
     res <- xmlToList(xmlRoot(xmlParse(MyEOL[[1]], getDTD=FALSE)), simplify=FALSE)
-  if(!is.null(res$error)) {
-    #system(paste("mv", MyEOL, "../TRASH/"))
-    stop(paste("Bad file", MyEOL, "has an error"))
-    }
+  if(!is.null(res$error))
+    stop(paste("Bad file", MyEOL, "has an error:", res$error))
   return(res)
 }
 
