@@ -1,6 +1,6 @@
 MatchHierPageToEOLdata <- function(MyHiers, EOLdata){
-  if(any(is.na(names(MyHiers)))) {
-  	whichNAs <- which(is.na(names(MyHiers)))
+  if(any(is.na(GetHierID(MyHiers)))) {
+  	whichNAs <- which(is.na(GetHierID(MyHiers)))
   	MyHiers <- MyHiers[-whichNAs]
   }
   if(class(MyHiers) == "list")
