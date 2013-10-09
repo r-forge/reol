@@ -9,3 +9,12 @@ PageProcessing <- function(MyEOL) {
     }
   return(res)
 }
+
+
+RemoveNAFiles <- function(MyFiles){
+  if(any(is.na(GetHierID(MyFiles)))) {
+    whichNAs <- which(is.na(GetHierID(MyFiles)))
+    MyFiles <- MyFiles[-whichNAs]
+  }
+  return(MyFiles)
+}

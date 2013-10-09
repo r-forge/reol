@@ -1,8 +1,5 @@
 MatchHierPageToEOLdata <- function(MyHiers, EOLdata){
-  if(any(is.na(GetHierID(MyHiers)))) {
-  	whichNAs <- which(is.na(GetHierID(MyHiers)))
-  	MyHiers <- MyHiers[-whichNAs]
-  }
+  MyHiers <- RemoveNAFiles(MyHiers)
   if(class(MyHiers) == "list")
     fileNames <- names(MyHiers)
   else

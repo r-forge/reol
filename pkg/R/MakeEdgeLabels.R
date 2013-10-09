@@ -31,10 +31,7 @@ WhatToDoWithDuplicateEdgeNames <- function(edgeLabels, duplicateEdgeLabels){
 }
 
 MakeEdgeLabels <- function(MyHiers, label="all", duplicateEdgeLabels="recent"){
-  if(any(is.na(GetHierID(MyHiers)))) {
-  	whichNAs <- which(is.na(GetHierID(MyHiers)))
-  	MyHiers <- MyHiers[-whichNAs]
-  }
+  MyHiers <- RemoveNAFiles(MyHiers)
   nodeList <- NodeLabelList(MyHiers, label="all")
   if(length(nodeList) == 0)
     stop("Node Labels can not be created, because hierarchy information doesn't overlap")

@@ -1,4 +1,5 @@
 TaxonChildren <- function (MyHiers){
+  MyHiers <- RemoveNAFiles(MyHiers)
   TC <- matrix(ncol=5, nrow=0)
   colnames(TC) <- c("Taxon", "TaxonChild", "TaxonRank", "eolID", "hierID")  
   for(tax in sequence(length(MyHiers))){

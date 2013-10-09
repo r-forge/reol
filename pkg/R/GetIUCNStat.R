@@ -1,8 +1,5 @@
 GetIUCNStat <- function(MyEOLs) {
-  if(any(is.na(GetHierID(MyEOLs)))) {
-  	whichNAs <- which(is.na(GetHierID(MyEOLs)))
-  	MyEOLs <- MyEOLs[-whichNAs]
-  }
+  MyEOLs <- RemoveNAFiles(MyEOLs)
   IUCN <- matrix(ncol=3, nrow=length(MyEOLs))
   colnames(IUCN) <- c("Taxon", "eolID", "IUCNstat")
   for(i in sequence(length(MyEOLs))){

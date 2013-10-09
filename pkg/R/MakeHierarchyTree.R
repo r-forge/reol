@@ -56,10 +56,7 @@ CombineHierarchyInfo <- function(MyHiers) {
 }
 
 MakeTreeData <- function(MyHiers) {
-  if(any(is.na(GetHierID(MyHiers)))) {
-  	whichNAs <- which(is.na(GetHierID(MyHiers)))
-  	MyHiers <- MyHiers[-whichNAs]
-  }
+  MyHiers <- RemoveNAFiles(MyHiers)
   CombFiles <- CombineHierarchyInfo(MyHiers)
   whichColumns <- CombFiles[[2]]
   TreeData <- data.frame(matrix(nrow=length(MyHiers), ncol=length(whichColumns)))
@@ -160,6 +157,12 @@ NodeLabelList <- function(MyHiers, label="all") {  #also make an option to just 
   ListOfSpeciesPerNode <- lapply(uniqueTaxSets, ReturnTaxSet, TreeData=prunedTreeData)
   names(ListOfSpeciesPerNode) <- uniqueTaxSets
   ListOfSpeciesPerNode <- ListOfSpeciesPerNode[which(lapply(ListOfSpeciesPerNode, length) > 1)]
+  if(any(c(lapply(ListOfSpeciesPerNode, duplicated), recursive=T))){
+    for(i in rev(sequence(length(ListOfSpeciesPerNode)))){
+      if(any(duplicated(ListOfSpeciesPerNode[[i]])))
+        ListOfSpeciesPerNode <- ListOfSpeciesPerNode[-i]
+    }
+}
   return(ListOfSpeciesPerNode)
 }
 

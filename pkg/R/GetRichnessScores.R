@@ -1,8 +1,5 @@
 GetRichnessScores <- function(MyEOLs) {
-  if(any(is.na(GetHierID(MyEOLs)))) {
-  	whichNAs <- which(is.na(GetHierID(MyEOLs)))
-  	MyEOLs <- MyEOLs[-whichNAs]
-  }
+  MyEOLs <- RemoveNAFiles(MyEOLs)
   richnessDF <- matrix(nrow=length(MyEOLs), ncol=3)
   for(i in sequence(length(MyEOLs))) {
     richnessData <- rep(NA, 3)

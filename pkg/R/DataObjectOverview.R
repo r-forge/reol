@@ -72,10 +72,7 @@ CombineDataObjectInformation <- function(MyEOLs, verbose=TRUE) {
 
 
 DataObjectOverview <- function(MyEOLs, verbose=TRUE){
-  if(any(is.na(GetHierID(MyEOLs)))) {
-  	whichNAs <- which(is.na(GetHierID(MyEOLs)))
-  	MyEOLs <- MyEOLs[-whichNAs]
-  }
+  MyEOLs <- RemoveNAFiles(MyEOLs)
   if(length(MyEOLs) == 1)
     cDOI <- suppressWarnings(GatherDataObjectInformation(MyEOLs))
 
