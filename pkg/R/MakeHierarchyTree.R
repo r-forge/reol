@@ -103,7 +103,10 @@ AutofillTaxonNames <- function(TreeData){
   #autofill in missing data with child taxon names
   for(i in sequence(dim(TreeData)[1])){
     columnNAs <- which(is.na(TreeData[i,]))
-    columnInfo <- which(!is.na(TreeData[1,]))
+    columnInfo <- which(!is.na(TreeData[i,]))
+    if(max(columnNAs) > max(columnInfo)){
+      columnNAs <- columnNAs[-which(columnNAs > max(columnInfo))]
+    }
     for (j in rev(sequence(length(columnNAs)))){
       ChildTaxonPlace <- which(columnInfo > columnNAs[j])[1]
       TreeData[i, columnNAs[j]] <- paste(colnames(TreeData)[columnNAs[j]], TreeData[i, columnInfo[ChildTaxonPlace]], sep="")
@@ -117,15 +120,20 @@ MakeHierarchyTree <- function(MyHiers, includeNodeLabels=TRUE, userRanks=NULL) {
   TreeData <- MakeTreeData(MyHiers)
   if(!is.null(userRanks)){
     TreeData <- TreeData[,which(colnames(TreeData) %in% userRanks)]
-    TreeData <- DropADim(TreeData)
+    TreeData <- AutofillTaxonNames(TreeData)   
+    #TreeData <- DropADim(TreeData)
     pattern <- paste("~", paste(colnames(TreeData), sep="", collapse="/"), sep="")   
   }
   else{
     TreeData <- AutofillTaxonNames(TreeData)
-    #TreeData <- DropADim(TreeData)
-    DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
-    pattern <- paste("~", paste(colnames(TreeData)[-which(apply(TreeData, 2, RepeatDataToDrop))], sep="", collapse="/"), sep="")
+    pattern <- paste("~", paste(colnames(TreeData), sep="", collapse="/"), sep="")
+    if(any(apply(TreeData, 2, RepeatDataToDrop))) {
+      DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
+      pattern <- paste("~", paste(colnames(TreeData)[-DataToDrop], sep="", collapse="/"), sep="")
+    }
   }
+  if(colnames(TreeData[dim(TreeData)[2]]) != strsplit(pattern, "/")[[1]][length(strsplit(pattern, "/")[[1]])])
+    warning(paste("Your hierarchy files contain information to the", colnames(TreeData[dim(TreeData)[2]]), "level, however not all taxa have this information. In order to make a tree the tips must align, so information was pruned to", strsplit(pattern, "/")[[1]][length(strsplit(pattern, "/")[[1]])]))
   if(pattern == "~")
     stop("Error in Tree Building: try MakeTreeData(MyHiers) to see if there is hierarchical data associated with your files")
   fo <- as.formula(pattern)
@@ -143,7 +151,8 @@ ReturnTaxSet <- function(Taxon, TreeData) {
 
 NodeLabelList <- function(MyHiers, label="all") {  #also make an option to just label genus, etc. 
   TreeData <- MakeTreeData(MyHiers)
-  TreeData <- DropADim(TreeData)
+  TreeData <- AutofillTaxonNames(TreeData)   
+  #TreeData <- DropADim(TreeData)
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
   prunedTreeData <- TreeData[,-DataToDrop]
   if(label == "all")

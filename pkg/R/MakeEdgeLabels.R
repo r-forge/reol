@@ -38,7 +38,7 @@ MakeEdgeLabels <- function(MyHiers, label="all", duplicateEdgeLabels="recent"){
   nodeList <- NodeLabelList(MyHiers, label="all")
   if(length(nodeList) == 0)
     stop("Node Labels can not be created, because hierarchy information doesn't overlap")
-  phy <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)
+  phy <- suppressWarnings(MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE))
   tipList <- getTipList(phy)
   edges <- c(lapply(nodeList, whichEdge, phy=phy), recursive=T)
   for(i in sequence(length(edges))){
