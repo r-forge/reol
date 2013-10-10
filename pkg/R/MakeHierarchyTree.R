@@ -157,9 +157,10 @@ ReturnTaxSet <- function(Taxon, TreeData) {
 NodeLabelList <- function(MyHiers, label="all", missingData) {  #also make an option to just label genus, etc. 
   TreeData <- MakeTreeData(MyHiers)
   TreeData <- AutofillTaxonNames(TreeData)   
-  #TreeData <- DropADim(TreeData)
-  if(missingData == "pruneTaxa")
-    TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
+  if(any(is.na(TreeData))){
+    if(missingData == "pruneTaxa")
+      TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
+  }
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
   prunedTreeData <- TreeData[,-DataToDrop]
   if(label == "all")

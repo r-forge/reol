@@ -15,7 +15,7 @@ whichEdge(phy, taxa)
 node.leaves(phy, node)
 node.offspring(phy, node)
 WhatToDoWithDuplicateEdgeNames(edgeLabels, duplicateEdgeLabels)
-MakeEdgeLabels(MyHiers, label="all", duplicateEdgeLabels="oldest")
+MakeEdgeLabels(MyHiers, label = "all", missingData = c("pruneTaxa", "pruneRank"), duplicateEdgeLabels = "oldest")
 }
 \arguments{
 	\item{phy}{A tree in the class phylo}	
@@ -24,14 +24,15 @@ MakeEdgeLabels(MyHiers, label="all", duplicateEdgeLabels="oldest")
 	\item{taxa}{Vector of tip taxa}
 	\item{edgeLabels}{Vector of edge labels with the same associated branch}
 	\item{duplicateEdgeLabels}{Choice of which edge label to prefer: recent, oldest, or combined}
+	\item{missingData}{If tip taxa are not all the same taxonomic rank, should Reol cleave out taxa or hierarchical rank first}
 	\item{label}{Which hierarchical units should be included in the edge labels}
 }
 \value{
-	\code{MakeEdgeLabels} returns a vector of "edges" and their clade names to be used in apes edgeLabels function.  \code{getTipList}, \code{WhatToDoWithDuplicateEdgeNames}, and \code{whichEdge} are internal functions for \code{MakeEdgeLabel}. 
+	\code{MakeEdgeLabels} returns a vector of edges and their clade names to be used in apes edgeLabels function.  \code{getTipList}, \code{WhatToDoWithDuplicateEdgeNames}, and \code{whichEdge} are internal functions for \code{MakeEdgeLabel}. 
 }
 \details{
-	Note that "edges" are slightly different than node labels, in that edges are plotted along the center of the branch rather than at a node.  Plotting both is redundant, but one or the other may look better aesthetically. 
-	Also "edges" in the edgeLabels function is not the actual edge number, but the row.  Our functions reflect this.    
+	Note that edges are slightly different than node labels, in that edges are plotted along the center of the branch rather than at a node.  Plotting both is redundant, but one or the other may look better aesthetically. 
+	Also edges in the edgeLabels function is not the actual edge number, but the row.  Our functions reflect this.    
 	There will likely be cases where edges have more than one hierarchical name (for example, the branch to camel species will have the genus Camelus and the family Camelidae). When making edge labels, you have the choice of using the most recent hierarchical name (genus in the camel example) or the oldest (family in camels), or you can choose to combine the names so that you can see all of them (Camilidae.Camelus).  
 }
 \seealso{
@@ -39,8 +40,8 @@ MakeEdgeLabels(MyHiers, label="all", duplicateEdgeLabels="oldest")
 }
 \examples{
 data(MyHiers)
-Tree <- MakeHierarchyTree(MyHiers, missingData="pruneTaxa", includeNodeLabels=TRUE)
-edges <- MakeEdgeLabels(MyHiers, missingData="pruneTaxa")
+Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=TRUE)
+edges <- MakeEdgeLabels(MyHiers)
 
 plot(Tree, show.node.label=TRUE)
 	

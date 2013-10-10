@@ -9,8 +9,8 @@ GatherSynonyms(MyHiers, output = c("detail", "counts"))
 }
 \arguments{
 	\item{MyHiers}{A vector of filenames for downloaded hierarchy pages}
-	\item{output}{"detail" will return a data frame with each taxon and their taxonomic 
-	synonyms; "counts" will return a dataframe with each species and synonym counts.}
+	\item{output}{Detail will return a data frame with each taxon and their taxonomic 
+	synonyms; counts will return a dataframe with each species and synonym counts.}
 }
 \value{
 	When output is set to detail, it returns a data frame where each row is the 

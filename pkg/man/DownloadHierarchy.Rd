@@ -4,7 +4,7 @@
 \alias{BestProvider}
 \title{Download Hierarchy Content From Contributors}
 \description{
-	This function will use the EOL pages to find the provider information (ie which providers contribute information to the pages).  Hierarchies get downloaded as "hier" pages rather than "eol" pages. Providers contribute information on taxonomic rankings, hierarchical tree structure, synonyms, etc.  Some providers only contribute certain kinds of information; for example not all will provide synonyms or taxonomic hierarchy information.  
+	This function will use the EOL pages to find the provider information (ie which providers contribute information to the pages).  Hierarchies get downloaded as hier pages rather than eol pages. Providers contribute information on taxonomic rankings, hierarchical tree structure, synonyms, etc.  Some providers only contribute certain kinds of information; for example not all will provide synonyms or taxonomic hierarchy information.  
 }
 \usage{
 ProviderCount(MyEOLs,verbose=FALSE)

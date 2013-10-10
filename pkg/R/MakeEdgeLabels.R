@@ -13,7 +13,7 @@ whichEdge <- function(phy, taxa) {
   nodes <- tipList[tipList[, 4] %in% taxa, 1]
   foundBranch <- FALSE
   while(foundBranch==FALSE) {
-    for(i in unique(nodes)){
+    for(i in as.numeric(unique(nodes))){
       leaves <- node.leaves(phy, i)
       if(all(leaves %in% taxa) && all(taxa %in% leaves)){
         foundBranch <- TRUE
