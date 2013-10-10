@@ -9,17 +9,38 @@ getTipList <- function(phy) {
 }
 
 whichEdge <- function(phy, taxa) {
-  rootNode <- Ntip(phy) +1
   tipList <- getTipList(phy)
   nodes <- tipList[tipList[, 4] %in% taxa, 1]
-  if(length(unique(nodes)) == 1)  
-    return(as.numeric(unique(nodes)))
-  if(length(unique(nodes)) > 1) {
-    if(rootNode %in% nodes)
-      nodes <- nodes[-which(nodes==rootNode)]
-    return(min(as.numeric(unique(nodes))))
-  } 
+  foundBranch <- FALSE
+  while(foundBranch==FALSE) {
+    for(i in unique(nodes)){
+      leaves <- node.leaves(phy, i)
+      if(all(leaves %in% taxa) && all(taxa %in% leaves)){
+        foundBranch <- TRUE
+        return(as.numeric(i))  
+      }
+    }
+    nodes <- tipList[which(tipList[,2] %in% nodes), 1]
+  }
 }
+
+node.leaves<-function(phy, node) {
+  n<-length(phy$tip.label)
+  if(node<= n) return(phy$tip.label[as.numeric(node)])
+    l<-character();
+  d<-node.offspring(phy, node);
+  for(j in d) {
+    if(j <= n) l<-c(l, phy$tip.label[as.numeric(j)])
+    else l<-c(l, node.leaves(phy, j));
+  }
+  return(l);
+}
+
+node.offspring<-function(phy, node) {
+  r<-which(phy$edge[,1]==node)
+  return(phy$edge[r,2])
+}
+
 
 WhatToDoWithDuplicateEdgeNames <- function(edgeLabels, duplicateEdgeLabels){
   if(duplicateEdgeLabels == "recent")
@@ -30,12 +51,12 @@ WhatToDoWithDuplicateEdgeNames <- function(edgeLabels, duplicateEdgeLabels){
     return(paste(names(edgeLabels), sep="", collapse="."))
 }
 
-MakeEdgeLabels <- function(MyHiers, label="all", duplicateEdgeLabels="recent"){
+MakeEdgeLabels <- function(MyHiers, label="all", missingData=c("pruneTaxa", "pruneRank"), duplicateEdgeLabels="oldest"){
   MyHiers <- RemoveNAFiles(MyHiers)
-  nodeList <- NodeLabelList(MyHiers, label="all")
+  nodeList <- NodeLabelList(MyHiers, label="all", missingData)
   if(length(nodeList) == 0)
     stop("Node Labels can not be created, because hierarchy information doesn't overlap")
-  phy <- suppressWarnings(MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE))
+  phy <- suppressWarnings(MakeHierarchyTree(MyHiers, missingData=missingData, includeNodeLabels=FALSE))
   tipList <- getTipList(phy)
   edges <- c(lapply(nodeList, whichEdge, phy=phy), recursive=T)
   for(i in sequence(length(edges))){

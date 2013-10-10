@@ -1,5 +1,7 @@
 \name{MakeEdgeLabels}
 \alias{MakeEdgeLabels}
+\alias{node.leaves}
+\alias{node.offspring}
 \alias{getTipList}
 \alias{WhatToDoWithDuplicateEdgeNames}
 \alias{whichEdge}
@@ -10,11 +12,14 @@
 \usage{
 getTipList(phy)
 whichEdge(phy, taxa)
+node.leaves(phy, node)
+node.offspring(phy, node)
 WhatToDoWithDuplicateEdgeNames(edgeLabels, duplicateEdgeLabels)
-MakeEdgeLabels(MyHiers, label="all", duplicateEdgeLabels="recent")
+MakeEdgeLabels(MyHiers, label="all", duplicateEdgeLabels="oldest")
 }
 \arguments{
-	\item{phy}{phylogenetic tree in the class phylo}	
+	\item{phy}{A tree in the class phylo}	
+	\item{node}{Any node number in the tree}
 	\item{MyHiers}{A vector of hier pages OR a list of XMLs as an R object}
 	\item{taxa}{Vector of tip taxa}
 	\item{edgeLabels}{Vector of edge labels with the same associated branch}
@@ -34,15 +39,15 @@ MakeEdgeLabels(MyHiers, label="all", duplicateEdgeLabels="recent")
 }
 \examples{
 data(MyHiers)
-Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=TRUE)
-edges <- MakeEdgeLabels(MyHiers)
+Tree <- MakeHierarchyTree(MyHiers, missingData="pruneTaxa", includeNodeLabels=TRUE)
+edges <- MakeEdgeLabels(MyHiers, missingData="pruneTaxa")
 
 plot(Tree, show.node.label=TRUE)
 	
 plot(Tree, show.node.label=FALSE)
 edgelabels(text=names(edges), edge=edges)  
 
-edges <- MakeEdgeLabels(MyHiers, duplicateEdgeLabels="oldest")
+edges <- MakeEdgeLabels(MyHiers, missingData="pruneTaxa", duplicateEdgeLabels="recent")
 plot(Tree, show.node.label=FALSE)
 edgelabels(text=names(edges), edge=edges)  
 }
