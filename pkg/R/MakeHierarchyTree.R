@@ -127,8 +127,10 @@ MakeHierarchyTree <- function(MyHiers, missingData=c("pruneTaxa", "pruneRank"), 
     TreeData <- AutofillTaxonNames(TreeData)
     pattern <- paste("~", paste(colnames(TreeData), sep="", collapse="/"), sep="")
     if(any(apply(TreeData, 2, RepeatDataToDrop))) {
-      if(missingData == "pruneTaxa")
-        TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
+      if(any(is.na(TreeData))){
+        if(missingData == "pruneTaxa")
+          TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
+      }
       DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
       pattern <- paste("~", paste(colnames(TreeData)[-DataToDrop], sep="", collapse="/"), sep="")
     }
