@@ -53,23 +53,23 @@ WhatToDoWithDuplicateEdgeNames <- function(edgeLabels, duplicateEdgeLabels){
 
 MakeEdgeLabels <- function(MyHiers, label="all", missingData=NULL, duplicateEdgeLabels="oldest"){
   MyHiers <- RemoveNAFiles(MyHiers)
-  print(missingData)
   nodeList <- NodeLabelList(MyHiers, label="all", missingData=missingData)
   if(length(nodeList) == 0)
     stop("Node Labels can not be created, because hierarchy information doesn't overlap")
   phy <- suppressWarnings(MakeHierarchyTree(MyHiers, missingData=missingData, includeNodeLabels=FALSE))
   tipList <- getTipList(phy)
   edges <- c(lapply(nodeList, whichEdge, phy=phy), recursive=T)
-  for(i in sequence(length(edges))){
-    #reduce duplicate edge labels to either recent/ancestral/combined names  
-    if(length(edges[which(edges == edges[i])]) >= 2) {
-      duplicateEdges <- edges[which(edges == edges[i])]
-      names(edges)[i] <- WhatToDoWithDuplicateEdgeNames(duplicateEdges, duplicateEdgeLabels)
-    }
-  tipList[which(tipList[,2] == edges[i]),4] <- names(edges)[i]
-  }
   if(any(duplicated(names(edges))))
-    edges <- edges[-which(duplicated(names(edges)))]
+    edges <- edges[-which(duplicated(names(edges)))]  
+  if(any(duplicated(edges))){
+    for(i in unique(edges[which(duplicated(edges))])){
+      duplicateEdges <- edges[which(edges == i)]
+      names(edges)[which(edges == i)] <- WhatToDoWithDuplicateEdgeNames(duplicateEdges, duplicateEdgeLabels)
+    }
+  }
+  for(i in sequence(length(edges))){
+    tipList[which(tipList[,2] == edges[i]),4] <- names(edges)[i]
+  }
   justInts <- which(tipList[,3] == "internal")   #to get row to use in ape
   names(justInts) <- tipList[tipList[,3] == "internal",4]  #associate taxon name with row
   if(any(names(justInts) == 0))
