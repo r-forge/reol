@@ -12,7 +12,7 @@
 \usage{
 MakeTreeData(MyHiers)
 AutofillTaxonNames(TreeData)
-MakeHierarchyTree(MyHiers, missingData=c("pruneTaxa", "pruneRank"), includeNodeLabels=TRUE, userRanks=NULL)
+MakeHierarchyTree(MyHiers, missingData=NULL, includeNodeLabels=TRUE, userRanks=NULL)
 ReturnTaxSet(Taxon, TreeData)
 NodeLabelList(MyHiers, label="all", missingData)
 MergeTaxonomies(i, j)

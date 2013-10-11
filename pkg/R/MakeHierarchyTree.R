@@ -114,8 +114,7 @@ AutofillTaxonNames <- function(TreeData){
 }
   
 
-MakeHierarchyTree <- function(MyHiers, missingData=c("pruneTaxa", "pruneRank"), includeNodeLabels=TRUE, userRanks=NULL) {
-  missingData <- match.arg(missingData)
+MakeHierarchyTree <- function(MyHiers, missingData=NULL, includeNodeLabels=TRUE, userRanks=NULL) {
   TreeData <- MakeTreeData(MyHiers)
   if(!is.null(userRanks)){
     TreeData <- TreeData[,which(colnames(TreeData) %in% userRanks)]
@@ -128,6 +127,8 @@ MakeHierarchyTree <- function(MyHiers, missingData=c("pruneTaxa", "pruneRank"), 
     pattern <- paste("~", paste(colnames(TreeData), sep="", collapse="/"), sep="")
     if(any(apply(TreeData, 2, RepeatDataToDrop))) {
       if(any(is.na(TreeData))){
+        if(is.null(missingData))
+          stop("Tip taxa are differing hierarchical ranks, you need to choose an option in missingData whether to drop taxa or ranks.")
         if(missingData == "pruneTaxa")
           TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
       }

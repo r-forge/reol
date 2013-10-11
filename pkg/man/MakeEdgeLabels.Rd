@@ -15,7 +15,7 @@ whichEdge(phy, taxa)
 node.leaves(phy, node)
 node.offspring(phy, node)
 WhatToDoWithDuplicateEdgeNames(edgeLabels, duplicateEdgeLabels)
-MakeEdgeLabels(MyHiers, label = "all", missingData = c("pruneTaxa", "pruneRank"), duplicateEdgeLabels = "oldest")
+MakeEdgeLabels(MyHiers, label="all", missingData=NULL, duplicateEdgeLabels="oldest")
 }
 \arguments{
 	\item{phy}{A tree in the class phylo}	

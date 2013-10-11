@@ -51,9 +51,10 @@ WhatToDoWithDuplicateEdgeNames <- function(edgeLabels, duplicateEdgeLabels){
     return(paste(names(edgeLabels), sep="", collapse="."))
 }
 
-MakeEdgeLabels <- function(MyHiers, label="all", missingData=c("pruneTaxa", "pruneRank"), duplicateEdgeLabels="oldest"){
+MakeEdgeLabels <- function(MyHiers, label="all", missingData=NULL, duplicateEdgeLabels="oldest"){
   MyHiers <- RemoveNAFiles(MyHiers)
-  nodeList <- NodeLabelList(MyHiers, label="all", missingData)
+  print(missingData)
+  nodeList <- NodeLabelList(MyHiers, label="all", missingData=missingData)
   if(length(nodeList) == 0)
     stop("Node Labels can not be created, because hierarchy information doesn't overlap")
   phy <- suppressWarnings(MakeHierarchyTree(MyHiers, missingData=missingData, includeNodeLabels=FALSE))
