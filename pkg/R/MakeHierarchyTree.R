@@ -116,6 +116,7 @@ AutofillTaxonNames <- function(TreeData){
 
 MakeHierarchyTree <- function(MyHiers, missingData=NULL, includeNodeLabels=TRUE, userRanks=NULL) {
   TreeData <- MakeTreeData(MyHiers)
+  pattern <- paste("~", paste(colnames(TreeData), sep="", collapse="/"), sep="")
   if(!is.null(userRanks)){
     TreeData <- TreeData[,which(colnames(TreeData) %in% userRanks)]
     TreeData <- AutofillTaxonNames(TreeData)   
@@ -123,14 +124,15 @@ MakeHierarchyTree <- function(MyHiers, missingData=NULL, includeNodeLabels=TRUE,
     pattern <- paste("~", paste(colnames(TreeData), sep="", collapse="/"), sep="")   
   }
   else{
-    TreeData <- AutofillTaxonNames(TreeData)
-    pattern <- paste("~", paste(colnames(TreeData), sep="", collapse="/"), sep="")
     if(any(apply(TreeData, 2, RepeatDataToDrop))) {
       if(any(is.na(TreeData))){
-        if(is.null(missingData))
-          stop("Tip taxa are differing hierarchical ranks, you need to choose an option in missingData whether to drop taxa or ranks.")
-        if(missingData == "pruneTaxa")
-          TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
+        TreeData <- AutofillTaxonNames(TreeData)
+        if(colnames(TreeData[dim(TreeData)[2]]) != strsplit(pattern, "/")[[1]][length(strsplit(pattern, "/")[[1]])]){
+          if(is.null(missingData))
+            stop("Tip taxa are differing hierarchical ranks, you need to choose an option in missingData whether to drop taxa or ranks.")
+          if(missingData == "pruneTaxa")
+            TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
+        }
       }
       DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
       pattern <- paste("~", paste(colnames(TreeData)[-DataToDrop], sep="", collapse="/"), sep="")
@@ -157,10 +159,12 @@ ReturnTaxSet <- function(Taxon, TreeData) {
 
 NodeLabelList <- function(MyHiers, label="all", missingData) {  #also make an option to just label genus, etc. 
   TreeData <- MakeTreeData(MyHiers)
-  TreeData <- AutofillTaxonNames(TreeData)   
   if(any(is.na(TreeData))){
-    if(missingData == "pruneTaxa")
-      TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
+    TreeData <- AutofillTaxonNames(TreeData)
+    if(any(is.na(TreeData[,dim(TreeData)[2]]))){
+      if(missingData == "pruneTaxa")
+        TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
+    }
   }
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
   prunedTreeData <- TreeData[,-DataToDrop]
@@ -175,7 +179,7 @@ NodeLabelList <- function(MyHiers, label="all", missingData) {  #also make an op
         ListOfSpeciesPerNode[[i]] <- ListOfSpeciesPerNode[[i]][-which(duplicated(ListOfSpeciesPerNode[[i]]))]
     }
   }
-  if(any(c(lapply(ListOfSpeciesPerNode, length), recursive=T)))
+  if(any(c(lapply(ListOfSpeciesPerNode, length), recursive=T) == 1))
     ListOfSpeciesPerNode <- ListOfSpeciesPerNode[-which(c(lapply(ListOfSpeciesPerNode, length), recursive=T) == 1)]
   return(ListOfSpeciesPerNode)
 }

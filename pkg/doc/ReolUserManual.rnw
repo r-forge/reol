@@ -35,9 +35,9 @@ The first step is to get information from EOL pages to your local machine. There
 There are benefits and drawbacks to which type of download you choose. If you choose to download to files, then a single file will be created for each EOL page you download. These files are small text files, and shouldn't take up much space on your computer, however they will need management in terms of organization. Downloading to the R workspace is a nice alternative to keeping track of files, however there will be a limit of computer memory to how many you can store before having allocation issues. We recommend that if you are going to download a small number of taxa to download as an R object, but if you are downloading a large number of taxa then to save files.  
  
 <<>>=
-GreatApes <- c("Pongo pygmaeus", "Pongo abelii", "Gorilla gorilla", 
-	"Gorilla beringei", "Homo sapiens", "Pan troglodytes", 
-	"Pan paniscus")
+GreatApes <- c( "Pan troglodytes",  "Pan paniscus",
+         "Pongo pygmaeus", "Pongo abelii", "Gorilla gorilla", 
+	"Gorilla beringei", "Homo sapiens")
 DownloadedApes <- DownloadSearchedTaxa(GreatApes, to.file=FALSE, 
 	verbose=F)
 @
@@ -117,10 +117,18 @@ GatherSynonyms(NCBIfiles, "d")
 GatherSynonyms(NCBIfiles, "c")
 @
 
+\subsection{Taxonomic parents and offspring}
+There are a few functions to help determine taxonomic parentage and offspring (if the provider contributes this info).  The function TaxonParents, will give the full hierarchical ranking of any single taxon (note this does not work for multiple hierarchy files).  The function TaxonChildren will return a table of all of the primary offspring from that taxon, for example, if you provide a genus it will return a list of species names or if you provide a species it will return any subspecies.
+
+<<>>=
+TaxonParents(NCBIfiles[1])
+TaxonChildren(NCBIfiles)
+@
+
 \subsection{Creating a Taxonomic Dendrogram}
 EOL providers can also contribute taxonomic hierarchy data. This data can be used to create a tree structure or dendrogram of taxonomic structure. These trees can be used in lieu of a phylogenetic tree if none exists and are a good way to see patterns in the data. These trees can also be used to see taxonomic inconsistencies, either compared to a phylogenetic tree (ie paraphyletic taxa) or among providers. Note, that these trees only represent the taxonomic hierarchy, and are not a replacement for a phylogenetic analysis. 
 
-The tree structure follows the same formatting of the package ape (http://cran.r-project.org/web/packages/ape/), in the class phylo. The benefit is that you can use all of ape's plotting functions to make nice looking trees and mapping of traits. 
+The tree structure follows the same formatting of the package ape (http://cran.r-project.org/web/packages/ape/), in the class phylo. The benefit is that you can use all of ape's plotting functions to make nice looking trees and mapping of traits (these plotting functions are not described in detail here). 
 
 \begin {center}
 <<fig=TRUE>>=
@@ -130,29 +138,77 @@ plot(ApeTree, "p", show.node.label=TRUE, adj=0.5, font=4,
 @
 \end{center}
 
-\textit{Reol} also has a function to create edge labels with the taxonomic group names automatically. In some cases there are multiple taxonomic names for one edge, and at this point it will only print the last one. There is a bit more flexibility with visualization using the edge label functions rather than the node label functions. 
+There are a few options available for creating the tree.  First, the argument includeNodeLabels will write node labels to the tree file a component of the class phylo.  You can see these in the same way as viewing other pieces of the tree object.  You can choose to turn this off if you will be creating edge labels for the tree anyway or just don't care to label anything.  It will take up some computational time depending on how big the tree is, so if you don't plan to label, then it is best to turn them off.  Second, because EOL data can be so easily downloaded and these downloaded files can be of any hierarchical rank, we needed a way to build a tree with missing data.  For example, if several taxa are genera and the rest are species, how will the tips align in the tree?  In this case, you can set the missingData argument to either prune the taxa with the missing information or you can prune the ranks without the information.  In either case, this will not be necessary if all the taxa are of the same rank.  Third, a user can predefine the rankings to use when building the tree, for example if you would like the tree to be build using only the taxon phylum, class, and species you can set userRanks = c("Phylum", "Class", "Species") and it will only take these rankings into account.  Note that this option can change the tree topology!  
+
+\textit{Reol} also has a function to create edge labels with the taxonomic group names automatically. In some cases there are multiple taxonomic names for one edge, and the user can choose whether to print the most recent divergence name, the oldest divergence name, or do a combined name that will display all the names.  In the same way as when making the tree, any missing tip taxon information will have to be dealt with using the argument missingData.  
+
+There is a bit more flexibility with visualization using the edge label functions rather than the node label functions. 
 
 \begin {center}
 <<fig=TRUE>>=
+MakeEdgeLabels(NCBIfiles, duplicateEdgeLabels="oldest")
+MakeEdgeLabels(NCBIfiles, duplicateEdgeLabels="recent")
+MakeEdgeLabels(NCBIfiles, duplicateEdgeLabels="combined")
+
 edges <- MakeEdgeLabels(NCBIfiles)
 plot(ApeTree, "c", show.node.label=FALSE)
 edgelabels(text=names(edges), edge=edges, bg="light gray")
 @
 \end{center}
 
-These trees can be used to plot information about EOL data. For example, if we want to know patterns of the number of common names across our taxa, we can plot that information as a continuous trait along our new taxonomy tree. 
+These trees can be used to plot information about EOL data. For example, if we want to know patterns of the number of common names across our taxa, we can plot that information as a continuous trait along our new taxonomy tree. One word of caution is to use \textit{Reol's} matching functions when plotting text on a tree.  This is especially true when plotting EOL data on a provider hierarchy tree, since the two may not overlap in taxon names or even number of files.  The first matching function is \code{MatchHierPageToEOLdata}, which will create a table of data with hierarchy/provider IDs and their associated EOL data.  We recommend that if you are going to be traversing EOL and Hier pages that you go through this function, since it will match up unique IDs rather than taxon names.  
 
+The second matching function is to aid in plotting data on the taxonomic tree.  Tips in the tree are labeled according to their order in tip.labels, which likely will not match up with the order of your EOL input files.  There are different ways that you can ensure plotting the correct data with its matching tip (for example plotting each tip at a time), however the function \code{MatchDataToTreeTips} will do it automatically.  This function creates a new table, where each row is a tip taxon and data gets populated to that row in the correct order (if no data exists for that tip, then it is left as NA as a place holder).  For this function, you will need a tree and data that contains hierIDs, either data scraped from the hierarchy pages OR EOL data that has been matched using the function \code{MatchHierPageToEOLdata}.  
+
+<<>>=
+MatchHierPageToEOLdata(MyHiers, GetRichnessScores(DownloadedApes))
+MatchDataToTreeTips(ApeTree, MatchHierPageToEOLdata(MyHiers, 
+     GetRichnessScores(DownloadedApes)))
+MatchDataToTreeTips(ApeTree, GatherSynonyms(NCBIfiles, "c"))
+@
+
+A simple example of plotting data.  In this example, we are plotting the number of English common names for each Great Ape species.  
 \begin {center}
 <<fig=TRUE>>=
 CNs <- GetCommonNames(DownloadedApes, output="c")
 plot(ApeTree, label.offset=0.5, x.lim=10, no.margin=TRUE)
 edgelabels(text=names(edges), edge=edges, bg="light blue")
 trans <- CNs[,3]/10
+matched <- MatchDataToTreeTips(ApeTree, MatchHierPageToEOLdata(MyHiers, CNs))
 tiplabels(pch=22, bg=rgb(0,0.5,0.5,trans), cex=2.8, adj=0.7)
-tiplabels(CNs[,3], 1:7, frame="none", bg="clear",adj=-1)
+tiplabels(matched[,3], frame="none", bg="clear",adj=-1)
 @
 \end{center}
 
+ 
+Another simple example of plotting data.  In this example, we are plotting the IUCN status for each Great Ape species.  
+ \begin {center}
+<<fig=TRUE>>=
+ApeData <- MatchDataToTreeTips(ApeTree, 
+     MatchHierPageToEOLdata(NCBIfiles, GetIUCNStat(DownloadedApes)))
+  for(i in sequence(dim(ApeData)[1])) {
+    if(ApeData[i,3] == "Least Concern (LC)") {
+      ApeData[i,4] <- "Khaki"
+      ApeData[i,5] <- "LC"
+    }  
+    else if(ApeData[i,3] == "Endangered (EN)") {
+      ApeData[i,4] <- "Goldenrod"
+      ApeData[i,5] <- "EN"
+    }
+    else if(ApeData[i,3] == "Critically Endangered (CR)") {
+      ApeData[i,4] <- "coral4"
+      ApeData[i,5] <- "CR"
+    }
+  }
+plot(ApeTree, label.offset=0.8, x.lim=11)
+edgelabels(text=names(edges), edge=edges, bg="DarkGray")
+tiplabels(pch=21, bg=ApeData[,4], cex=4, adj = 0.85)
+tiplabels(ApeData[,5], frame="none", bg="clear",adj = -0.3)
+title(main="IUCN Status")
+@
+\end{center}
+
+ 
  
 \end{document}
 
