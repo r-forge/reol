@@ -31,7 +31,6 @@ CombineHierarchyInfo <- function(MyHiers) {
   MergedTax <- NULL
   for(i in sequence(length(MyHiers))) {
     OFH <- OneFileHierarchy(MyHiers[i])
-    #print(i)
     if(dim(OFH)[1] <= 1)
       cat(paste(OFH[1,1], "has no higher taxonomic rankings, so it must be dropped\n"))
     if(dim(OFH)[1] > 1){
@@ -45,7 +44,6 @@ CombineHierarchyInfo <- function(MyHiers) {
           longestHierTaxon <- max(longestHierTaxon, length(oneFile[,2]))    
           CombFiles <- rbind(oneFile, CombFiles)  #puts longest hierarchies first in combined files
           CombFiles <- as.data.frame(CombFiles, stringsAsFactors=FALSE)
-          #print(paste("longest dim = ", longestHierTaxon))
         }
       }
       else
@@ -101,13 +99,15 @@ AutofillTaxonNames <- function(TreeData){
   for(i in sequence(dim(TreeData)[1])){
     columnNAs <- which(is.na(TreeData[i,]))
     columnInfo <- which(!is.na(TreeData[i,]))
-    if(max(columnNAs) > max(columnInfo)){
-      columnNAs <- columnNAs[-which(columnNAs > max(columnInfo))]
-    }
-    for (j in rev(sequence(length(columnNAs)))){
-      ChildTaxonPlace <- which(columnInfo > columnNAs[j])[1]
-      #TreeData[i, columnNAs[j]] <- paste(colnames(TreeData)[columnNAs[j]], TreeData[i, columnInfo[ChildTaxonPlace]], sep="")
-      TreeData[i, columnNAs[j]] <- paste(TreeData[i, columnInfo[ChildTaxonPlace]], sep="")
+    if(any(columnNAs)){
+      if(max(columnNAs) > max(columnInfo)){
+        columnNAs <- columnNAs[-which(columnNAs > max(columnInfo))]
+      }
+      for (j in rev(sequence(length(columnNAs)))){
+        ChildTaxonPlace <- which(columnInfo > columnNAs[j])[1]
+        #TreeData[i, columnNAs[j]] <- paste(colnames(TreeData)[columnNAs[j]], TreeData[i, columnInfo[ChildTaxonPlace]], sep="")
+        TreeData[i, columnNAs[j]] <- paste(TreeData[i, columnInfo[ChildTaxonPlace]], sep="")
+      }
     }
   }
   return(TreeData)
@@ -148,7 +148,7 @@ MakeHierarchyTree <- function(MyHiers, missingData=NULL, includeNodeLabels=TRUE,
   TreeData <- as.data.frame(apply(TreeData, 2, factor))
   tree <- ladderize(as.phylo.formula(fo, data=TreeData))  
   if(includeNodeLabels)
-    tree <- makeNodeLabel(tree, method="u", nodeList=NodeLabelList(MyHiers, "all", missingData=missingData))  #maybe change this later when other options
+    tree <- makeNodeLabel(tree, method="u", nodeList=NodeLabelList(MyHiers, "all", missingData=missingData), fixed=TRUE)  #maybe change this later when other options
   return(tree)
 }
 
@@ -161,7 +161,7 @@ NodeLabelList <- function(MyHiers, label="all", missingData) {  #also make an op
   TreeData <- MakeTreeData(MyHiers)
   if(any(is.na(TreeData))){
     TreeData <- AutofillTaxonNames(TreeData)
-    if(any(is.na(TreeData[,dim(TreeData)[2]]))){
+    if(!is.null(missingData)){
       if(missingData == "pruneTaxa")
         TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
     }
