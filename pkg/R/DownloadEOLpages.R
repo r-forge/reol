@@ -1,4 +1,6 @@
 DownloadEOLpages <- function(pages, to.file=TRUE, MyKey=NULL, verbose=TRUE) {
+  if(Sys.getlocale("LC_ALL") == "C")
+    warning("Sys.getlocale is set to C. In order to read UTF characters, you need to set the locale aspect to UTF-8 using Sys.setlocale")
   EOLpages <- vector("list", length=length(pages))
   for (i in sequence(length(pages))) {
     pageNum <- pages[i]

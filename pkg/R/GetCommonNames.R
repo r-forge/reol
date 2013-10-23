@@ -16,13 +16,15 @@ GetCommonNames <- function(MyEOLs, output=c("detail", "counts")) {
       CNs <- which(names(res) == "commonName")
       taxonCommonNames <- rep(NA, 4)
       for(j in sequence(length(CNs))) {
-        language <- as.character(res[[CNs[j]]]$.attr[which(names(res[[CNs[j]]]$.attr) == "lang")]) #not tidy, but effective for multiple entries
-        taxonCommonNames <- c(taxon, eolID, res[[CNs[j]]]$text, language)
-        CommonNames <- rbind(CommonNames, taxonCommonNames, deparse.level=0)
-        CommonNames <- data.frame(CommonNames, stringsAsFactors=FALSE)
-        if(sum(grepl(language, colnames(CNOverview))) == 0) {
-          CNOverview <- cbind(CNOverview, rep(0, length(MyEOLs)))
-          colnames(CNOverview) <- append(colnames(CNOverview[-dim(CNOverview)[2]]), language)
+        if(any(names(res[[CNs[j]]]) == ".attrs")){
+          language <- as.character(res[[CNs[j]]]$.attr[which(names(res[[CNs[j]]]$.attr) == "lang")]) #not tidy, but effective for multiple entries
+          taxonCommonNames <- c(taxon, eolID, res[[CNs[j]]]$text, language)
+          CommonNames <- rbind(CommonNames, taxonCommonNames, deparse.level=0)
+          CommonNames <- data.frame(CommonNames, stringsAsFactors=FALSE)
+          if(sum(grepl(language, colnames(CNOverview))) == 0) {
+            CNOverview <- cbind(CNOverview, rep(0, length(MyEOLs)))
+            colnames(CNOverview) <- append(colnames(CNOverview[-dim(CNOverview)[2]]), language)
+          }
         }
         languageColumn <- which(colnames(CNOverview) == language) 
         CNOverview[i,languageColumn] <- as.numeric(CNOverview[i,languageColumn])+1   

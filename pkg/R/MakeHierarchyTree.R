@@ -181,6 +181,10 @@ NodeLabelList <- function(MyHiers, label="all", missingData) {  #also make an op
   }
   if(any(c(lapply(ListOfSpeciesPerNode, length), recursive=T) == 1))
     ListOfSpeciesPerNode <- ListOfSpeciesPerNode[-which(c(lapply(ListOfSpeciesPerNode, length), recursive=T) == 1)]
+  if(any(is.na(names(ListOfSpeciesPerNode))) || any(names(ListOfSpeciesPerNode) == "Not assigned")){
+    whichMissing <- c(which(is.na(names(ListOfSpeciesPerNode))), which(names(ListOfSpeciesPerNode) == "Not assigned"))
+    ListOfSpeciesPerNode <- ListOfSpeciesPerNode[-whichMissing]
+  }  
   return(ListOfSpeciesPerNode)
 }
 
