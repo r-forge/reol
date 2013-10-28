@@ -161,7 +161,7 @@ NodeLabelList <- function(MyHiers, label="all", missingData) {  #also make an op
   TreeData <- MakeTreeData(MyHiers)
   if(any(is.na(TreeData))){
     TreeData <- AutofillTaxonNames(TreeData)
-    if(!is.null(missingData)){
+    if(any(is.na(TreeData)) && !is.null(missingData)){
       if(missingData == "pruneTaxa")
         TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
     }
