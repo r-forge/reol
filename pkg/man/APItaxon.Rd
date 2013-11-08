@@ -8,7 +8,7 @@
 	APItaxon(taxon)
 }
 \arguments{
-	\item{taxon}{Single taxon}
+	\item{taxon}{Single taxonomic name}
 }
 \value{
 	Returns an encoded taxon name.

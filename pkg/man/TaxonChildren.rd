@@ -29,12 +29,14 @@ TaxonParents(MyHiers[1])
 
 #Species of Anolis off NCBI
 eolAnolis <- DownloadSearchedTaxa("Anolis", to.file=FALSE)
-hierAnolis <- DownloadHierarchy(eolAnolis, to.file=FALSE, database="NCBI Taxonomy")
+hierAnolis <- DownloadHierarchy(eolAnolis, to.file=FALSE, database="NCBI
+     Taxonomy")
 TaxonChildren(hierAnolis)
 
 #Species of Anolis off The Reptile Database
 eolAnolis <- DownloadSearchedTaxa("Anolis", to.file=FALSE)
-repdbAnolis <- DownloadHierarchy(eolAnolis, to.file=FALSE, database="The Reptile Database")
+repdbAnolis <- DownloadHierarchy(eolAnolis, to.file=FALSE, database="The Reptile
+     Database")
 TaxonChildren(repdbAnolis)
 
 

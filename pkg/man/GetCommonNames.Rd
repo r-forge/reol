@@ -15,6 +15,12 @@ GetCommonNames(MyEOLs, output = c("detail", "counts"))
 \value{
 	Returns a data frame with taxon, eol ID, common name, and language. 
 }
+\seealso{
+	\code{\link{GetRichnessScores}}
+	\code{\link{GetIUCNStat}}
+	\code{\link{GetReferences}}
+	\code{\link{DataObjectOverview}}
+}
 \examples{
 data(MyEOLs)
 GetCommonNames(MyEOLs, output="detail")

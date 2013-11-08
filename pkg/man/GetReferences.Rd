@@ -14,6 +14,12 @@ GetReferences(MyEOLs, output = c("detail", "counts"))
 \value{
 	Returns a data frame with taxon, eol ID, common name, and language. 
 }
+\seealso{
+	\code{\link{GetRichnessScores}}
+	\code{\link{GetCommonNames}}
+	\code{\link{GetIUCNStat}}
+	\code{\link{DataObjectOverview}}
+}
 \examples{
 data(MyEOLs)
 GetReferences(MyEOLs[[1]], output="detail")

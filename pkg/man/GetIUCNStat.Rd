@@ -14,6 +14,12 @@ GetIUCNStat(MyEOLs)
 \value{
 	Returns a data frame with taxon, eol ID, and IUCN status. 
 }
+\seealso{
+	\code{\link{GetRichnessScores}}
+	\code{\link{GetCommonNames}}
+	\code{\link{GetReferences}}
+	\code{\link{DataObjectOverview}}
+}
 \examples{
 data(MyEOLs)
 GetIUCNStat(MyEOLs)

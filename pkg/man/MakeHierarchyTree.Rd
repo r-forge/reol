@@ -46,6 +46,7 @@ Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=TRUE)
 labels <- NodeLabelList(MyHiers, "all")
 plot(Tree, show.node.label=TRUE)
 
-plot(Tree, "c", show.node.label=TRUE, adj=0.5, font=3, edge.color="gray", tip.color=rainbow(10))
+plot(Tree, "c", show.node.label=TRUE, adj=0.5, font=3, edge.color="gray",
+	tip.color=rainbow(10))
 
 }
