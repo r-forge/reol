@@ -16,5 +16,7 @@ GatherProviderDataFrame(MyEOLs, extended.output=FALSE)
 }
 \examples{
 data(MyEOLs)
-GatherProviderDataFrame(MyEOLs, extended.output=FALSE)
+\dontrun{GatherProviderDataFrame(MyEOLs, extended.output=FALSE)}
+
+GatherProviderDataFrame(MyEOLs[1], extended.output=FALSE)
 }

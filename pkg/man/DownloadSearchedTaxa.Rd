@@ -31,11 +31,12 @@ DownloadSearchedTaxa(ListOfTaxa, to.file=TRUE, MyKey=NULL, exact=TRUE, verbose=T
 \examples{
 #Download taxa files to working directory in R
 \dontrun{DownloadEOLpages(c(1,2,3), to.file=TRUE, MyKey)}
-\dontrun{DownloadSearchedTaxa("Anolis_carolinensis", to.file=TRUE, exact=TRUE)}
+\dontrun{DownloadSearchedTaxa(c("Anolis_carolinensis", 
+	"Anolis garmani"), to.file=TRUE, exact=TRUE)}
 
 #Save data as an R object rather than download files
 
-MyTaxa <- c("Camelus", "Camelus dromedarius")
+MyTaxa <- c("Camelus dromedarius")
 MyEOLs <- DownloadSearchedTaxa(MyTaxa, to.file=FALSE)
 #save(MyEOLs, file="MyEOLs.rda")
 }

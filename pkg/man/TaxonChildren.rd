@@ -28,6 +28,11 @@ TaxonParents(MyHiers[1])
 
 
 #Species of Anolis off NCBI
+data(MyHiers)
+TaxonChildren(MyHiers)
+
+#Example to get all Anolis species from NCBI
+\dontrun{
 eolAnolis <- DownloadSearchedTaxa("Anolis", to.file=FALSE)
 hierAnolis <- DownloadHierarchy(eolAnolis, to.file=FALSE, database="NCBI
      Taxonomy")
@@ -38,6 +43,6 @@ eolAnolis <- DownloadSearchedTaxa("Anolis", to.file=FALSE)
 repdbAnolis <- DownloadHierarchy(eolAnolis, to.file=FALSE, database="The Reptile
      Database")
 TaxonChildren(repdbAnolis)
-
+}
 
 }

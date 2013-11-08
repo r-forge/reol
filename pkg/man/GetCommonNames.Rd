@@ -23,6 +23,9 @@ GetCommonNames(MyEOLs, output = c("detail", "counts"))
 }
 \examples{
 data(MyEOLs)
-GetCommonNames(MyEOLs, output="detail")
-GetCommonNames(MyEOLs, "c")
+
+GetCommonNames(MyEOLs[1], "d")
+
+\dontrun{GetCommonNames(MyEOLs, output="detail")}
+\dontrun{GetCommonNames(MyEOLs, "c")}
 }

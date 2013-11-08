@@ -40,15 +40,15 @@ MakeEdgeLabels(MyHiers, label="all", missingData=NULL, duplicateEdgeLabels="olde
 }
 \examples{
 data(MyHiers)
-Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=TRUE)
-edges <- MakeEdgeLabels(MyHiers)
-
-plot(Tree, show.node.label=TRUE)
-	
+Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)
+edges <- MakeEdgeLabels(MyHiers)	
 plot(Tree, show.node.label=FALSE)
 edgelabels(text=names(edges), edge=edges)  
 
+
+\dontrun{
 edges <- MakeEdgeLabels(MyHiers, missingData="pruneTaxa", duplicateEdgeLabels="recent")
 plot(Tree, show.node.label=FALSE)
 edgelabels(text=names(edges), edge=edges)  
+}
 }

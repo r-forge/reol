@@ -29,7 +29,8 @@ DataObjectOverview(MyEOLs, verbose=TRUE)
 }
 \examples{
 data(MyEOLs)
-DataObjectOverview(MyEOLs, verbose=FALSE)
+DataObjectOverview(MyEOLs[1], verbose=FALSE)
+\dontrun{DataObjectOverview(MyEOLs, verbose=FALSE)}
 
 #Data from the first data object from the first EOL page on the list
 \dontrun{GatherDataObjectInformation(MyEOLs[1])[1,]}

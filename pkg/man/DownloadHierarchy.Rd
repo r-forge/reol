@@ -27,12 +27,15 @@ DownloadHierarchy(MyEOLs, to.file=TRUE, database=NULL, verbose=TRUE)
 }
 \examples{
 data(MyEOLs)
-ProviderCount(MyEOLs, verbose=TRUE)
-BestProvider(MyEOLs)
+\dontrun{ProviderCount(MyEOLs[6], verbose=TRUE)
+BestProvider(MyEOLs[6])}
+DownloadHierarchy(MyEOLs[6], FALSE, database="NCBI Taxonomy")
 	
 #Download data from whichever provider has the most coverage
 \dontrun{MyHiers <- DownloadHierarchy(MyEOLs, to.file=TRUE, BestProvider(MyEOLs))}
 	
 #Or download from a specific provider
-MyHiers <- DownloadHierarchy(MyEOLs, FALSE, database="NCBI Taxonomy")
+\dontrun{MyHiers <- DownloadHierarchy(MyEOLs, FALSE, database="NCBI Taxonomy")}
+
+
 }

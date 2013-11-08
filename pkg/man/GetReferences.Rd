@@ -22,6 +22,6 @@ GetReferences(MyEOLs, output = c("detail", "counts"))
 }
 \examples{
 data(MyEOLs)
-GetReferences(MyEOLs[[1]], output="detail")
-GetReferences(MyEOLs, "c")
+\dontrun{GetReferences(MyEOLs, output="detail")}
+GetReferences(MyEOLs[1], "c")
 }

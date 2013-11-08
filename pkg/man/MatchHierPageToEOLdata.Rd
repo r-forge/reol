@@ -20,15 +20,13 @@ MatchDataToTreeTips(Tree, Data)
 }
 \examples{
 	#plotting richness scores
-	data(MyEOLs)
-	data(MyHiers)
-	Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)  
-	MyData <- MatchHierPageToEOLdata(MyHiers, GetRichnessScores(MyEOLs))
-	plot(Tree, label.offset=1, x.lim=10)
-	tiplabels(round(as.numeric(MyData[,3])), 1:6, col="Blue", frame="none",
+	\dontrun{data(MyEOLs)
+     data(MyHiers)
+     Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)  
+     MyData <- MatchHierPageToEOLdata(MyHiers, GetRichnessScores(MyEOLs))
+     plot(Tree, label.offset=1, x.lim=10)
+     tiplabels(round(as.numeric(MyData[,3])), 1:6, col="Blue", frame="none",
 		bg="clear",adj = -0.5)
-	title(main="Richness scores")
-	
-	
-	
+     title(main="Richness scores")
+	}
 }

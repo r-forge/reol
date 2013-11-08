@@ -22,6 +22,7 @@ GetIUCNStat(MyEOLs)
 }
 \examples{
 data(MyEOLs)
-GetIUCNStat(MyEOLs)
+\dontrun{GetIUCNStat(MyEOLs)}
+GetIUCNStat(MyEOLs[3])
 }
 

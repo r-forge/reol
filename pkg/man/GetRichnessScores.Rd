@@ -21,5 +21,5 @@ GetRichnessScores(MyEOLs)
 }
 \examples{
 data(MyEOLs)
-GetRichnessScores(MyEOLs)
+GetRichnessScores(MyEOLs[1:2])
 }
