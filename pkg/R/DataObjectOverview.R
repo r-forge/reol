@@ -18,7 +18,7 @@ GatherDataObjectInformation <- function(MyEOL) {
   #add each data object one by one.  
   for(i in sequence(NumberOfDataObjects)) {
     DO <- res[[whichDataObjects[i]]]
-    for(j in 1:length(DO)) {
+    for(j in sequence(length(DO))) {
       nameOfColumn <- names(DO)[j]
       if(!any(grepl(paste(nameOfColumn,'*', sep=""), colnames(DataObjectInfo)))) {  #add new column if data doesn't exist
         DataObjectInfo <- cbind(DataObjectInfo, rep(NA, NumberOfDataObjects))
@@ -26,7 +26,7 @@ GatherDataObjectInformation <- function(MyEOL) {
       }
       column <- which(colnames(DataObjectInfo) == nameOfColumn)
       #DataObjectInfo[i,column] <- paste("DO$", nameOfColumn, sep="")
-      DataObjectInfo[i,column] <- DO[[j]]
+      DataObjectInfo[i,column] <- DO[[j]][1] #Note: sometimes there are multiple elements. Typically, this is is just a main element (like a name of a provider) followed by attributes (URL), but we are just taking the first element regardless.
 
     }
   }
