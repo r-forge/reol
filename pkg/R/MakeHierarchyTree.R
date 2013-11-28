@@ -13,7 +13,7 @@ MergeTaxonomies <- function(i, j) {
   outlier.pos <- which(j %ni% i)
   for (outlier.index in sequence(length(outlier.pos))) {
     if (outlier.pos[outlier.index] == 1) {
-      warning("Haven't dealt with this yet")
+      paste("Haven't dealt with this yet")
       return(combined)
     }
     previous.pos <- which(grepl(j[outlier.pos[outlier.index] - 1], combined))[1]
@@ -123,24 +123,23 @@ MakeHierarchyTree <- function(MyHiers, missingData=NULL, includeNodeLabels=TRUE,
     #TreeData <- DropADim(TreeData)
     pattern <- paste("~", paste(colnames(TreeData), sep="", collapse="/"), sep="")   
   }
-  else{
-    if(any(apply(TreeData, 2, RepeatDataToDrop))) {
-      if(any(is.na(TreeData))){
-        TreeData <- AutofillTaxonNames(TreeData)
-        if(colnames(TreeData[dim(TreeData)[2]]) != strsplit(pattern, "/")[[1]][length(strsplit(pattern, "/")[[1]])]){
-          if(is.null(missingData))
-            stop("Tip taxa are differing hierarchical ranks, you need to choose an option in missingData whether to drop taxa or ranks.")
-          if(missingData == "pruneTaxa")
-            TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
-        }
+  if(any(apply(TreeData, 2, RepeatDataToDrop))) {
+    if(any(is.na(TreeData))){
+      TreeData <- AutofillTaxonNames(TreeData)
+      if(colnames(TreeData[dim(TreeData)[2]]) != strsplit(pattern, "/")[[1]][length(strsplit(pattern, "/")[[1]])]){
+        if(is.null(missingData))
+          stop("Tip taxa are differing hierarchical ranks, you need to choose an option in missingData whether to drop taxa or ranks.")
+        if(missingData == "pruneTaxa")
+          TreeData <- TreeData[-which(is.na(TreeData[,dim(TreeData)[2]])),]
       }
-      DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
-      pattern <- paste("~", paste(colnames(TreeData)[-DataToDrop], sep="", collapse="/"), sep="")
     }
+    DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
+    if(any(DataToDrop))
+      pattern <- paste("~", paste(colnames(TreeData)[-DataToDrop], sep="", collapse="/"), sep="")
   }
   if(colnames(TreeData[dim(TreeData)[2]]) != strsplit(pattern, "/")[[1]][length(strsplit(pattern, "/")[[1]])]){
-    warning(paste("Your hierarchy files contain information to the", colnames(TreeData[dim(TreeData)[2]]), "level, however not all taxa have this information. In order to make a tree the tips must align, so information was pruned to", strsplit(pattern, "/")[[1]][length(strsplit(pattern, "/")[[1]])]))
-    warning(paste("If you want to make a", colnames(TreeData[dim(TreeData)[2]]), "tree, change the missingData argument to pruneTaxa, which will remove taxa without", colnames(TreeData[dim(TreeData)[2]])))
+    paste("Your hierarchy files contain information to the", colnames(TreeData[dim(TreeData)[2]]), "level, however not all taxa have this information. In order to make a tree the tips must align, so information was pruned to", strsplit(pattern, "/")[[1]][length(strsplit(pattern, "/")[[1]])])
+    paste("If you want to make a", colnames(TreeData[dim(TreeData)[2]]), "tree, change the missingData argument to pruneTaxa, which will remove taxa without", colnames(TreeData[dim(TreeData)[2]]))
   }
   if(pattern == "~")
     stop("Error in Tree Building: try MakeTreeData(MyHiers) to see if there is hierarchical data associated with your files")
@@ -167,10 +166,11 @@ NodeLabelList <- function(MyHiers, label="all", missingData) {  #also make an op
     }
   }
   DataToDrop <- which(apply(TreeData, 2, RepeatDataToDrop))
-  prunedTreeData <- TreeData[,-DataToDrop]
+  if(any(DataToDrop))
+    TreeData <- TreeData[,-DataToDrop]
   if(label == "all")
-    uniqueTaxSets <- c(apply(prunedTreeData[,-dim(prunedTreeData)[2]], 2, unique), recursive=T)
-  ListOfSpeciesPerNode <- lapply(uniqueTaxSets, ReturnTaxSet, TreeData=prunedTreeData)
+    uniqueTaxSets <- c(apply(TreeData[,-dim(TreeData)[2]], 2, unique), recursive=T)
+  ListOfSpeciesPerNode <- lapply(uniqueTaxSets, ReturnTaxSet, TreeData= TreeData)
   names(ListOfSpeciesPerNode) <- uniqueTaxSets
   ListOfSpeciesPerNode <- ListOfSpeciesPerNode[which(lapply(ListOfSpeciesPerNode, length) > 1)]
   if(any(c(lapply(ListOfSpeciesPerNode, duplicated), recursive=T))){

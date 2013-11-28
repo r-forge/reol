@@ -56,7 +56,7 @@ MakeEdgeLabels <- function(MyHiers, label="all", missingData=NULL, duplicateEdge
   nodeList <- NodeLabelList(MyHiers, label="all", missingData=missingData)
   if(length(nodeList) == 0)
     stop("Node Labels can not be created, because hierarchy information doesn't overlap")
-  phy <- suppressWarnings(MakeHierarchyTree(MyHiers, missingData=missingData, includeNodeLabels=FALSE))
+  phy <- MakeHierarchyTree(MyHiers, missingData=missingData, includeNodeLabels=FALSE)
   tipList <- getTipList(phy)
   edges <- c(lapply(nodeList, whichEdge, phy=phy), recursive=T)
   if(any(duplicated(names(edges))))

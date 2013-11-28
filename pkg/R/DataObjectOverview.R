@@ -17,7 +17,7 @@ GatherDataObjectInformation <- function(MyEOL) {
 
   #add each data object one by one.  
   for(i in sequence(NumberOfDataObjects)) {
-    DO <- res[[whichDataObjects[i]]]
+    DO <- unlist(res[[whichDataObjects[i]]])
     for(j in sequence(length(DO))) {
       nameOfColumn <- names(DO)[j]
       if(!any(grepl(paste(nameOfColumn,'*', sep=""), colnames(DataObjectInfo)))) {  #add new column if data doesn't exist
