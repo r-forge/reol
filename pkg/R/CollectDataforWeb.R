@@ -67,7 +67,7 @@ providerCount <- function(res) {
 
 
 #gather vector of information
-DataProcessing <- function(res) {
+DataProcessing <- function(res, higher.taxonomy) {
   if(!is.null(res$taxonConcept)) {
     taxonData <- c(FirstTwo(res$taxonConcept$ScientificName), res$taxonConcept$ScientificName, res$taxonConcept$taxonConceptID)
     richness <- res$taxonConcept$additionalInformation$richness_score
@@ -77,12 +77,16 @@ DataProcessing <- function(res) {
     DOs <- DOCount(res)
     pageLength <- sum(nchar(unlist(res, use.names=FALSE)))
   }	
-  return(matrix(c(taxonData, richness, refCounts, CNs, providers , DOs, pageLength), nrow=1))
+  return(matrix(c(taxonData, richness, refCounts, CNs, providers , DOs, pageLength, higher.taxonomy), nrow=1))
 }
 
-CollectDataforWeb <- function(MyEOL) {
+CollectDataforWeb <- function(MyEOL, do.higher.taxonomy=FALSE) {
+  higher.taxonomy<-""
+  if(do.higher.taxonomy) {
+    try(higher.taxonomy<-paste(MakeTreeData (DownloadHierarchy(MyEOL, FALSE)), collapse="/"))
+  }
   res <- PageProcessing(MyEOL)
-  return(DataProcessing(res))
+  return(DataProcessing(res, higher.taxonomy))
 }
 
 
