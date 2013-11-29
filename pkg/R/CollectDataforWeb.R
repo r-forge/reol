@@ -83,7 +83,7 @@ DataProcessing <- function(res, higher.taxonomy) {
 CollectDataforWeb <- function(MyEOL, do.higher.taxonomy=FALSE) {
   higher.taxonomy<-""
   if(do.higher.taxonomy) {
-    try(higher.taxonomy<-paste(MakeTreeData (DownloadHierarchy(MyEOL, to.file=FALSE, database="NCBI Taxonomy")), collapse="/"))
+    try(higher.taxonomy<-paste(MakeTreeData (DownloadHierarchy(MyEOL, to.file=FALSE)), collapse="/"))
   }
   res <- PageProcessing(MyEOL)
   return(DataProcessing(res, higher.taxonomy))
