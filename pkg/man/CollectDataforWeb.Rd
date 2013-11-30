@@ -15,13 +15,12 @@ CollectDataforWeb(MyEOL, do.higher.taxonomy)
 CNCount(res)
 DOCount(res)
 providerCount(res)
-DataProcessing(res, higher.taxonomy)
+DataProcessing(res, do.higher.taxonomy)
 }
 \arguments{
 	\item{MyEOL}{A single filename for downloaded EOL pages}
 	\item{res}{XML object}
 	\item{do.higher.taxonomy}{TRUE/FALSE on whether to download higher level taxonomy}
-	\item{higher.taxonomy}{String with taxonomic information}
 }
 \value{
 	Appends EOL data to a table. 
