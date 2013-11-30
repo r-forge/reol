@@ -21,7 +21,7 @@ MatchHierPageToEOLdata <- function(MyHiers, EOLdata){
 
 MatchDataToTreeTips <- function(Tree, Data){
   if(length(grep("HierID", colnames(Data), ignore.case=T)) == 0) 
-    warning("EOLdata must be matched to HierarchyID first, use MatchHierPageToEOLdata(MyHiers, EOLdata)")
+    stop("EOLdata must be matched to HierarchyID first, use MatchHierPageToEOLdata(MyHiers, EOLdata)")
   if(any(is.na(Data)))
     Data <- Data[-unique(which(is.na(Data), arr.ind=TRUE)[,1]),]
   if(length(grep("Taxon", colnames(Data), ignore.case=T)) > 0)  #if taxon names are a column, then make them rownames
@@ -41,7 +41,7 @@ MatchDataToTreeTips <- function(Tree, Data){
   if(all(rownames(NewOrderMatchedData) == Tree$tip.label))
     return(NewOrderMatchedData)
   else
-    warning("something wonky in data")
+    stop("something wonky in data")
 }
 
 
