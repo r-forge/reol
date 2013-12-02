@@ -78,7 +78,7 @@ DataProcessing <- function(res, do.higher.taxonomy) {
     pageLength <- sum(nchar(unlist(res, use.names=FALSE)))
     higher.taxonomy <- ""
     if (do.higher.taxonomy) {
-    	try(higher.taxonomy<-paste(MakeTreeData (DownloadHierarchy(MyEOL, to.file=FALSE)), collapse="/"))
+    	try(higher.taxonomy<-paste(MakeTreeData (DownloadHierarchy(res, to.file=FALSE)), collapse="/"))
     	if(nchar(higher.taxonomy)==0) {
     		try(higher.taxonomy<-paste(MakeTreeData (DownloadHierarchy(DownloadEOLpages(res$taxonConcept$taxonConceptID, to.file=FALSE), to.file=FALSE)), collapse="/")) #sometimes the taxon name does not match to the hierarchy, but the eol ID does
     	}	
