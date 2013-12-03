@@ -5,9 +5,12 @@ PageProcessing <- function(MyEOL) {
     res <- xmlToList(xmlRoot(xmlParse(MyEOL[[1]], getDTD=FALSE)), simplify=FALSE)
   if(is.na(GetHierID(MyEOL)))
     return(paste("Filenames contain NAs"))
-  if(!is.null(res$error))
-    stop(paste("Bad file", MyEOL, "has an error:", res$error))
-  return(res)
+  if(!is.null(res$error)){
+    paste("Bad file", MyEOL, "has an error:", res$error)
+    return(NULL)
+  }
+  if(is.null(res$error))
+    return(res)
 }
 
 
