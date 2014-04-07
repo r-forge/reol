@@ -43,7 +43,7 @@ There are benefits and drawbacks to which type of download you choose. If you ch
 +          "Pongo pygmaeus", "Pongo abelii", "Gorilla gorilla", 
 + 	"Gorilla beringei", "Homo sapiens")
 > DownloadedApes <- DownloadSearchedTaxa(GreatApes, to.file=FALSE, 
-+ 	verbose=F)
++ 	verbose=FALSE)
 \end{Sinput}
 \end{Schunk}
 
@@ -95,7 +95,7 @@ Another type of data we can assemble is the kind and number of data objects that
 \begin{Schunk}
 \begin{Sinput}
 > DataObjectInfo <- CombineDataObjectInformation(DownloadedApes, 
-+ 	verbose=F)
++ 	verbose=FALSE)
 > DataObjectInfo[1,]
 \end{Sinput}
 \begin{Soutput}
@@ -125,7 +125,7 @@ Another type of data we can assemble is the kind and number of data objects that
 1     <NA>  <NA>
 \end{Soutput}
 \begin{Sinput}
-> DataObjectOverview(DownloadedApes, verbose=F)
+> DataObjectOverview(DownloadedApes, verbose=FALSE)
 \end{Sinput}
 \begin{Soutput}
              Taxon   eolID text.html text.plain image.jpeg
@@ -316,7 +316,7 @@ Just as EOL page content can be downloaded and scraped for content, so can the c
 \begin{Schunk}
 \begin{Sinput}
 > NCBIfiles <- DownloadHierarchy(DownloadedApes, to.file=FALSE, 
-+ 	database="NCBI Taxonomy", verbose=F)
++ 	database="NCBI Taxonomy", verbose=FALSE)
 \end{Sinput}
 \end{Schunk}
 
