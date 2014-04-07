@@ -21,6 +21,7 @@ MatchDataToTreeTips(Tree, Data)
 \examples{
 	#plotting richness scores
 	\dontrun{data(MyEOLs)
+	 library(ape)
      data(MyHiers)
      Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)  
      MyData <- MatchHierPageToEOLdata(MyHiers, GetRichnessScores(MyEOLs))

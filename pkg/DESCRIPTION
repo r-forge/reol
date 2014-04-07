@@ -4,7 +4,8 @@ Date: 2013-12-02
 Title: R interface to the Encyclopedia of Life
 Author: Barb Banbury <darwinthesun@gmail.com>, Brian O'Meara <bomeara@utk.edu>
 Maintainer: Barb Banbury <darwinthesun@gmail.com>
-Depends: R (>= 2.13.0), XML, RCurl, ape
+Depends: R (>= 2.13.0)
+Imports: XML, RCurl, ape
 Suggests: geiger
 LazyData: yes
 Description: An R interface to the Encyclopedia of Life API. Includes functions for downloading and extracting information off the EOL pages.

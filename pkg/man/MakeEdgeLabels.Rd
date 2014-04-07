@@ -39,6 +39,7 @@ MakeEdgeLabels(MyHiers, label="all", missingData=NULL, duplicateEdgeLabels="olde
 \code{\link{MakeHierarchyTree}}
 }
 \examples{
+library(ape)
 data(MyHiers)
 Tree <- MakeHierarchyTree(MyHiers, includeNodeLabels=FALSE)
 edges <- MakeEdgeLabels(MyHiers)	

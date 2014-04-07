@@ -9,13 +9,14 @@
 \usage{
 ProviderCount(MyEOLs,verbose=FALSE)
 BestProvider(MyEOLs)
-DownloadHierarchy(MyEOLs, to.file=TRUE, database=NULL, verbose=TRUE)
+DownloadHierarchy(MyEOLs, to.file=TRUE, database=NULL, verbose=TRUE, ...)
 }
 \arguments{
 	\item{MyEOLs}{A vector of filenames for downloaded EOL pages}
 	\item{to.file}{Whether to download data to a file}
 	\item{database}{Provider hierarchy information to use}
 	\item{verbose}{An optional print statement during download}	
+	\item{...}{further arguments to be passed to \code{DownloadHierarchy}}
 }
 
 \value{

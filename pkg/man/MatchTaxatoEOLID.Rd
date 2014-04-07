@@ -5,11 +5,12 @@
 	This function will take a sting of taxa and search EOL database for the EOL ID. These IDs can then be used with the DownloadEOLpages function.    
 }
 \usage{
-MatchTaxatoEOLID(ListOfTaxa, exact=TRUE)
+MatchTaxatoEOLID(ListOfTaxa, exact=TRUE, ...)
 }
 \arguments{
 	\item{ListOfTaxa}{List of EOL taxa to search and download EOL pages}
 	\item{exact}{Should taxon name match exactly in EOL or fuzzy match}
+	\item{...}{further arguments to be passed to \code{MatchTaxatoEOLID}}
 }
 \value{
 	Returns a table with the submitted taxon name, returned taxon name, and eol ID number.
