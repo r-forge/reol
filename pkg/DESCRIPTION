@@ -1,9 +1,10 @@
 Package: Reol
-Version: 1.53
+Version: 1.54
 Date: 2013-12-02
 Title: R interface to the Encyclopedia of Life
 Author: Barb Banbury <darwinthesun@gmail.com>, Brian O'Meara <bomeara@utk.edu>
 Maintainer: Barb Banbury <darwinthesun@gmail.com>
+BugReports: http://r-forge.r-project.org/tracker/?group_id=1523
 Depends: R (>= 2.13.0)
 Imports: XML, RCurl, ape
 Suggests: geiger
