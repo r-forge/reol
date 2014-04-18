@@ -13,9 +13,7 @@ MatchTaxatoEOLID <- function(ListOfTaxa, exact=TRUE, ...){
   for (i in sequence(length(ListOfTaxa))) {  
     taxon <- APItaxon(ListOfTaxa[i])
 	web <- paste('http://eol.org/api/search/1.0.xml?q=', taxon, '&exact=', exact, '&page=1', sep="")
-	htmlHeader <- basicHeaderGatherer()
-    a <- getURL(web, headerfunction = htmlHeader$update, ...)
-    print(htmlHeader$value()$Status)
+    a <- getURL(web, ...)
     searchRes <- NULL
     searchRes <- xmlToList(xmlRoot(xmlParse(a, getDTD=FALSE), ...), simplify=FALSE)
     if(searchRes$totalResults == 1) {  #didn't match any eol taxa
